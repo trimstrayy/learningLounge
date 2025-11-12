@@ -10,7 +10,7 @@ const About = () => {
       <main className="pt-24 pb-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6 text-center">About IELTS Pro</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6 text-center">About The Learning Lounge</h1>
             
             <div className="prose prose-lg max-w-none mb-12">
               <p className="text-lg text-muted-foreground text-center mb-8">

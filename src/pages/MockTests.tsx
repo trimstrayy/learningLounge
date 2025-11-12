@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Headphones, BookOpen, PenTool, Mic, Clock, FileText, Target, CheckCircle } from "lucide-react";
+import { Headphones, BookOpen, PenTool, Mic, Clock, FileText, Target, CheckCircle, X } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const testTypes = [
@@ -43,7 +45,7 @@ const testTypes = [
   {
     id: "writing",
     title: "Writing Test",
-    icon: PenTool,
+    icon: FileText,
     duration: "60 minutes",
     questions: "2 tasks",
     description: "The IELTS Writing test requires you to complete two tasks. Task 1 requires you to describe visual information, while Task 2 is an essay in response to a point of view, argument or problem.",
@@ -54,7 +56,7 @@ const testTypes = [
       "Both tasks must be completed to get a band score"
     ],
     scoring: "Task 2 carries more weight. Assessed on task achievement, coherence, vocabulary, and grammar.",
-    color: "bg-accent"
+    color: "bg-amber-500"
   },
   {
     id: "speaking",
@@ -101,6 +103,18 @@ const MockTests = () => {
     setSelectedTest(selectedTest === testId ? null : testId);
   };
 
+  const closeDetails = () => setSelectedTest(null);
+
+  // lock body scroll on mobile modal open
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    if (selectedTest && isMobile) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [selectedTest]);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -115,11 +129,12 @@ const MockTests = () => {
           </div>
 
           {/* Test Overview Cards with Inline Details */}
-          <div className="grid md:grid-cols-4 gap-4 mb-12">
-            {testTypes.map((test, index) => {
+      <div className="grid md:grid-cols-4 gap-4 mb-12">
+        {testTypes.map((test, index) => {
               const Icon = test.icon;
               const isCompleted = completedTests.has(test.id);
               const isSelected = selectedTest === test.id;
+              const dimmed = selectedTest !== null && !isSelected;
               const isLastInRow = (index + 1) % 4 === 0;
               const isLastCard = index === testTypes.length - 1;
               
@@ -130,8 +145,9 @@ const MockTests = () => {
                     className={cn(
                       "p-4 border-2 cursor-pointer transition-all",
                       isCompleted && "border-green-500 bg-green-50 dark:bg-green-950/20",
-                      isSelected && !isCompleted && "border-primary shadow-lg",
-                      !isCompleted && !isSelected && "border-border hover:shadow-md hover:border-primary/50"
+                      isSelected && !isCompleted && "border-primary shadow-lg rounded-b-none",
+                      !isCompleted && !isSelected && "border-border hover:shadow-md hover:border-primary/50",
+                      dimmed && "opacity-50"
                     )}
                     onClick={() => handleTestClick(test.id)}
                   >
@@ -170,58 +186,119 @@ const MockTests = () => {
                     )}
                   </Card>
 
-                  {/* Show details right after the selected card (full width on mobile, after row on desktop) */}
-                  {isSelected && (isLastInRow || isLastCard || window.innerWidth < 768) && (
-                    <div className="md:col-span-4 animate-fade-in">
-                      <Card className="border-2 border-primary overflow-hidden bg-card">
-                        <div className="px-6 py-4 bg-primary/5 border-b border-border">
-                          <div className="flex items-center gap-4">
-                            <div className={`w-12 h-12 rounded-lg ${test.color} bg-opacity-10 flex items-center justify-center`}>
-                              <Icon className={`w-6 h-6 ${test.color.replace('bg-', 'text-')}`} />
-                            </div>
-                            <div>
-                              <h3 className="text-xl font-semibold text-card-foreground">{test.title}</h3>
-                              <p className="text-sm text-muted-foreground">{test.duration} • {test.questions}</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="px-6 py-6 space-y-4">
-                          <p className="text-muted-foreground leading-relaxed">{test.description}</p>
-                          
-                          <div>
-                            <h4 className="font-semibold text-card-foreground mb-2 flex items-center gap-2">
-                              <Target className="w-4 h-4" />
-                              Test Format
-                            </h4>
-                            <ul className="space-y-2 text-muted-foreground">
-                              {test.format.map((item, idx) => (
-                                <li key={idx} className="flex gap-2">
-                                  <span className="text-primary mt-1">•</span>
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <div>
-                            <h4 className="font-semibold text-card-foreground mb-2">Scoring</h4>
-                            <p className="text-muted-foreground">{test.scoring}</p>
-                          </div>
-
-                          <Link to={`/test/${test.id}`}>
-                            <Button className="mt-4 bg-primary hover:bg-primary/90">
-                              Start {test.title}
-                            </Button>
-                          </Link>
-                        </div>
-                      </Card>
-                    </div>
-                  )}
+                  {/* Inline expanded panel removed — expanded details render below the grid to avoid shifting cards */}
                 </>
               );
             })}
           </div>
+
+          {/* Expanded details panel (renders below the grid so cards keep their positions) */}
+          {selectedTest && (() => {
+            const activeTest = testTypes.find((t) => t.id === selectedTest);
+            if (!activeTest) return null;
+            const Icon = activeTest.icon;
+            return (
+              <div className="md:col-span-4 animate-fade-in mt-4">
+                <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+                  <Card className="border-2 border-primary overflow-hidden bg-card rounded-t-none">
+                    <div className="px-6 py-6 space-y-4">
+                      <p className="text-muted-foreground leading-relaxed">{activeTest.description}</p>
+
+                      <div>
+                        <h4 className="font-semibold text-card-foreground mb-2 flex items-center gap-2">
+                          <Target className="w-4 h-4" />
+                          Test Format
+                        </h4>
+                        <ul className="space-y-2 text-muted-foreground">
+                          {activeTest.format.map((item, idx) => (
+                            <li key={idx} className="flex gap-2">
+                              <span className="text-primary mt-1">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-card-foreground mb-2">Scoring</h4>
+                        <p className="text-muted-foreground">{activeTest.scoring}</p>
+                      </div>
+
+                      <Link to={`/test/${activeTest.id}`}>
+                        <Button className="mt-4 bg-primary hover:bg-primary/90">
+                          Start {activeTest.title}
+                        </Button>
+                      </Link>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            );
+          })()}
+
+          {/* Mobile modal: fixed, viewport-centered overlay (center of device screen, not page length) */}
+          {selectedTest && typeof window !== 'undefined' && window.innerWidth < 768 && (() => {
+            const activeTest = testTypes.find((t) => t.id === selectedTest);
+            if (!activeTest) return null;
+
+            const modal = (
+              <div className="fixed inset-0 z-50">
+                {/* backdrop */}
+                <div className="absolute inset-0 bg-black/50" onClick={closeDetails} />
+
+                {/* dialog fixed to viewport center (portal prevents ancestor transform issues) */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.22 }}
+                  role="dialog"
+                  aria-modal="true"
+                  onClick={(e) => e.stopPropagation()}
+                  className="fixed left-1/2 top-1/2 z-50 w-[92%] max-w-xl -translate-x-1/2 -translate-y-1/2"
+                >
+                  <Card className="p-4 overflow-hidden">
+                    <button aria-label="Close" onClick={closeDetails} className="absolute top-3 right-3 p-2 rounded-full hover:bg-gray-100">
+                      <X className="w-5 h-5" />
+                    </button>
+
+                    {/* Scrollable content with constrained height so the dialog itself remains centered in the viewport */}
+                    <div className="pt-2 overflow-y-auto max-h-[80vh] pr-2">
+                      <h3 className="text-xl font-semibold mb-2">{activeTest.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-4">{activeTest.duration} • {activeTest.questions}</p>
+                      <p className="text-muted-foreground leading-relaxed mb-4">{activeTest.description}</p>
+                      <div>
+                        <h4 className="font-semibold text-card-foreground mb-2 flex items-center gap-2">
+                          <Target className="w-4 h-4" />
+                          Test Format
+                        </h4>
+                        <ul className="space-y-2 text-muted-foreground">
+                          {activeTest.format.map((item, idx) => (
+                            <li key={idx} className="flex gap-2">
+                              <span className="text-primary mt-1">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="mt-4">
+                        <h4 className="font-semibold text-card-foreground mb-2">Scoring</h4>
+                        <p className="text-muted-foreground">{activeTest.scoring}</p>
+                      </div>
+                      <div className="mt-4 text-right">
+                        <Link to={`/test/${activeTest.id}`}>
+                          <Button className="bg-primary hover:bg-primary/90">Start {activeTest.title}</Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              </div>
+            );
+
+            // render modal into document.body to avoid ancestor transform/layout affecting fixed positioning
+            return createPortal(modal, document.body);
+          })()}
         </div>
       </main>
       <Footer />

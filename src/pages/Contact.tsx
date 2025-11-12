@@ -40,7 +40,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Address</h3>
-                      <p className="text-muted-foreground">123 Education Street, City Center, Your City, 12345</p>
+                      <p className="text-muted-foreground">Chardobato, 07 Banepa, Kavre</p>
                     </div>
                   </Card>
                   <Card className="p-4 border-border flex items-start gap-4">
@@ -49,7 +49,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Phone</h3>
-                      <a href="tel:+1234567890" className="text-muted-foreground hover:text-primary">+1 (234) 567-890</a>
+                      <a href="tel:+9779767364658" className="text-muted-foreground hover:text-primary">011-66-5060, +977 9767364658</a>
                     </div>
                   </Card>
                   <Card className="p-4 border-border flex items-start gap-4">
@@ -58,7 +58,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
-                      <a href="mailto:info@ieltspro.com" className="text-muted-foreground hover:text-primary">info@ieltspro.com</a>
+                      <a href="mailto:learningloungenepal@gmail.com" className="text-muted-foreground hover:text-primary">learningloungenepal@gmail.com</a>
                     </div>
                   </Card>
                 </div>
@@ -78,7 +78,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Phone</label>
-                    <Input type="tel" placeholder="+1 (234) 567-890" />
+                    <Input type="tel" placeholder="+977 9741740551" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Message</label>

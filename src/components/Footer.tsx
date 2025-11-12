@@ -11,15 +11,15 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <p className="text-sm">123 Education Street, City Center, Your City, 12345</p>
+                <p className="text-sm">Chardobato, 07 Banepa, Kavre</p>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 flex-shrink-0" />
-                <a href="tel:+1234567890" className="text-sm hover:underline">+1 (234) 567-890</a>
+                <a href="tel:+9779767364658" className="text-sm hover:underline">011-66-5060, +977 9767364658</a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 flex-shrink-0" />
-                <a href="mailto:info@ieltspro.com" className="text-sm hover:underline">info@ieltspro.com</a>
+                <a href="mailto:learningloungenepal@gmail.com" className="text-sm hover:underline">learningloungenepal@gmail.com</a>
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-6 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} IELTS Pro Consultancy. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} The Learning Lounge. All rights reserved.</p>
         </div>
       </div>
     </footer>

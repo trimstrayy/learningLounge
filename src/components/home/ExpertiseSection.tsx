@@ -5,22 +5,22 @@ const expertiseItems = [
   {
     icon: BookOpen,
     title: "IELTS Preparation",
-    description: "Comprehensive training covering all four modules: Listening, Reading, Writing, and Speaking with expert instructors."
+    description: "Comprehensive coaching across Listening, Reading, Writing, and Speaking with experienced instructors."
   },
   {
-    icon: Globe,
-    title: "Visa Guidance",
-    description: "End-to-end visa application support with documentation assistance and interview preparation."
+    icon: BookOpen,
+    title: "Mini Library",
+    description: "A curated mini-library and reading space to support self-study and group learning."
   },
   {
     icon: Users,
-    title: "Student Counseling",
-    description: "Personalized guidance for course selection, university shortlisting, and career planning."
+    title: "Community Programs",
+    description: "Exploring community lives through events and study groups rooted in local engagement."
   },
   {
     icon: Award,
-    title: "Study Abroad",
-    description: "Complete support for studying in UK, USA, Canada, Australia, and other top destinations."
+    title: "Co-working & Reading Space",
+    description: "Comfortable co-working and reading spaces to help students focus and collaborate."
   }
 ];
 

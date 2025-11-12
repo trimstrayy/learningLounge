@@ -13,23 +13,50 @@ const MapSection = () => {
 
         <div className="max-w-5xl mx-auto">
           <div className="rounded-2xl overflow-hidden shadow-lg border border-border bg-card">
-            {/* Map Placeholder - MapTiler integration */}
-            <div className="relative w-full h-96 bg-gradient-to-br from-navy-lighter to-secondary flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <MapPin className="w-10 h-10 text-primary" />
-                </div>
-                <h3 className="text-2xl font-semibold text-primary mb-2">MapTiler Integration</h3>
-                <p className="text-muted-foreground mb-4">
-                  Add your MapTiler API key to display an interactive map
-                </p>
-                <div className="inline-block px-4 py-2 bg-card rounded-lg border border-border">
-                  <code className="text-sm text-primary font-mono">YOUR_MAPTILER_API_KEY</code>
-                </div>
-                <p className="text-sm text-muted-foreground mt-4">
-                  123 Education Street, City Center, Your City, 12345
-                </p>
-              </div>
+            {/* Interactive Map (MapLibre in an iframe using MapTiler style) */}
+            <div className="relative w-full h-96">
+              <iframe
+                title="MapTiler Map"
+                className="w-full h-full border-0"
+                srcDoc={
+`<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+      html,body,#map { height: 100%; margin: 0; padding: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+    <script>
+      // MapTiler style URL with provided API key
+      const styleUrl = 'https://api.maptiler.com/maps/base-v4/style.json?key=GSnqdXi9o51ELauMGguM';
+
+      // Create the map once maplibregl is available
+      (function() {
+        try {
+          const map = new maplibregl.Map({
+            container: 'map',
+            style: styleUrl,
+            center: [ -0.1278, 51.5074 ], // lon, lat (default: London). Adjust as needed.
+            zoom: 12
+          });
+
+          // Add navigation controls
+          map.addControl(new maplibregl.NavigationControl());
+        } catch (err) {
+          document.body.innerHTML = '<div style="display:flex;height:100%;align-items:center;justify-content:center;color:#666">Failed to load the map: ' + (err && err.message ? err.message : err) + '</div>';
+        }
+      })();
+    </script>
+  </body>
+</html>`
+                }
+              />
             </div>
 
             {/* Contact Info Bar */}
@@ -37,15 +64,15 @@ const MapSection = () => {
               <div className="grid md:grid-cols-3 gap-4 text-center">
                 <div>
                   <p className="text-sm opacity-90 mb-1">Address</p>
-                  <p className="font-semibold">123 Education Street, City Center</p>
+                  <p className="font-semibold">Chardobato, 07 Banepa, Kavre</p>
                 </div>
                 <div>
                   <p className="text-sm opacity-90 mb-1">Phone</p>
-                  <p className="font-semibold">+1 (234) 567-890</p>
+                  <p className="font-semibold">011-66-5060, +977 9767364658</p>
                 </div>
                 <div>
                   <p className="text-sm opacity-90 mb-1">Email</p>
-                  <p className="font-semibold">info@ieltspro.com</p>
+                  <p className="font-semibold">learningloungenepal@gmail.com</p>
                 </div>
               </div>
             </div>

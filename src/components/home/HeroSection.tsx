@@ -20,17 +20,17 @@ const HeroSection = () => {
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-in slide-in-from-bottom-4 duration-700">
-            IELTS Pro Consultancy
+            The Learning Lounge
           </h1>
 
           {/* Tagline */}
           <p className="text-xl md:text-2xl text-primary-foreground/90 font-medium mb-6 animate-in slide-in-from-bottom-4 duration-700 delay-100">
-            Your Gateway to Global Education
+            Your gateway to global education experience
           </p>
 
           {/* Description */}
           <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto mb-10 leading-relaxed animate-in slide-in-from-bottom-4 duration-700 delay-200">
-            We are a leading IELTS preparation and study abroad consultancy, dedicated to helping students achieve their dream scores and secure admissions to top universities worldwide. With expert guidance, personalized coaching, and comprehensive support, we make your international education journey smooth and successful.
+            We are a prolific IELTS preparation and study abroad consultancy, dedicated to helping Nepali students achieve their dream scores and secure admission to top universities around the globe. With expert guidance, personalized coaching, and comprehensive support, we make your international education journey smooth and successful.
           </p>
 
           {/* CTA Button */}
