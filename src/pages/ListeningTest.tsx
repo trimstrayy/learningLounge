@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Volume2, Pause, Play } from "lucide-react";
+import { Eye, EyeOff, Volume2, Pause, Play, BookOpen, Pencil, Mic } from "lucide-react";
 import TestHeader from "@/components/TestHeader";
 import { useTestSession } from "@/hooks/useTestSession";
 import { Card } from "@/components/ui/card";
@@ -10,6 +10,13 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface Question {
   id: string;
@@ -44,6 +51,13 @@ const ListeningTest = () => {
   const [showAnswers, setShowAnswers] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
   const [audioPlaying, setAudioPlaying] = useState<{ [key: number]: boolean }>({});
+  const [showResultsModal, setShowResultsModal] = useState(false);
+  const [scoreResults, setScoreResults] = useState<{
+    correctCount: number;
+    totalQuestions: number;
+    band: number;
+    wrongQuestions: string[];
+  } | null>(null);
   
   const durationMinutes = 30;
   const session = useTestSession(durationMinutes, {
@@ -74,22 +88,63 @@ const ListeningTest = () => {
       .finally(() => setLoading(false));
   }, [testId, navigate, toast]);
 
+  const calculateBand = (correctCount: number): number => {
+    if (correctCount >= 39) return 9;
+    if (correctCount >= 37) return 8.5;
+    if (correctCount >= 35) return 8;
+    if (correctCount >= 32) return 7.5;
+    if (correctCount >= 30) return 7;
+    if (correctCount >= 26) return 6.5;
+    if (correctCount >= 23) return 6;
+    if (correctCount >= 18) return 5.5;
+    if (correctCount >= 16) return 5;
+    if (correctCount >= 13) return 4.5;
+    if (correctCount >= 10) return 4;
+    if (correctCount >= 6) return 3.5;
+    if (correctCount >= 4) return 3;
+    if (correctCount >= 3) return 2.5;
+    if (correctCount >= 2) return 2;
+    return 1;
+  };
+
   const onSubmit = () => {
     if (!test) return;
+
+    // Calculate score
+    let correctCount = 0;
+    const wrongQuestions: string[] = [];
+    const totalQuestions = test.sections.reduce((sum, sec) => sum + sec.questions.length, 0);
+
+    test.sections.forEach(section => {
+      section.questions.forEach(q => {
+        if (q.correctAnswer) {
+          const isCorrect = checkAnswer(q.id, answers[q.id], q.correctAnswer);
+          if (isCorrect) {
+            correctCount++;
+          } else {
+            wrongQuestions.push(q.id);
+          }
+        }
+      });
+    });
+
+    const band = calculateBand(correctCount);
+    setScoreResults({
+      correctCount,
+      totalQuestions,
+      band,
+      wrongQuestions
+    });
 
     const payload = {
       testId: test.testId,
       answers,
       submittedAt: new Date().toISOString(),
+      score: { correctCount, totalQuestions, band }
     };
     console.log("Test submitted", payload);
-    toast({ title: 'Test Submitted', description: 'Your answers have been saved successfully.' });
     setSubmitted(true);
-    
-    // Navigate back to mock tests page with completion flag
-    setTimeout(() => {
-      navigate('/mock-tests?completed=listening');
-    }, 1500);
+    setShowResultsModal(true);
   };
 
   const checkAnswer = (questionId: string, userAnswer: string | string[] | undefined, correctAnswer: string) => {
@@ -104,6 +159,16 @@ const ListeningTest = () => {
     const userAnswerStr = String(userAnswer).toLowerCase().trim();
     const correctAnswerStr = correctAnswer.toLowerCase().trim();
     return userAnswerStr === correctAnswerStr;
+  };
+
+  const handleRedoTest = () => {
+    setAnswers({});
+    setSubmitted(false);
+    setShowAnswers(false);
+    setShowResultsModal(false);
+    setScoreResults(null);
+    session.setStarted(false);
+    session.setTimeLeft(durationMinutes * 60);
   };
 
   return (
@@ -130,6 +195,103 @@ const ListeningTest = () => {
 
           {test && session.started && (
             <div className="space-y-6">
+              {/* Results Modal */}
+              <AlertDialog open={showResultsModal} onOpenChange={setShowResultsModal}>
+                <AlertDialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-2xl font-bold text-center">Test Results</AlertDialogTitle>
+                    <AlertDialogDescription asChild>
+                      <div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+                          <div className="text-center p-4 bg-primary/5 rounded-lg">
+                            <div className="text-3xl font-bold text-primary">{scoreResults?.correctCount}/{scoreResults?.totalQuestions}</div>
+                            <div className="text-sm text-muted-foreground mt-1">Correct Answers</div>
+                          </div>
+                          <div className="text-center p-4 bg-primary/5 rounded-lg">
+                            <div className="text-3xl font-bold text-primary">Band {scoreResults?.band}</div>
+                            <div className="text-sm text-muted-foreground mt-1">IELTS Band Score</div>
+                          </div>
+                          <div className="text-center p-4 bg-destructive/5 rounded-lg">
+                            <div className="text-3xl font-bold text-destructive">{scoreResults?.wrongQuestions.length}</div>
+                            <div className="text-sm text-muted-foreground mt-1">Wrong Answers</div>
+                          </div>
+                        </div>
+                        
+                        {scoreResults && scoreResults.wrongQuestions.length > 0 && (
+                          <div className="mb-6 p-4 bg-destructive/5 rounded-lg">
+                            <h4 className="font-semibold mb-2 text-destructive">Questions Answered Incorrectly:</h4>
+                            <div className="flex flex-wrap gap-2">
+                              {scoreResults.wrongQuestions.map(qId => (
+                                <span key={qId} className="px-2 py-1 bg-background rounded text-sm">{qId}</span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between border-t pt-4">
+                            <h4 className="font-semibold text-foreground">Test Other Skills:</h4>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <Button 
+                              variant="outline" 
+                              className="gap-2"
+                              onClick={() => navigate('/test/reading/cambridge-08-test-1')}
+                            >
+                              <BookOpen className="w-4 h-4" />
+                              Reading
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              className="gap-2"
+                              onClick={() => navigate('/test/writing/cambridge-08-test-1')}
+                            >
+                              <Pencil className="w-4 h-4" />
+                              Writing
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              className="gap-2"
+                              onClick={() => navigate('/test/speaking/cambridge-08-test-1')}
+                            >
+                              <Mic className="w-4 h-4" />
+                              Speaking
+                            </Button>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            <Button 
+                              variant="secondary"
+                              onClick={handleRedoTest}
+                            >
+                              Redo This Test
+                            </Button>
+                            <Button 
+                              onClick={() => navigate('/mock-tests')}
+                            >
+                              Back to Mock Tests
+                            </Button>
+                          </div>
+
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => {
+                              setShowResultsModal(false);
+                              setShowAnswers(true);
+                            }}
+                            className="w-full mt-2"
+                          >
+                            View Answers on Page
+                          </Button>
+                        </div>
+                      </div>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              </AlertDialog>
+
               {/* Answer Toggle */}
               <div className="flex justify-end">
                 <Button
@@ -268,12 +430,20 @@ const ListeningTest = () => {
               ))}
 
               <div className="flex justify-end gap-3">
-                <Button variant="outline" onClick={() => navigate('/mock-tests')}>
-                  Exit Test
-                </Button>
-                <Button onClick={onSubmit} disabled={submitted} size="lg">
-                  {submitted ? "Submitted" : "Submit Test"}
-                </Button>
+                {submitted ? (
+                  <Button onClick={() => navigate('/mock-tests')} size="lg">
+                    Back to Mock Tests
+                  </Button>
+                ) : (
+                  <>
+                    <Button variant="outline" onClick={() => navigate('/mock-tests')}>
+                      Exit Test
+                    </Button>
+                    <Button onClick={onSubmit} size="lg">
+                      Submit Test
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           )}
