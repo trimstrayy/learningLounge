@@ -10,6 +10,8 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  // include static asset types so they are recognized by Vite when imported
+  assetsInclude: ["**/*.mp3", "**/*.png", "**/*.jpg", "**/*.txt", "**/*.json"],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

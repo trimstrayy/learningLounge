@@ -1,0 +1,350 @@
+{
+  "testId": "cambridge-08-test-2",
+  "title": "Cambridge IELTS 08 - Test 2",
+  "sections": [
+    {
+      "sectionNumber": 1,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (4).wma",
+      "questions": [
+        {
+          "id": "1",
+          "type": "form-completion",
+          "question": "Name:",
+          "answerLength": "medium",
+          "correctAnswer": "Sara Brown"
+        },
+        {
+          "id": "2",
+          "type": "form-completion",
+          "question": "Telephone:",
+          "answerLength": "medium",
+          "correctAnswer": "01785 249604"
+        },
+        {
+          "id": "3",
+          "type": "form-completion",
+          "question": "Heard about the park from:",
+          "answerLength": "medium",
+          "correctAnswer": "a leaflet"
+        },
+        {
+          "id": "4",
+          "type": "form-completion",
+          "question": "Wants to visit:",
+          "answerLength": "medium",
+          "correctAnswer": "farmers market"
+        },
+        {
+          "id": "5",
+          "type": "form-completion",
+          "question": "Opening time:",
+          "answerLength": "short",
+          "correctAnswer": "10 am"
+        },
+        {
+          "id": "6",
+          "type": "form-completion",
+          "question": "Entry fee per adult:",
+          "answerLength": "short",
+          "correctAnswer": "6 pounds"
+        },
+        {
+          "id": "7",
+          "type": "form-completion",
+          "question": "Closes on:",
+          "answerLength": "short",
+          "correctAnswer": "Monday"
+        },
+        {
+          "id": "8",
+          "type": "form-completion",
+          "question": "Facilities available:",
+          "answerLength": "medium",
+          "correctAnswer": "cafe and restaurant"
+        },
+        {
+          "id": "9",
+          "type": "form-completion",
+          "question": "Special events this month:",
+          "answerLength": "medium",
+          "correctAnswer": "craft fair"
+        },
+        {
+          "id": "10",
+          "type": "form-completion",
+          "question": "Discount available for:",
+          "answerLength": "medium",
+          "correctAnswer": "group bookings"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 2,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (5).wma",
+      "questions": [
+        {
+          "id": "11",
+          "type": "multiple-choice",
+          "question": "The park is open",
+          "options": [
+            "all the year round.",
+            "almost all the year.",
+            "a short time every year."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "12",
+          "type": "multiple-choice",
+          "question": "How can you move around the park?",
+          "options": [
+            "by tram, walking or bicycle",
+            "by solar car or bicycle",
+            "by bicycle, walking or bus"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "13",
+          "type": "multiple-choice",
+          "question": "The rare breed animals kept in the park include",
+          "options": [
+            "hens and horses.",
+            "goats and cows.",
+            "goats and hens."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "14",
+          "type": "multiple-choice",
+          "question": "What is the main purpose of having the Rare Breeds Section?",
+          "options": [
+            "to save unusual animals",
+            "to keep a variety of breeds",
+            "to educate the public"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "15",
+          "type": "multiple-choice",
+          "question": "What can you see in the park at the present time?",
+          "options": [
+            "the arrival of wild birds",
+            "fruit tree blossom",
+            "a demonstration of fishing"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "16",
+          "type": "multiple-choice",
+          "question": "The shop contains books about",
+          "options": [
+            "animals.",
+            "local traditions.",
+            "the history of the park."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "17",
+          "type": "form-completion",
+          "question": "The park was originally developed as a _______ estate.",
+          "answerLength": "short",
+          "correctAnswer": "farming"
+        },
+        {
+          "id": "18",
+          "type": "form-completion",
+          "question": "The lake was created for _______",
+          "answerLength": "short",
+          "correctAnswer": "fishing"
+        },
+        {
+          "id": "19",
+          "type": "form-completion",
+          "question": "The woodland area covers _______ hectares.",
+          "answerLength": "short",
+          "correctAnswer": "120"
+        },
+        {
+          "id": "20",
+          "type": "form-completion",
+          "question": "Guided tours are available on _______",
+          "answerLength": "short",
+          "correctAnswer": "weekends"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 3,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (6).wma",
+      "questions": [
+        {
+          "id": "21",
+          "type": "multiple-choice",
+          "question": "Where in Australia have Asian honey bees been found in the past?",
+          "options": [
+            "Queensland",
+            "New South Wales",
+            "several states"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "22",
+          "type": "multiple-choice",
+          "question": "A problem with Asian honey bees is that they",
+          "options": [
+            "attack native bees.",
+            "carry parasites.",
+            "damage crops."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "23",
+          "type": "multiple-choice",
+          "question": "What point is made about Australian bees?",
+          "options": [
+            "Their honey varies in quality.",
+            "Their size stops them from pollinating some flowers.",
+            "They are sold to customers abroad."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "24",
+          "type": "multiple-choice",
+          "question": "Grant Freeman says that if Asian honey bees got into Australia,",
+          "options": [
+            "the country's economy would be affected.",
+            "they could be used in the study of allergies.",
+            "certain areas of agriculture would benefit."
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "25",
+          "type": "form-completion",
+          "question": "Asian honey bees can survive on _______",
+          "answerLength": "medium",
+          "correctAnswer": "less honey"
+        },
+        {
+          "id": "26",
+          "type": "form-completion",
+          "question": "They tend to build hives in _______",
+          "answerLength": "short",
+          "correctAnswer": "roof spaces"
+        },
+        {
+          "id": "27",
+          "type": "form-completion",
+          "question": "Asian honey bees form _______ when swarming.",
+          "answerLength": "short",
+          "correctAnswer": "small groups"
+        },
+        {
+          "id": "28",
+          "type": "form-completion",
+          "question": "They can only fly within _______ kilometers.",
+          "answerLength": "short",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "29",
+          "type": "form-completion",
+          "question": "The European honey bee was introduced in _______",
+          "answerLength": "short",
+          "correctAnswer": "1822"
+        },
+        {
+          "id": "30",
+          "type": "form-completion",
+          "question": "Australia exports _______ worth of honey products annually.",
+          "answerLength": "medium",
+          "correctAnswer": "90 million dollars"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 4,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (7).wma",
+      "questions": [
+        {
+          "id": "31",
+          "type": "form-completion",
+          "question": "The writer's aim is to show links between different _______ and health.",
+          "answerLength": "short",
+          "correctAnswer": "cultures"
+        },
+        {
+          "id": "32",
+          "type": "form-completion",
+          "question": "People are more susceptible to _______ when stressed.",
+          "answerLength": "short",
+          "correctAnswer": "infection"
+        },
+        {
+          "id": "33",
+          "type": "form-completion",
+          "question": "Mental health is affected by our _______ as well as our mind.",
+          "answerLength": "short",
+          "correctAnswer": "body"
+        },
+        {
+          "id": "34",
+          "type": "form-completion",
+          "question": "In ancient times health depended on a balance between _______ and environment.",
+          "answerLength": "short",
+          "correctAnswer": "humans"
+        },
+        {
+          "id": "35",
+          "type": "form-completion",
+          "question": "Traditional Chinese medicine aims to _______ the body's energy.",
+          "answerLength": "short",
+          "correctAnswer": "balance"
+        },
+        {
+          "id": "36",
+          "type": "form-completion",
+          "question": "In Ayurvedic medicine, _______ types of energy are found in different parts of the body.",
+          "answerLength": "short",
+          "correctAnswer": "three"
+        },
+        {
+          "id": "37",
+          "type": "form-completion",
+          "question": "Western medicine aims to identify and treat the _______ of a disease.",
+          "answerLength": "short",
+          "correctAnswer": "cause"
+        },
+        {
+          "id": "38",
+          "type": "form-completion",
+          "question": "Modern medicine has led to _______ being nearly eliminated.",
+          "answerLength": "medium",
+          "correctAnswer": "infectious diseases"
+        },
+        {
+          "id": "39",
+          "type": "form-completion",
+          "question": "Preventive medicine focuses on maintaining good _______",
+          "answerLength": "short",
+          "correctAnswer": "health"
+        },
+        {
+          "id": "40",
+          "type": "form-completion",
+          "question": "The best approach to health combines both _______ methods.",
+          "answerLength": "medium",
+          "correctAnswer": "traditional and modern"
+        }
+      ]
+    }
+  ]
+}

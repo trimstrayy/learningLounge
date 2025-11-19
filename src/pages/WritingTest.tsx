@@ -1,31 +1,82 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import TestHeader from "@/components/TestHeader";
+import { useTestSession } from "@/hooks/useTestSession";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Clock, Upload, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { loadQuestions } from "@/utils/loadQuestions";
+import type { WritingTest as WT } from "@/types/questions";
 
 const WritingTest = () => {
-  const [timeLeft, setTimeLeft] = useState(60 * 60); // 60 minutes in seconds
-  const [writtenAnswer, setWrittenAnswer] = useState("");
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const { toast } = useToast();
   const navigate = useNavigate();
+  const [timeLeft, setTimeLeft] = useState(60 * 60); // 60 minutes in seconds
+  const [task1Answer, setTask1Answer] = useState("");
+  const [task2Answer, setTask2Answer] = useState("");
+  const [task1ImageData, setTask1ImageData] = useState<string | null>(null);
+  const [task2ImageData, setTask2ImageData] = useState<string | null>(null);
+  const [test, setTest] = useState<WT | null>(null);
+  const [loadingTest, setLoadingTest] = useState(true);
+  const { toast } = useToast();
+  const [submitted, setSubmitted] = useState(false);
+  
+  const [startedLocal, setStartedLocal] = useState(false); // local mirrors for UI where needed
+  const [showConfirmExit, setShowConfirmExit] = useState(false);
+
+  const session = useTestSession(60, {
+    onConfirmExit: () => {
+      // clear any page-local progress when user confirms exit
+      setTask1Answer('');
+      setTask2Answer('');
+      setTask1ImageData(null);
+      setTask2ImageData(null);
+      setSubmitted(false);
+      try {
+        localStorage.removeItem('writing:task1:answer');
+        localStorage.removeItem('writing:task2:answer');
+        localStorage.removeItem('writing:task1:image');
+        localStorage.removeItem('writing:task2:image');
+      } catch {}
+      session.setStarted(false);
+      session.setTimeLeft(60 * 60);
+    }
+  });
+
+  // run timer only after user clicks Begin — handled by session
+  useEffect(() => {
+    // keep a local started state for any UI bits that still reference it
+    setStartedLocal(session.started);
+  }, [session.started]);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 0) {
-          clearInterval(timer);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
+    setLoadingTest(true);
+    loadQuestions("writing", "writing-sample-1")
+      .then((data) => setTest(data as WT))
+      .catch((err) => console.error(err))
+      .finally(() => setLoadingTest(false));
   }, []);
+
+  // load drafts from localStorage
+  useEffect(() => {
+    try {
+      const d1 = localStorage.getItem("writing:task1:answer");
+      const d2 = localStorage.getItem("writing:task2:answer");
+      const i1 = localStorage.getItem("writing:task1:image");
+      const i2 = localStorage.getItem("writing:task2:image");
+      if (d1) setTask1Answer(d1);
+      if (d2) setTask2Answer(d2);
+      if (i1) setTask1ImageData(i1);
+      if (i2) setTask2ImageData(i2);
+    } catch (e) {
+      /* ignore */
+    }
+  }, []);
+
+  // autosave answers
+  useEffect(() => { try { localStorage.setItem("writing:task1:answer", task1Answer); } catch {} }, [task1Answer]);
+  useEffect(() => { try { localStorage.setItem("writing:task2:answer", task2Answer); } catch {} }, [task2Answer]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -33,35 +84,53 @@ const WritingTest = () => {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setUploadedImage(e.target.files[0]);
-      toast({
-        title: "Image uploaded",
-        description: "Your handwritten answer has been uploaded successfully.",
-      });
-    }
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, task: 1 | 2) => {
+    if (!e.target.files || !e.target.files[0]) return;
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      if (task === 1) {
+        setTask1ImageData(dataUrl);
+        try { localStorage.setItem("writing:task1:image", dataUrl); } catch {}
+      } else {
+        setTask2ImageData(dataUrl);
+        try { localStorage.setItem("writing:task2:image", dataUrl); } catch {}
+      }
+      toast({ title: "Image uploaded", description: "Your handwritten answer has been uploaded successfully." });
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = () => {
-    if (!writtenAnswer && !uploadedImage) {
+    if (!task1Answer && !task2Answer && !task1ImageData && !task2ImageData) {
       toast({
         title: "No answer provided",
-        description: "Please provide either a typed or handwritten answer.",
+        description: "Please provide at least one typed answer or upload a handwritten image for Task 1 or Task 2.",
         variant: "destructive",
       });
       return;
     }
+
+    // prepare payload
+    const payload = {
+      testId: test?.testId ?? 'writing-sample-1',
+      answers: {
+        task1: task1Answer,
+        task2: task2Answer,
+        task1Image: task1ImageData ?? null,
+        task2Image: task2ImageData ?? null,
+      },
+      submittedAt: new Date().toISOString(),
+    };
+    console.log('ready-to-upload', payload);
 
     toast({
       title: "Answer submitted!",
       description: "Your writing test has been submitted for evaluation.",
     });
 
-    // Redirect back to mock tests page with completion flag
-    setTimeout(() => {
-      navigate("/mock-tests?completed=writing");
-    }, 1500);
+    setSubmitted(true);
   };
 
   return (
@@ -71,24 +140,31 @@ const WritingTest = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link to="/mock-tests">
-                <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Exit Test
-                </Button>
-              </Link>
+              <Button onClick={() => setShowConfirmExit(true)} variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Exit Test
+              </Button>
               <h1 className="text-xl font-semibold">IELTS Writing Test</h1>
             </div>
-            
-            <div className="flex items-center gap-3 bg-primary-foreground/10 px-4 py-2 rounded-lg">
-              <Clock className="w-5 h-5" />
-              <span className="text-lg font-mono font-semibold">
-                {formatTime(timeLeft)}
-              </span>
+
+            <div className="flex items-center gap-3">
+              {!session.started ? (
+                <Button onClick={() => session.setStarted(true)} className="bg-primary">Begin Test</Button>
+              ) : (
+                <span className="px-3 py-1 rounded bg-muted text-sm text-muted-foreground">Test running</span>
+              )}
+              <div className="flex items-center gap-3 bg-primary-foreground/10 px-4 py-2 rounded-lg ml-3">
+                <Clock className="w-5 h-5" />
+                <span className="text-lg font-mono font-semibold">
+                  {formatTime(session.timeLeft)}
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <TestHeader title="IELTS Writing Test" session={session} />
 
       {/* Main Content */}
       <main className="pt-24 pb-12">
@@ -110,40 +186,55 @@ const WritingTest = () => {
           </Card>
 
           {/* Task 1 */}
-          <Card className="p-6 mb-8 border-border">
+          <Card onClick={() => { if (submitted) { const ok = window.confirm('Do you want to test again?'); if (ok) { setTask1Answer(''); setTask2Answer(''); setTask1ImageData(null); setTask2ImageData(null); setSubmitted(false); try { localStorage.removeItem('writing:task1:answer'); localStorage.removeItem('writing:task2:answer'); localStorage.removeItem('writing:task1:image'); localStorage.removeItem('writing:task2:image'); } catch {} } } }} className={`p-6 mb-8 border-border ${submitted ? 'bg-emerald-100 cursor-pointer' : ''}`}>
             <div className="mb-4">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-2xl font-bold text-primary">Task 1</h2>
                 <span className="text-sm text-muted-foreground">Minimum 150 words • 20 minutes</span>
               </div>
               <div className="p-4 bg-secondary/50 rounded-lg">
-                <p className="text-card-foreground leading-relaxed">
-                  <strong>Placeholder Question:</strong> The chart below shows the number of international students studying in five different countries between 2010 and 2020.
-                </p>
-                <p className="text-muted-foreground mt-3">
-                  Summarize the information by selecting and reporting the main features, and make comparisons where relevant.
-                </p>
-                <div className="mt-4 p-8 bg-muted rounded-lg text-center">
-                  <p className="text-muted-foreground italic">[Chart/Graph will be displayed here]</p>
-                </div>
+                {!loadingTest && test ? (
+                  <>
+                    <p className="text-card-foreground leading-relaxed">
+                      <strong>Task:</strong> {test.task1.prompt}
+                    </p>
+                    <p className="text-muted-foreground mt-3">Please summarise the chart and make comparisons where relevant.</p>
+                    {test.task1.imageUrl ? (
+                      <div className="mt-4 p-4 bg-muted rounded-lg text-center">
+                        <img src={test.task1.imageUrl} alt="task1 visual" className="mx-auto max-w-full" />
+                      </div>
+                    ) : (
+                      <div className="mt-4 p-8 bg-muted rounded-lg text-center">
+                        <p className="text-muted-foreground italic">[No image provided for this task]</p>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="mt-4 p-8 bg-muted rounded-lg text-center">
+                    <p className="text-muted-foreground italic">Loading task...</p>
+                  </div>
+                )}
               </div>
             </div>
           </Card>
 
           {/* Task 2 */}
-          <Card className="p-6 mb-8 border-border">
+          <Card className={`p-6 mb-8 border-border ${submitted ? 'bg-emerald-100' : ''}`}>
             <div className="mb-4">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-2xl font-bold text-primary">Task 2</h2>
                 <span className="text-sm text-muted-foreground">Minimum 250 words • 40 minutes</span>
               </div>
               <div className="p-4 bg-secondary/50 rounded-lg">
-                <p className="text-card-foreground leading-relaxed">
-                  <strong>Placeholder Question:</strong> Some people believe that studying abroad is essential for students' personal development, while others think that students can gain similar benefits by studying in their home country.
-                </p>
-                <p className="text-muted-foreground mt-3">
-                  Discuss both views and give your own opinion. Give reasons for your answer and include any relevant examples from your own knowledge or experience.
-                </p>
+                {!loadingTest && test ? (
+                  <>
+                    <p className="text-card-foreground leading-relaxed">
+                      <strong>Prompt:</strong> {test.task2.prompt}
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-muted-foreground">Loading prompt…</p>
+                )}
               </div>
             </div>
           </Card>
@@ -152,42 +243,57 @@ const WritingTest = () => {
           <Card className="p-6 border-border">
             <h3 className="text-xl font-semibold text-card-foreground mb-4">Your Answer</h3>
             
-            {/* Typed Answer */}
+            {/* Task 1 Answer */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-card-foreground mb-2">
-                Type your answer
-              </label>
+              <label className="block text-sm font-medium text-card-foreground mb-2">Task 1 — Type your answer</label>
               <Textarea
-                value={writtenAnswer}
-                onChange={(e) => setWrittenAnswer(e.target.value)}
-                placeholder="Type your answer for both tasks here..."
-                className="min-h-[400px] font-mono text-base"
+                value={task1Answer}
+                onChange={(e) => setTask1Answer(e.target.value)}
+                placeholder="Type your Task 1 answer here (minimum 150 words)"
+                className="min-h-[200px] font-mono text-base"
               />
-              <p className="text-sm text-muted-foreground mt-2">
-                Word count: {writtenAnswer.split(/\s+/).filter(word => word.length > 0).length}
-              </p>
-            </div>
+              <p className="text-sm text-muted-foreground mt-2">Word count: {task1Answer.split(/\s+/).filter(word => word.length > 0).length}</p>
 
-            {/* Handwritten Upload */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-card-foreground mb-2">
-                Or upload a photo of your handwritten answer
-              </label>
-              <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="hidden"
-                  id="image-upload"
-                />
-                <label htmlFor="image-upload" className="cursor-pointer">
+              <label className="block text-sm font-medium text-card-foreground mb-2 mt-4">Or upload a photo of your handwritten Task 1 answer</label>
+              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
+                <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 1)} className="hidden" id="image-upload-1" />
+                <label htmlFor="image-upload-1" className="cursor-pointer">
                   <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-muted-foreground mb-2">
-                    {uploadedImage ? uploadedImage.name : "Click to upload image"}
-                  </p>
+                  <p className="text-muted-foreground mb-2">{task1ImageData ? 'Image uploaded' : 'Click to upload image for Task 1'}</p>
                   <p className="text-sm text-muted-foreground">PNG, JPG up to 10MB</p>
                 </label>
+                {task1ImageData && (
+                  <div className="mt-4">
+                    <img src={task1ImageData} alt="task1 upload" className="mx-auto max-w-full" />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Task 2 Answer */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-card-foreground mb-2">Task 2 — Type your answer</label>
+              <Textarea
+                value={task2Answer}
+                onChange={(e) => setTask2Answer(e.target.value)}
+                placeholder="Type your Task 2 answer here (minimum 250 words)"
+                className="min-h-[200px] font-mono text-base"
+              />
+              <p className="text-sm text-muted-foreground mt-2">Word count: {task2Answer.split(/\s+/).filter(word => word.length > 0).length}</p>
+
+              <label className="block text-sm font-medium text-card-foreground mb-2 mt-4">Or upload a photo of your handwritten Task 2 answer</label>
+              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
+                <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 2)} className="hidden" id="image-upload-2" />
+                <label htmlFor="image-upload-2" className="cursor-pointer">
+                  <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-muted-foreground mb-2">{task2ImageData ? 'Image uploaded' : 'Click to upload image for Task 2'}</p>
+                  <p className="text-sm text-muted-foreground">PNG, JPG up to 10MB</p>
+                </label>
+                {task2ImageData && (
+                  <div className="mt-4">
+                    <img src={task2ImageData} alt="task2 upload" className="mx-auto max-w-full" />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -201,16 +307,44 @@ const WritingTest = () => {
                 <CheckCircle className="w-5 h-5 mr-2" />
                 Submit Answer
               </Button>
-              <Link to="/mock-tests" className="flex-1">
-                <Button variant="outline" className="w-full" size="lg">
-                  <ArrowLeft className="w-5 h-5 mr-2" />
-                  Back to Tests
-                </Button>
-              </Link>
+              {submitted && (
+                <button className="px-4 py-2 bg-amber-500 text-white rounded">Get Results</button>
+              )}
+              <Button variant="outline" className="w-full" size="lg" onClick={() => setShowConfirmExit(true)}>
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Back to Tests
+              </Button>
             </div>
           </Card>
         </div>
       </main>
+      {showConfirmExit && (
+        <div className="fixed inset-0 z-60 flex items-start justify-center pt-20">
+          <div className="absolute inset-0 bg-black/40 z-40" onClick={() => setShowConfirmExit(false)} />
+          <div className="relative z-50 w-[92%] max-w-md pointer-events-auto">
+            <Card className="p-4">
+              <h3 className="font-semibold">Exit Test?</h3>
+              <p className="text-sm text-muted-foreground mt-2">Exiting will end your attempt and clear any progress. Do you want to exit?</p>
+              <div className="mt-4 flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setShowConfirmExit(false)}>Continue Test</Button>
+                <Button className="bg-red-600" onClick={() => {
+                  // close modal first, reset state and clear drafts, then navigate
+                  setShowConfirmExit(false);
+                  session.setStarted(false);
+                  session.setTimeLeft(60*60);
+                  try {
+                    localStorage.removeItem('writing:task1:answer');
+                    localStorage.removeItem('writing:task2:answer');
+                    localStorage.removeItem('writing:task1:image');
+                    localStorage.removeItem('writing:task2:image');
+                  } catch {}
+                  navigate('/mock-tests');
+                }}>Exit and Lose Progress</Button>
+              </div>
+            </Card>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

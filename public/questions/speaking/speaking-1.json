@@ -1,0 +1,28 @@
+{
+  "testId": "speaking-1",
+  "part1": {
+    "topic": "Hometown",
+    "questions": [
+      "Where are you from?",
+      "What do you like about your hometown?",
+      "Has your hometown changed much in recent years?"
+    ]
+  },
+  "part2": {
+    "cueCard": {
+      "topic": "Describe a memorable trip.",
+      "points": [
+        "Where you went",
+        "Who you travelled with",
+        "What you did",
+        "Why it was memorable"
+      ]
+    }
+  },
+  "part3": {
+    "discussion": [
+      "What are the benefits of travelling to other countries?",
+      "How can travel broaden people's perspectives?"
+    ]
+  }
+}

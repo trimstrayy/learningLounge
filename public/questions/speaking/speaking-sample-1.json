@@ -1,0 +1,29 @@
+{
+  "testId": "speaking-sample-1",
+  "part1": {
+    "topic": "Daily Routine",
+    "questions": [
+      "What time do you usually wake up?",
+      "Do you prefer mornings or evenings?",
+      "How do you usually spend your weekends?"
+    ]
+  },
+  "part2": {
+    "cueCard": {
+      "topic": "Describe a memorable journey",
+      "points": [
+        "Where you went",
+        "Who you traveled with",
+        "What you did",
+        "Why it was memorable"
+      ]
+    }
+  },
+  "part3": {
+    "discussion": [
+      "How has travel changed in the last 50 years?",
+      "Do you think travel is important for personal growth?",
+      "Should people be encouraged to travel more?"
+    ]
+  }
+}

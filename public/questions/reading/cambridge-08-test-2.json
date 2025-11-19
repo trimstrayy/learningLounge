@@ -1,0 +1,67 @@
+{
+  "testId": "cambridge-08-test-2",
+  "title": "Cambridge IELTS 08 - Reading Test 2",
+  "passages": [
+    {
+      "passageNumber": 1,
+      "title": "Sheet Glass Manufacture",
+      "passageFile": "/questions/reading/passages/cambridge-08-test-2-passage-1.txt",
+      "questions": [
+        {"id": "1", "type": "matching-headings", "question": "Early methods of glass production", "correctAnswer": "ii"},
+        {"id": "2", "type": "matching-headings", "question": "The float glass revolution", "correctAnswer": "v"},
+        {"id": "3", "type": "matching-headings", "question": "Modern applications", "correctAnswer": "viii"},
+        {"id": "4", "type": "form-completion", "question": "Glass is made by heating _______ and other materials.", "correctAnswer": "sand"},
+        {"id": "5", "type": "form-completion", "question": "The float process involves molten glass floating on _______", "correctAnswer": "molten tin"},
+        {"id": "6", "type": "form-completion", "question": "The temperature is gradually reduced in the _______ zone.", "correctAnswer": "cooling"},
+        {"id": "7", "type": "true-false-notgiven", "question": "Float glass is perfectly flat.", "correctAnswer": "TRUE"},
+        {"id": "8", "type": "true-false-notgiven", "question": "The process was invented in the UK.", "correctAnswer": "TRUE"},
+        {"id": "9", "type": "true-false-notgiven", "question": "All glass is now made using this method.", "correctAnswer": "FALSE"},
+        {"id": "10", "type": "multiple-choice", "question": "What is the main advantage of float glass?", "options": ["Lower cost", "Better quality", "Faster production", "All of the above"], "correctAnswer": "D"},
+        {"id": "11", "type": "multiple-choice", "question": "The process takes place in", "options": ["open air", "a controlled atmosphere", "underwater", "a vacuum"], "correctAnswer": "B"},
+        {"id": "12", "type": "multiple-choice", "question": "Why is tin used?", "options": ["It's cheap", "It's smooth", "It doesn't react with glass", "All of the above"], "correctAnswer": "D"},
+        {"id": "13", "type": "form-completion", "question": "The ribbon of glass moves through the _______ continuously.", "correctAnswer": "furnace"}
+      ]
+    },
+    {
+      "passageNumber": 2,
+      "title": "The Little Ice Age",
+      "passageFile": "/questions/reading/passages/cambridge-08-test-2-passage-2.txt",
+      "questions": [
+        {"id": "14", "type": "matching-headings", "question": "Climate's impact on civilization", "correctAnswer": "viii"},
+        {"id": "15", "type": "matching-headings", "question": "Reconstructing past temperatures", "correctAnswer": "v"},
+        {"id": "16", "type": "matching-headings", "question": "The seesaw effect", "correctAnswer": "ii"},
+        {"id": "17", "type": "matching-headings", "question": "Future implications", "correctAnswer": "iv"},
+        {"id": "18", "type": "true-false-notgiven", "question": "The Little Ice Age lasted about 500 years.", "correctAnswer": "TRUE"},
+        {"id": "19", "type": "true-false-notgiven", "question": "Glaciers advanced during this period.", "correctAnswer": "TRUE"},
+        {"id": "20", "type": "true-false-notgiven", "question": "Tree rings provide climate data.", "correctAnswer": "TRUE"},
+        {"id": "21", "type": "form-completion", "question": "The Little Ice Age began around _______", "correctAnswer": "1300"},
+        {"id": "22", "type": "form-completion", "question": "Ice cores are drilled in _______", "correctAnswer": "Antarctica"},
+        {"id": "23", "type": "form-completion", "question": "Climate shifts were driven by interactions between atmosphere and _______", "correctAnswer": "ocean"},
+        {"id": "24", "type": "multiple-choice", "question": "What caused the Little Ice Age?", "options": ["Volcanic eruptions", "Solar activity", "Ocean currents", "Still unknown"], "correctAnswer": "D"},
+        {"id": "25", "type": "multiple-choice", "question": "How do scientists study past climates?", "options": ["Historical records", "Proxy records", "Computer models", "All of the above"], "correctAnswer": "D"},
+        {"id": "26", "type": "multiple-choice", "question": "The period was characterized by", "options": ["Constant cold", "Irregular shifts", "Gradual warming", "Stable conditions"], "correctAnswer": "B"}
+      ]
+    },
+    {
+      "passageNumber": 3,
+      "title": "The Meaning and Power of Smell",
+      "passageFile": "/questions/reading/passages/cambridge-08-test-2-passage-3.txt",
+      "questions": [
+        {"id": "27", "type": "multiple-choice", "question": "What is the main focus of the passage?", "options": ["How smell works", "The importance of smell", "Smell and memory", "All of the above"], "correctAnswer": "D"},
+        {"id": "28", "type": "form-completion", "question": "Smell is processed in the _______ brain.", "correctAnswer": "limbic"},
+        {"id": "29", "type": "form-completion", "question": "This area is also responsible for _______", "correctAnswer": "emotions"},
+        {"id": "30", "type": "true-false-notgiven", "question": "Smell is our most primitive sense.", "correctAnswer": "TRUE"},
+        {"id": "31", "type": "true-false-notgiven", "question": "Humans can distinguish thousands of odors.", "correctAnswer": "TRUE"},
+        {"id": "32", "type": "true-false-notgiven", "question": "Smell affects food taste.", "correctAnswer": "TRUE"},
+        {"id": "33", "type": "form-completion", "question": "Perfume companies use smell to evoke _______", "correctAnswer": "memories"},
+        {"id": "34", "type": "form-completion", "question": "Loss of smell is called _______", "correctAnswer": "anosmia"},
+        {"id": "35", "type": "multiple-choice", "question": "Why is smell linked to memory?", "options": ["Brain structure", "Evolution", "Chemical processes", "Learning"], "correctAnswer": "A"},
+        {"id": "36", "type": "multiple-choice", "question": "Smell can influence", "options": ["Mood", "Behavior", "Memory", "All of the above"], "correctAnswer": "D"},
+        {"id": "37", "type": "matching-headings", "question": "The neuroscience of smell", "correctAnswer": "iii"},
+        {"id": "38", "type": "matching-headings", "question": "Commercial applications", "correctAnswer": "vi"},
+        {"id": "39", "type": "matching-headings", "question": "Smell and emotion", "correctAnswer": "ii"},
+        {"id": "40", "type": "form-completion", "question": "Retailers use scent to influence _______ behavior.", "correctAnswer": "purchasing"}
+      ]
+    }
+  ]
+}

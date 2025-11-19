@@ -24,7 +24,8 @@ const testTypes = [
       "Section 4: Monologue on an academic subject"
     ],
     scoring: "Each correct answer receives one mark. Scores are reported in whole and half bands.",
-    color: "bg-blue-500"
+    color: "bg-blue-500",
+    link: "/listening/cambridge-08"
   },
   {
     id: "reading",
@@ -40,7 +41,8 @@ const testTypes = [
       "Academic topics of general interest suitable for test takers"
     ],
     scoring: "Each correct answer receives one mark. Band scores are calculated from the total marks.",
-    color: "bg-green-500"
+    color: "bg-green-500",
+    link: "/reading/cambridge-08"
   },
   {
     id: "writing",
@@ -56,7 +58,8 @@ const testTypes = [
       "Both tasks must be completed to get a band score"
     ],
     scoring: "Task 2 carries more weight. Assessed on task achievement, coherence, vocabulary, and grammar.",
-    color: "bg-amber-500"
+    color: "bg-amber-500",
+    link: "/writing/cambridge-08"
   },
   {
     id: "speaking",
@@ -71,7 +74,8 @@ const testTypes = [
       "Part 3: Discussion (4-5 minutes) - further discussion of the topic in Part 2"
     ],
     scoring: "Assessed on fluency, vocabulary, grammar, and pronunciation. Band scores from 0 to 9.",
-    color: "bg-purple-500"
+    color: "bg-purple-500",
+    link: "/speaking/cambridge-08"
   }
 ];
 
@@ -224,9 +228,9 @@ const MockTests = () => {
                         <p className="text-muted-foreground">{activeTest.scoring}</p>
                       </div>
 
-                      <Link to={`/test/${activeTest.id}`}>
+                      <Link to={activeTest.link || `/test/${activeTest.id}`}>
                         <Button className="mt-4 bg-primary hover:bg-primary/90">
-                          Start {activeTest.title}
+                          {activeTest.id === 'listening' ? 'View Tests' : `Start ${activeTest.title}`}
                         </Button>
                       </Link>
                     </div>
@@ -248,47 +252,54 @@ const MockTests = () => {
 
                 {/* dialog fixed to viewport center (portal prevents ancestor transform issues) */}
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.22 }}
+                  initial={{ opacity: 0, translateY: 12 }}
+                  animate={{ opacity: 1, translateY: 0 }}
+                  exit={{ opacity: 0, translateY: 12 }}
+                  transition={{ duration: 0.18 }}
                   role="dialog"
                   aria-modal="true"
                   onClick={(e) => e.stopPropagation()}
-                  className="fixed left-1/2 top-1/2 z-50 w-[92%] max-w-xl -translate-x-1/2 -translate-y-1/2"
+                  className="fixed left-0 right-0 bottom-0 z-50 w-full px-4"
                 >
-                  <Card className="p-4 overflow-hidden">
-                    <button aria-label="Close" onClick={closeDetails} className="absolute top-3 right-3 p-2 rounded-full hover:bg-gray-100">
-                      <X className="w-5 h-5" />
-                    </button>
-
-                    {/* Scrollable content with constrained height so the dialog itself remains centered in the viewport */}
-                    <div className="pt-2 overflow-y-auto max-h-[80vh] pr-2">
-                      <h3 className="text-xl font-semibold mb-2">{activeTest.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4">{activeTest.duration} • {activeTest.questions}</p>
-                      <p className="text-muted-foreground leading-relaxed mb-4">{activeTest.description}</p>
-                      <div>
-                        <h4 className="font-semibold text-card-foreground mb-2 flex items-center gap-2">
-                          <Target className="w-4 h-4" />
-                          Test Format
-                        </h4>
-                        <ul className="space-y-2 text-muted-foreground">
-                          {activeTest.format.map((item, idx) => (
-                            <li key={idx} className="flex gap-2">
-                              <span className="text-primary mt-1">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="mt-4">
-                        <h4 className="font-semibold text-card-foreground mb-2">Scoring</h4>
-                        <p className="text-muted-foreground">{activeTest.scoring}</p>
-                      </div>
-                      <div className="mt-4 text-right">
-                        <Link to={`/test/${activeTest.id}`}>
-                          <Button className="bg-primary hover:bg-primary/90">Start {activeTest.title}</Button>
-                        </Link>
+                  {/* Bottom sheet style for small screens: full width, rounded top, and constrained height with internal scroll */}
+                  <Card className="p-4 overflow-hidden rounded-t-xl shadow-xl">
+                    <div className="relative">
+                      <button aria-label="Close" onClick={closeDetails} className="absolute top-3 right-3 p-2 rounded-full hover:bg-gray-100">
+                        <X className="w-5 h-5" />
+                      </button>
+                      <div className="mx-auto w-full max-w-none">
+                        <div className="h-1.5 w-12 bg-muted rounded-full mx-auto mb-3" />
+                        {/* Scrollable content */}
+                        <div className="pt-2 overflow-y-auto max-h-[80vh] pr-2">
+                          <h3 className="text-xl font-semibold mb-2">{activeTest.title}</h3>
+                          <p className="text-sm text-muted-foreground mb-4">{activeTest.duration} • {activeTest.questions}</p>
+                          <p className="text-muted-foreground leading-relaxed mb-4">{activeTest.description}</p>
+                          <div>
+                            <h4 className="font-semibold text-card-foreground mb-2 flex items-center gap-2">
+                              <Target className="w-4 h-4" />
+                              Test Format
+                            </h4>
+                            <ul className="space-y-2 text-muted-foreground">
+                              {activeTest.format.map((item, idx) => (
+                                <li key={idx} className="flex gap-2">
+                                  <span className="text-primary mt-1">•</span>
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="mt-4">
+                            <h4 className="font-semibold text-card-foreground mb-2">Scoring</h4>
+                            <p className="text-muted-foreground">{activeTest.scoring}</p>
+                          </div>
+                          <div className="mt-4 text-right">
+                            <Link to={activeTest.link || `/test/${activeTest.id}`}>
+                              <Button className="bg-primary hover:bg-primary/90">
+                                {activeTest.id === 'listening' ? 'View Tests' : `Start ${activeTest.title}`}
+                              </Button>
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </Card>

@@ -1,0 +1,39 @@
+{
+  "testId": "listening-1",
+  "sections": [
+    {
+  "sectionNumber": 1,
+  "audioUrl": "/audio/listening-1-sec1.mp3",
+      "questions": [
+        {
+          "id": "L1-Q1",
+          "type": "multiple-choice",
+          "question": "What is the speaker asking about?",
+          "options": ["A hotel booking", "A train schedule", "A restaurant menu", "A lecture time"],
+          "correctOptionIndex": null
+        },
+        {
+          "id": "L1-Q2",
+          "type": "form-completion",
+          "question": "Complete the form: Visitor's name",
+          "answerLength": "short"
+        }
+      ]
+    },
+    {
+  "sectionNumber": 2,
+  "audioUrl": "/audio/listening-1-sec2.mp3",
+      "questions": [
+        {
+          "id": "L2-Q1",
+          "type": "matching",
+          "question": "Match the speakers to the topics",
+          "pairs": [
+            { "left": "Speaker A", "rightOptions": ["Course fees", "Accommodation", "Transport"] },
+            { "left": "Speaker B", "rightOptions": ["Transport", "Course dates", "Library"] }
+          ]
+        }
+      ]
+    }
+  ]
+}

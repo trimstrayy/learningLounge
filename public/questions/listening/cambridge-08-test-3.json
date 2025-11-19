@@ -1,0 +1,346 @@
+{
+  "testId": "cambridge-08-test-3",
+  "title": "Cambridge IELTS 08 - Test 3",
+  "sections": [
+    {
+      "sectionNumber": 1,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (8).wma",
+      "questions": [
+        {
+          "id": "1",
+          "type": "form-completion",
+          "question": "Type of insurance required:",
+          "answerLength": "medium",
+          "correctAnswer": "contents insurance"
+        },
+        {
+          "id": "2",
+          "type": "form-completion",
+          "question": "Name of the street:",
+          "answerLength": "medium",
+          "correctAnswer": "Biggins Street"
+        },
+        {
+          "id": "3",
+          "type": "form-completion",
+          "question": "House number:",
+          "answerLength": "short",
+          "correctAnswer": "27"
+        },
+        {
+          "id": "4",
+          "type": "form-completion",
+          "question": "Postcode:",
+          "answerLength": "short",
+          "correctAnswer": "YH8 2RG"
+        },
+        {
+          "id": "5",
+          "type": "form-completion",
+          "question": "Telephone:",
+          "answerLength": "medium",
+          "correctAnswer": "01793 456215"
+        },
+        {
+          "id": "6",
+          "type": "form-completion",
+          "question": "Occupation:",
+          "answerLength": "short",
+          "correctAnswer": "dentist"
+        },
+        {
+          "id": "7",
+          "type": "form-completion",
+          "question": "Type of property:",
+          "answerLength": "medium",
+          "correctAnswer": "semi-detached house"
+        },
+        {
+          "id": "8",
+          "type": "form-completion",
+          "question": "Built in:",
+          "answerLength": "short",
+          "correctAnswer": "1960s"
+        },
+        {
+          "id": "9",
+          "type": "form-completion",
+          "question": "Security features:",
+          "answerLength": "medium",
+          "correctAnswer": "burglar alarm"
+        },
+        {
+          "id": "10",
+          "type": "form-completion",
+          "question": "Additional coverage needed for:",
+          "answerLength": "short",
+          "correctAnswer": "jewelry"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 2,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (9).wma",
+      "questions": [
+        {
+          "id": "11",
+          "type": "form-completion",
+          "question": "The museum was originally a _______",
+          "answerLength": "short",
+          "correctAnswer": "factory"
+        },
+        {
+          "id": "12",
+          "type": "form-completion",
+          "question": "The exhibition shows _______ from the local area.",
+          "answerLength": "short",
+          "correctAnswer": "machinery"
+        },
+        {
+          "id": "13",
+          "type": "form-completion",
+          "question": "Visitors can watch a _______ about the factory.",
+          "answerLength": "short",
+          "correctAnswer": "video"
+        },
+        {
+          "id": "14",
+          "type": "form-completion",
+          "question": "The factory was famous for making _______",
+          "answerLength": "short",
+          "correctAnswer": "engines"
+        },
+        {
+          "id": "15",
+          "type": "form-completion",
+          "question": "Entry fee for students:",
+          "answerLength": "short",
+          "correctAnswer": "free"
+        },
+        {
+          "id": "16",
+          "type": "multiple-choice",
+          "question": "What can visitors do on the first floor?",
+          "options": [
+            "see old photographs",
+            "watch demonstrations",
+            "use interactive displays"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "17",
+          "type": "multiple-choice",
+          "question": "The museum shop sells",
+          "options": [
+            "books and souvenirs.",
+            "craft items.",
+            "vintage tools."
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "18",
+          "type": "multiple-choice",
+          "question": "Tours are available",
+          "options": [
+            "every day.",
+            "on weekends only.",
+            "by appointment."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "19",
+          "type": "multiple-choice",
+          "question": "The café serves",
+          "options": [
+            "hot meals.",
+            "snacks and drinks.",
+            "traditional food."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "20",
+          "type": "multiple-choice",
+          "question": "Parking is available",
+          "options": [
+            "for free.",
+            "at a small charge.",
+            "nearby only."
+          ],
+          "correctAnswer": "A"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 3,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (10).wma",
+      "questions": [
+        {
+          "id": "21",
+          "type": "multiple-choice",
+          "question": "The main topic of the research is",
+          "options": [
+            "housing conditions.",
+            "social behavior.",
+            "employment patterns."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "22",
+          "type": "multiple-choice",
+          "question": "The students will collect data by",
+          "options": [
+            "conducting interviews.",
+            "distributing questionnaires.",
+            "observing people."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "23",
+          "type": "multiple-choice",
+          "question": "The project deadline is",
+          "options": [
+            "next month.",
+            "in two weeks.",
+            "at the end of term."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "24",
+          "type": "multiple-choice",
+          "question": "The tutor suggests they should",
+          "options": [
+            "focus on one area.",
+            "broaden their scope.",
+            "change their topic."
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "25",
+          "type": "form-completion",
+          "question": "The literature review should be completed by _______",
+          "answerLength": "short",
+          "correctAnswer": "Friday"
+        },
+        {
+          "id": "26",
+          "type": "form-completion",
+          "question": "They need to analyze the data using _______",
+          "answerLength": "short",
+          "correctAnswer": "statistics"
+        },
+        {
+          "id": "27",
+          "type": "form-completion",
+          "question": "The presentation should last _______ minutes.",
+          "answerLength": "short",
+          "correctAnswer": "15"
+        },
+        {
+          "id": "28",
+          "type": "form-completion",
+          "question": "They should include _______ in their report.",
+          "answerLength": "short",
+          "correctAnswer": "graphs"
+        },
+        {
+          "id": "29",
+          "type": "form-completion",
+          "question": "The supervisor will provide feedback on _______",
+          "answerLength": "short",
+          "correctAnswer": "Thursday"
+        },
+        {
+          "id": "30",
+          "type": "form-completion",
+          "question": "The final report should be submitted to _______",
+          "answerLength": "medium",
+          "correctAnswer": "the office"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 4,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (11).wma",
+      "questions": [
+        {
+          "id": "31",
+          "type": "form-completion",
+          "question": "Dolphins use _______ to navigate underwater.",
+          "answerLength": "short",
+          "correctAnswer": "echolocation"
+        },
+        {
+          "id": "32",
+          "type": "form-completion",
+          "question": "They can detect objects from _______ meters away.",
+          "answerLength": "short",
+          "correctAnswer": "200"
+        },
+        {
+          "id": "33",
+          "type": "form-completion",
+          "question": "Dolphins communicate through a series of _______",
+          "answerLength": "short",
+          "correctAnswer": "clicks"
+        },
+        {
+          "id": "34",
+          "type": "form-completion",
+          "question": "Each dolphin has its own unique _______",
+          "answerLength": "short",
+          "correctAnswer": "signature whistle"
+        },
+        {
+          "id": "35",
+          "type": "form-completion",
+          "question": "Scientists study dolphins using _______ equipment.",
+          "answerLength": "short",
+          "correctAnswer": "underwater"
+        },
+        {
+          "id": "36",
+          "type": "form-completion",
+          "question": "Dolphins live in groups called _______",
+          "answerLength": "short",
+          "correctAnswer": "pods"
+        },
+        {
+          "id": "37",
+          "type": "form-completion",
+          "question": "They hunt fish using _______ techniques.",
+          "answerLength": "short",
+          "correctAnswer": "cooperative"
+        },
+        {
+          "id": "38",
+          "type": "form-completion",
+          "question": "Young dolphins stay with their mothers for _______ years.",
+          "answerLength": "short",
+          "correctAnswer": "three"
+        },
+        {
+          "id": "39",
+          "type": "form-completion",
+          "question": "The main threat to dolphins is _______",
+          "answerLength": "short",
+          "correctAnswer": "pollution"
+        },
+        {
+          "id": "40",
+          "type": "form-completion",
+          "question": "Conservation efforts focus on protecting their _______",
+          "answerLength": "short",
+          "correctAnswer": "habitat"
+        }
+      ]
+    }
+  ]
+}

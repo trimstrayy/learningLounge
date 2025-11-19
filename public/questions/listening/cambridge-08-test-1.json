@@ -1,0 +1,378 @@
+{
+  "testId": "cambridge-08-test-1",
+  "title": "Cambridge IELTS 08 - Test 1",
+  "sections": [
+    {
+      "sectionNumber": 1,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (0).wma",
+      "questions": [
+        {
+          "id": "1",
+          "type": "multiple-choice",
+          "question": "In the lobby of the library George saw",
+          "options": [
+            "a group playing music.",
+            "a display of instruments.",
+            "a video about the festival."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "2",
+          "type": "multiple-choice",
+          "question": "George wants to sit at the back so they can",
+          "options": [
+            "see well.",
+            "hear clearly.",
+            "pay less."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "3",
+          "type": "form-completion",
+          "question": "ADDRESS:",
+          "answerLength": "medium",
+          "correctAnswer": "14 Anderby Street"
+        },
+        {
+          "id": "4",
+          "type": "form-completion",
+          "question": "POSTCODE:",
+          "answerLength": "short",
+          "correctAnswer": "WS6 2YH"
+        },
+        {
+          "id": "5",
+          "type": "form-completion",
+          "question": "TELEPHONE:",
+          "answerLength": "medium",
+          "correctAnswer": "01674 553242"
+        },
+        {
+          "id": "6",
+          "type": "form-completion",
+          "question": "Date: 17 June - Singer - Price includes:",
+          "answerLength": "medium",
+          "correctAnswer": "interval drink"
+        },
+        {
+          "id": "7",
+          "type": "form-completion",
+          "question": "Date: 22 June - Anna Ventura - Type of music:",
+          "answerLength": "short",
+          "correctAnswer": "folk"
+        },
+        {
+          "id": "8",
+          "type": "form-completion",
+          "question": "Date: 23 June - Spanish Dance & Guitar Concert - No. of tickets:",
+          "answerLength": "short",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "9",
+          "type": "form-completion",
+          "question": "Date: 24 June - Ends at:",
+          "answerLength": "short",
+          "correctAnswer": "10.30 pm"
+        },
+        {
+          "id": "10",
+          "type": "form-completion",
+          "question": "METHOD OF PAYMENT:",
+          "answerLength": "short",
+          "correctAnswer": "cash"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 2,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (1).wma",
+      "questions": [
+        {
+          "id": "11",
+          "type": "form-completion",
+          "question": "The museum closes at _______ p.m. on Mondays.",
+          "answerLength": "short",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "12",
+          "type": "form-completion",
+          "question": "The museum is not open on _______",
+          "answerLength": "medium",
+          "correctAnswer": "25, 26 December"
+        },
+        {
+          "id": "13",
+          "type": "form-completion",
+          "question": "School groups are met by tour guides in the _______",
+          "answerLength": "short",
+          "correctAnswer": "reception"
+        },
+        {
+          "id": "14",
+          "type": "form-completion",
+          "question": "The whole visit takes 90 minutes, including _______ minutes for the guided tour.",
+          "answerLength": "short",
+          "correctAnswer": "40"
+        },
+        {
+          "id": "15",
+          "type": "form-completion",
+          "question": "There are _______ behind the museum where students can have lunch.",
+          "answerLength": "short",
+          "correctAnswer": "tables"
+        },
+        {
+          "id": "16",
+          "type": "multiple-choice",
+          "question": "Which THREE things can students have with them in the museum?",
+          "options": ["food", "water", "cameras", "books", "bags", "pens", "worksheets"],
+          "correctAnswer": "B,C,G",
+          "multipleSelect": true
+        },
+        {
+          "id": "17",
+          "type": "multiple-choice",
+          "question": "Which THREE things can students have with them in the museum? (Select 3)",
+          "options": ["food", "water", "cameras", "books", "bags", "pens", "worksheets"],
+          "correctAnswer": "B,C,G",
+          "multipleSelect": true
+        },
+        {
+          "id": "18",
+          "type": "multiple-choice",
+          "question": "Which THREE things can students have with them in the museum? (Select 3)",
+          "options": ["food", "water", "cameras", "books", "bags", "pens", "worksheets"],
+          "correctAnswer": "B,C,G",
+          "multipleSelect": true
+        },
+        {
+          "id": "19",
+          "type": "multiple-choice",
+          "question": "Which TWO activities can students do after the tour at present?",
+          "options": [
+            "build model dinosaurs",
+            "watch films",
+            "draw dinosaurs",
+            "find dinosaur eggs",
+            "play computer games"
+          ],
+          "correctAnswer": "B,E",
+          "multipleSelect": true
+        },
+        {
+          "id": "20",
+          "type": "multiple-choice",
+          "question": "Which TWO activities can students do after the tour at present? (Select 2)",
+          "options": [
+            "build model dinosaurs",
+            "watch films",
+            "draw dinosaurs",
+            "find dinosaur eggs",
+            "play computer games"
+          ],
+          "correctAnswer": "B,E",
+          "multipleSelect": true
+        }
+      ]
+    },
+    {
+      "sectionNumber": 3,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (2).wma",
+      "questions": [
+        {
+          "id": "21",
+          "type": "multiple-choice",
+          "question": "The tutor thinks that Sandra's proposal",
+          "options": [
+            "should be re-ordered in some parts.",
+            "needs a contents page.",
+            "ought to include more information."
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "22",
+          "type": "multiple-choice",
+          "question": "The proposal would be easier to follow if Sandra",
+          "options": [
+            "inserted subheadings.",
+            "used more paragraphs.",
+            "shortened her sentences."
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "23",
+          "type": "multiple-choice",
+          "question": "What was the problem with the formatting on Sandra's proposal?",
+          "options": [
+            "Separate points were not clearly identified.",
+            "The headings were not always clear.",
+            "Page numbering was not used in an appropriate way."
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "24",
+          "type": "multiple-choice",
+          "question": "Sandra became interested in visiting the Navajo National Park through",
+          "options": [
+            "articles she read.",
+            "movies she saw as a child.",
+            "photographs she found on the internet."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "25",
+          "type": "multiple-choice",
+          "question": "Which THREE topics does Sandra agree to include in the proposal?",
+          "options": [
+            "climate change",
+            "field trip activities",
+            "geographical features",
+            "impact of tourism",
+            "myths and legends",
+            "plant and animal life",
+            "social history"
+          ],
+          "correctAnswer": "C,F,G",
+          "multipleSelect": true
+        },
+        {
+          "id": "26",
+          "type": "multiple-choice",
+          "question": "Which THREE topics does Sandra agree to include? (Select 3)",
+          "options": [
+            "climate change",
+            "field trip activities",
+            "geographical features",
+            "impact of tourism",
+            "myths and legends",
+            "plant and animal life",
+            "social history"
+          ],
+          "correctAnswer": "C,F,G",
+          "multipleSelect": true
+        },
+        {
+          "id": "27",
+          "type": "multiple-choice",
+          "question": "Which THREE topics does Sandra agree to include? (Select 3)",
+          "options": [
+            "climate change",
+            "field trip activities",
+            "geographical features",
+            "impact of tourism",
+            "myths and legends",
+            "plant and animal life",
+            "social history"
+          ],
+          "correctAnswer": "C,F,G",
+          "multipleSelect": true
+        },
+        {
+          "id": "28",
+          "type": "form-completion",
+          "question": "The tribal park covers _______ hectares.",
+          "answerLength": "medium",
+          "correctAnswer": "64,000"
+        },
+        {
+          "id": "29",
+          "type": "form-completion",
+          "question": "Sandra suggests that they share the _______ for transport.",
+          "answerLength": "short",
+          "correctAnswer": "cost"
+        },
+        {
+          "id": "30",
+          "type": "form-completion",
+          "question": "She says they could also explore the local _______",
+          "answerLength": "short",
+          "correctAnswer": "accommodation"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 4,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (3).wma",
+      "questions": [
+        {
+          "id": "31",
+          "type": "form-completion",
+          "question": "Studying geography helps us to understand the effects of different processes on the _______ of the Earth",
+          "answerLength": "short",
+          "correctAnswer": "surface"
+        },
+        {
+          "id": "32",
+          "type": "form-completion",
+          "question": "the dynamic between _______ and population",
+          "answerLength": "short",
+          "correctAnswer": "place"
+        },
+        {
+          "id": "33",
+          "type": "form-completion",
+          "question": "human lifestyles and their _______",
+          "answerLength": "short",
+          "correctAnswer": "effects"
+        },
+        {
+          "id": "34",
+          "type": "form-completion",
+          "question": "Specific study areas include biophysical, topographic, political, social, economic, and historical _______ geography",
+          "answerLength": "short",
+          "correctAnswer": "environmental"
+        },
+        {
+          "id": "35",
+          "type": "form-completion",
+          "question": "geography helps us to understand our surroundings and the associated _______",
+          "answerLength": "short",
+          "correctAnswer": "processes"
+        },
+        {
+          "id": "36",
+          "type": "form-completion",
+          "question": "collect information in the form of _______ using computer and satellite technology",
+          "answerLength": "short",
+          "correctAnswer": "images"
+        },
+        {
+          "id": "37",
+          "type": "form-completion",
+          "question": "analyse data - identify _______, e.g. cause and effect",
+          "answerLength": "short",
+          "correctAnswer": "patterns"
+        },
+        {
+          "id": "38",
+          "type": "form-completion",
+          "question": "a two-dimensional map will always have some _______",
+          "answerLength": "short",
+          "correctAnswer": "distortion"
+        },
+        {
+          "id": "39",
+          "type": "form-completion",
+          "question": "aerial photos can show vegetation problems, _______ density, ocean floor etc.",
+          "answerLength": "short",
+          "correctAnswer": "population"
+        },
+        {
+          "id": "40",
+          "type": "form-completion",
+          "question": "Landsat pictures used for monitoring _______ conditions etc.",
+          "answerLength": "short",
+          "correctAnswer": "environmental"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "testId": "reading-1",
+  "passages": [
+    {
+  "id": "P1",
+  "title": "Community Gardens",
+  "textFile": "/passages/passage-1.txt",
+      "questions": [
+        {
+          "id": "R1-Q1",
+          "type": "multiple-choice",
+          "question": "What is the main benefit mentioned about community gardens?",
+          "options": ["Reduce traffic", "Increase social cohesion", "Provide parking", "Lower taxes"],
+          "correctOptionIndex": null
+        },
+        {
+          "id": "R1-Q2",
+          "type": "true-false-notgiven",
+          "statement": "Community gardens are usually funded by the city.",
+          "correctOptionIndex": null
+        }
+      ]
+    }
+  ]
+}

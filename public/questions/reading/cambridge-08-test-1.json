@@ -1,0 +1,327 @@
+{
+  "testId": "cambridge-08-test-1",
+  "title": "Cambridge IELTS 08 - Reading Test 1",
+  "passages": [
+    {
+      "passageNumber": 1,
+      "title": "A Chronicle of Timekeeping",
+      "passageFile": "/questions/reading/passages/cambridge-08-test-1-passage-1.txt",
+      "questions": [
+        {
+          "id": "1",
+          "type": "true-false-notgiven",
+          "question": "Prehistoric humans used the sun and moon to measure time.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": "2",
+          "type": "true-false-notgiven",
+          "question": "The Egyptians were the first to use water clocks.",
+          "correctAnswer": "NOT GIVEN"
+        },
+        {
+          "id": "3",
+          "type": "true-false-notgiven",
+          "question": "Sundials were unreliable in cloudy weather.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": "4",
+          "type": "true-false-notgiven",
+          "question": "Mechanical clocks were invented in China.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": "5",
+          "type": "form-completion",
+          "question": "The earliest timekeeping devices measured the passage of _______",
+          "correctAnswer": "celestial bodies"
+        },
+        {
+          "id": "6",
+          "type": "form-completion",
+          "question": "Water clocks worked by measuring _______",
+          "correctAnswer": "water flow"
+        },
+        {
+          "id": "7",
+          "type": "form-completion",
+          "question": "The invention of the _______ revolutionized timekeeping.",
+          "correctAnswer": "pendulum"
+        },
+        {
+          "id": "8",
+          "type": "form-completion",
+          "question": "Modern atomic clocks are accurate to within one _______ in millions of years.",
+          "correctAnswer": "second"
+        },
+        {
+          "id": "9",
+          "type": "multiple-choice",
+          "question": "What was the main limitation of early sundials?",
+          "options": [
+            "They were too expensive",
+            "They required sunlight",
+            "They were difficult to make",
+            "They were not portable"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "10",
+          "type": "multiple-choice",
+          "question": "Which invention led to portable timekeeping?",
+          "options": [
+            "The water clock",
+            "The sundial",
+            "The mechanical watch",
+            "The hourglass"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "11",
+          "type": "multiple-choice",
+          "question": "Why are atomic clocks so accurate?",
+          "options": [
+            "They use electronic circuits",
+            "They measure atomic vibrations",
+            "They are temperature controlled",
+            "They use multiple mechanisms"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "12",
+          "type": "multiple-choice",
+          "question": "What is suggested about the future of timekeeping?",
+          "options": [
+            "It will become less important",
+            "It will use quantum technology",
+            "It will be replaced by smartphones",
+            "It will return to mechanical methods"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "13",
+          "type": "matching-headings",
+          "question": "The development of portable timepieces",
+          "correctAnswer": "iv"
+        }
+      ]
+    },
+    {
+      "passageNumber": 2,
+      "title": "Air Traffic Control in the USA",
+      "passageFile": "/questions/reading/passages/cambridge-08-test-1-passage-2.txt",
+      "questions": [
+        {
+          "id": "14",
+          "type": "true-false-notgiven",
+          "question": "The FAA was created as a result of the introduction of the jet engine.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": "15",
+          "type": "true-false-notgiven",
+          "question": "Air Traffic Control started after the Grand Canyon crash in 1956.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": "16",
+          "type": "true-false-notgiven",
+          "question": "Beacons and flashing lights are still used by ATC today.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": "17",
+          "type": "true-false-notgiven",
+          "question": "Some improvements were made in radio communication during World War II.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": "18",
+          "type": "true-false-notgiven",
+          "question": "Class F airspace is airspace which is below 365m and not near airports.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": "19",
+          "type": "true-false-notgiven",
+          "question": "All aircraft in Class E airspace must use IFR.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": "20",
+          "type": "true-false-notgiven",
+          "question": "A pilot entering Class C airspace is flying over an average-sized city.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": "21",
+          "type": "form-completion",
+          "question": "The primary purpose of ATC is to prevent _______",
+          "correctAnswer": "collisions"
+        },
+        {
+          "id": "22",
+          "type": "form-completion",
+          "question": "Controllers use _______ to track aircraft positions.",
+          "correctAnswer": "radar"
+        },
+        {
+          "id": "23",
+          "type": "form-completion",
+          "question": "Pilots must maintain contact with ATC via _______",
+          "correctAnswer": "radio"
+        },
+        {
+          "id": "24",
+          "type": "multiple-choice",
+          "question": "What triggered the creation of the FAA?",
+          "options": [
+            "A major accident",
+            "New technology",
+            "International pressure",
+            "Military requirements"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "25",
+          "type": "multiple-choice",
+          "question": "Which airspace class requires the most restrictions?",
+          "options": [
+            "Class A",
+            "Class C",
+            "Class E",
+            "Class G"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "26",
+          "type": "multiple-choice",
+          "question": "What is the main function of transponders?",
+          "options": [
+            "Navigation",
+            "Communication",
+            "Identification",
+            "Weather detection"
+          ],
+          "correctAnswer": "C"
+        }
+      ]
+    },
+    {
+      "passageNumber": 3,
+      "title": "Telepathy",
+      "passageFile": "/questions/reading/passages/cambridge-08-test-1-passage-3.txt",
+      "questions": [
+        {
+          "id": "27",
+          "type": "multiple-choice",
+          "question": "What is the main topic of the passage?",
+          "options": [
+            "The history of telepathy research",
+            "Scientific experiments on telepathy",
+            "The controversy surrounding telepathy",
+            "Methods of developing telepathic abilities"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "28",
+          "type": "multiple-choice",
+          "question": "What do the ganzfeld experiments test?",
+          "options": [
+            "Brain activity during meditation",
+            "The ability to transmit images mentally",
+            "The effects of sensory deprivation",
+            "Visual perception accuracy"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "29",
+          "type": "multiple-choice",
+          "question": "What was the hit rate in early ganzfeld studies?",
+          "options": [
+            "25 percent",
+            "30 percent",
+            "35 percent",
+            "40 percent"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "30",
+          "type": "true-false-notgiven",
+          "question": "All scientists agree that telepathy is impossible.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": "31",
+          "type": "true-false-notgiven",
+          "question": "The ganzfeld method was developed in Germany.",
+          "correctAnswer": "NOT GIVEN"
+        },
+        {
+          "id": "32",
+          "type": "true-false-notgiven",
+          "question": "Random guessing would give a 25% success rate.",
+          "correctAnswer": "TRUE"
+        },
+        {
+          "id": "33",
+          "type": "true-false-notgiven",
+          "question": "Charles Honorton was skeptical of telepathy.",
+          "correctAnswer": "FALSE"
+        },
+        {
+          "id": "34",
+          "type": "form-completion",
+          "question": "Telepathy research has divided the _______ community.",
+          "correctAnswer": "scientific"
+        },
+        {
+          "id": "35",
+          "type": "form-completion",
+          "question": "The ganzfeld creates a relaxing environment of light, sound and _______",
+          "correctAnswer": "warmth"
+        },
+        {
+          "id": "36",
+          "type": "form-completion",
+          "question": "Participants' eyes are covered with filters that let in _______ light.",
+          "correctAnswer": "pink"
+        },
+        {
+          "id": "37",
+          "type": "form-completion",
+          "question": "The sender attempts to transmit an _______ to the receiver.",
+          "correctAnswer": "image"
+        },
+        {
+          "id": "38",
+          "type": "matching-headings",
+          "question": "The scientific debate continues",
+          "correctAnswer": "i"
+        },
+        {
+          "id": "39",
+          "type": "matching-headings",
+          "question": "Testing telepathy under controlled conditions",
+          "correctAnswer": "iii"
+        },
+        {
+          "id": "40",
+          "type": "matching-headings",
+          "question": "Limitations of early research",
+          "correctAnswer": "v"
+        }
+      ]
+    }
+  ]
+}

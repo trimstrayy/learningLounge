@@ -1,0 +1,12 @@
+{
+  "testId": "writing-1",
+  "task1": {
+    "type": "visual-report",
+    "prompt": "Summarize the main trends shown in the provided chart.",
+    "imageUrl": "/images/chart-1.png"
+  },
+  "task2": {
+    "type": "essay",
+    "prompt": "Some people say that technology improves education. Discuss both views and give your opinion."
+  }
+}

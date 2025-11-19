@@ -1,0 +1,25 @@
+{
+  "testId": "reading-sample-1",
+  "passages": [
+    {
+  "id": "R1P1",
+  "title": "The History of Tea",
+  "textFile": "/passages/history-of-tea.txt",
+      "questions": [
+        {
+          "id": "R1Q1",
+          "type": "multiple-choice",
+          "question": "Where did tea originate?",
+          "options": ["India", "China", "Japan"],
+          "correctOptionIndex": null
+        },
+        {
+          "id": "R1Q2",
+          "type": "true-false-notgiven",
+          "statement": "Tea was first consumed as a medicinal drink.",
+          "correctOptionIndex": null
+        }
+      ]
+    }
+  ]
+}

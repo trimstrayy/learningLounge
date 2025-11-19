@@ -1,0 +1,12 @@
+{
+  "testId": "writing-sample-1",
+  "task1": {
+    "type": "visual-report",
+    "prompt": "The chart shows the distribution of internet usage across three countries.",
+    "imageUrl": "/images/sample-chart.png"
+  },
+  "task2": {
+    "type": "essay",
+    "prompt": "Some people believe that technology makes life easier. Others think it makes life more complicated. Discuss both views."
+  }
+}

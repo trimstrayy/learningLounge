@@ -1,0 +1,346 @@
+{
+  "testId": "cambridge-08-test-4",
+  "title": "Cambridge IELTS 08 - Test 4",
+  "sections": [
+    {
+      "sectionNumber": 1,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (12).wma",
+      "questions": [
+        {
+          "id": "1",
+          "type": "form-completion",
+          "question": "Customer name:",
+          "answerLength": "medium",
+          "correctAnswer": "Maria Rodriguez"
+        },
+        {
+          "id": "2",
+          "type": "form-completion",
+          "question": "Reference number:",
+          "answerLength": "medium",
+          "correctAnswer": "TR4569"
+        },
+        {
+          "id": "3",
+          "type": "form-completion",
+          "question": "Date of complaint:",
+          "answerLength": "medium",
+          "correctAnswer": "15 June"
+        },
+        {
+          "id": "4",
+          "type": "form-completion",
+          "question": "Type of problem:",
+          "answerLength": "medium",
+          "correctAnswer": "damaged goods"
+        },
+        {
+          "id": "5",
+          "type": "form-completion",
+          "question": "Item purchased:",
+          "answerLength": "short",
+          "correctAnswer": "laptop"
+        },
+        {
+          "id": "6",
+          "type": "form-completion",
+          "question": "Price paid:",
+          "answerLength": "short",
+          "correctAnswer": "799 pounds"
+        },
+        {
+          "id": "7",
+          "type": "form-completion",
+          "question": "Required action:",
+          "answerLength": "short",
+          "correctAnswer": "replacement"
+        },
+        {
+          "id": "8",
+          "type": "form-completion",
+          "question": "Delivery expected on:",
+          "answerLength": "medium",
+          "correctAnswer": "next Tuesday"
+        },
+        {
+          "id": "9",
+          "type": "form-completion",
+          "question": "Compensation offered:",
+          "answerLength": "medium",
+          "correctAnswer": "discount voucher"
+        },
+        {
+          "id": "10",
+          "type": "form-completion",
+          "question": "Follow-up call scheduled for:",
+          "answerLength": "short",
+          "correctAnswer": "Friday"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 2,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (13).wma",
+      "questions": [
+        {
+          "id": "11",
+          "type": "form-completion",
+          "question": "The library opens at _______ on weekdays.",
+          "answerLength": "short",
+          "correctAnswer": "8 am"
+        },
+        {
+          "id": "12",
+          "type": "form-completion",
+          "question": "You can borrow up to _______ books at a time.",
+          "answerLength": "short",
+          "correctAnswer": "10"
+        },
+        {
+          "id": "13",
+          "type": "form-completion",
+          "question": "The loan period is _______ weeks.",
+          "answerLength": "short",
+          "correctAnswer": "three"
+        },
+        {
+          "id": "14",
+          "type": "form-completion",
+          "question": "DVDs can be borrowed for _______ days.",
+          "answerLength": "short",
+          "correctAnswer": "seven"
+        },
+        {
+          "id": "15",
+          "type": "form-completion",
+          "question": "Overdue fines are _______ pence per day.",
+          "answerLength": "short",
+          "correctAnswer": "20"
+        },
+        {
+          "id": "16",
+          "type": "multiple-choice",
+          "question": "To join the library you need",
+          "options": [
+            "proof of identity.",
+            "proof of address.",
+            "both proof of identity and address."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "17",
+          "type": "multiple-choice",
+          "question": "Computer sessions are limited to",
+          "options": [
+            "30 minutes.",
+            "one hour.",
+            "two hours."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "18",
+          "type": "multiple-choice",
+          "question": "Study rooms can be booked",
+          "options": [
+            "online only.",
+            "at the information desk.",
+            "both online and at the desk."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "19",
+          "type": "multiple-choice",
+          "question": "The children's section is located",
+          "options": [
+            "on the ground floor.",
+            "on the first floor.",
+            "in the basement."
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "20",
+          "type": "multiple-choice",
+          "question": "Wi-Fi access is available",
+          "options": [
+            "for members only.",
+            "throughout the building.",
+            "in designated areas only."
+          ],
+          "correctAnswer": "B"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 3,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (14).wma",
+      "questions": [
+        {
+          "id": "21",
+          "type": "multiple-choice",
+          "question": "The assignment topic is about",
+          "options": [
+            "renewable energy.",
+            "urban planning.",
+            "climate change."
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "22",
+          "type": "multiple-choice",
+          "question": "The students decided to focus on",
+          "options": [
+            "transportation systems.",
+            "green spaces.",
+            "housing development."
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "23",
+          "type": "multiple-choice",
+          "question": "They will collect data from",
+          "options": [
+            "government reports.",
+            "surveys.",
+            "case studies."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "24",
+          "type": "multiple-choice",
+          "question": "The presentation format will be",
+          "options": [
+            "individual.",
+            "pairs.",
+            "group."
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "25",
+          "type": "form-completion",
+          "question": "The research will compare _______ different cities.",
+          "answerLength": "short",
+          "correctAnswer": "three"
+        },
+        {
+          "id": "26",
+          "type": "form-completion",
+          "question": "They need to consider _______ factors.",
+          "answerLength": "short",
+          "correctAnswer": "environmental"
+        },
+        {
+          "id": "27",
+          "type": "form-completion",
+          "question": "The word limit is _______ words.",
+          "answerLength": "short",
+          "correctAnswer": "3000"
+        },
+        {
+          "id": "28",
+          "type": "form-completion",
+          "question": "References should follow the _______ style.",
+          "answerLength": "short",
+          "correctAnswer": "Harvard"
+        },
+        {
+          "id": "29",
+          "type": "form-completion",
+          "question": "They must include _______ in the appendix.",
+          "answerLength": "short",
+          "correctAnswer": "maps"
+        },
+        {
+          "id": "30",
+          "type": "form-completion",
+          "question": "The final draft is due on _______",
+          "answerLength": "medium",
+          "correctAnswer": "20 March"
+        }
+      ]
+    },
+    {
+      "sectionNumber": 4,
+      "audioUrl": "/Cambridge IELTS 08/audio/Cambridge IELTS 1 (15).wma",
+      "questions": [
+        {
+          "id": "31",
+          "type": "form-completion",
+          "question": "Antarctica is the _______ continent.",
+          "answerLength": "short",
+          "correctAnswer": "fifth largest"
+        },
+        {
+          "id": "32",
+          "type": "form-completion",
+          "question": "It contains _______ percent of the world's ice.",
+          "answerLength": "short",
+          "correctAnswer": "90"
+        },
+        {
+          "id": "33",
+          "type": "form-completion",
+          "question": "The average thickness of ice is _______ kilometers.",
+          "answerLength": "short",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "34",
+          "type": "form-completion",
+          "question": "The lowest temperature ever recorded was _______ degrees.",
+          "answerLength": "short",
+          "correctAnswer": "minus 89"
+        },
+        {
+          "id": "35",
+          "type": "form-completion",
+          "question": "Research stations are operated by _______ different countries.",
+          "answerLength": "short",
+          "correctAnswer": "30"
+        },
+        {
+          "id": "36",
+          "type": "form-completion",
+          "question": "Scientists study _______ cores to understand past climates.",
+          "answerLength": "short",
+          "correctAnswer": "ice"
+        },
+        {
+          "id": "37",
+          "type": "form-completion",
+          "question": "Penguins can dive to depths of _______ meters.",
+          "answerLength": "short",
+          "correctAnswer": "500"
+        },
+        {
+          "id": "38",
+          "type": "form-completion",
+          "question": "The Antarctic Treaty was signed in _______",
+          "answerLength": "short",
+          "correctAnswer": "1959"
+        },
+        {
+          "id": "39",
+          "type": "form-completion",
+          "question": "Tourism is regulated to minimize _______ impact.",
+          "answerLength": "short",
+          "correctAnswer": "environmental"
+        },
+        {
+          "id": "40",
+          "type": "form-completion",
+          "question": "Climate change is causing the ice shelves to _______",
+          "answerLength": "short",
+          "correctAnswer": "melt"
+        }
+      ]
+    }
+  ]
+}

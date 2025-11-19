@@ -1,0 +1,24 @@
+{
+  "testId": "listening-sample-1",
+  "sections": [
+    {
+  "sectionNumber": 1,
+  "audioUrl": "/audio/sample1.mp3",
+      "questions": [
+        {
+          "id": "L1Q1",
+          "type": "multiple-choice",
+          "question": "Where does the speaker plan to travel?",
+          "options": ["Tokyo", "London", "Sydney", "Toronto"],
+          "correctOptionIndex": null
+        },
+        {
+          "id": "L1Q2",
+          "type": "form-completion",
+          "question": "What is the speaker’s booking reference?",
+          "answerLength": "short"
+        }
+      ]
+    }
+  ]
+}
