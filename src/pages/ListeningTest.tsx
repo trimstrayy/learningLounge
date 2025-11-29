@@ -107,6 +107,22 @@ const ListeningTest = () => {
     return 1;
   };
 
+  const findCorrectAnswer = (questionId: string): string | string[] | undefined => {
+    if (!test) return undefined;
+    // Check top-level answers object (some imports store answers at root)
+    if ((test as any).answers && (test as any).answers[questionId]) {
+      return (test as any).answers[questionId];
+    }
+
+    // Check per-section answers if present
+    for (const sec of test.sections) {
+      if (sec && (sec as any).answers && (sec as any).answers[questionId]) {
+        return (sec as any).answers[questionId];
+      }
+    }
+    return undefined;
+  };
+
   const onSubmit = () => {
     if (!test) return;
 
@@ -117,8 +133,9 @@ const ListeningTest = () => {
 
     test.sections.forEach(section => {
       section.questions.forEach(q => {
-        if (q.correctAnswer) {
-          const isCorrect = checkAnswer(q.id, answers[q.id], q.correctAnswer);
+        const correctAns = q.correctAnswer ?? findCorrectAnswer(q.id);
+        if (correctAns) {
+          const isCorrect = checkAnswer(q.id, answers[q.id], correctAns);
           if (isCorrect) {
             correctCount++;
           } else {
@@ -147,18 +164,23 @@ const ListeningTest = () => {
     setShowResultsModal(true);
   };
 
-  const checkAnswer = (questionId: string, userAnswer: string | string[] | undefined, correctAnswer: string) => {
+  const checkAnswer = (questionId: string, userAnswer: string | string[] | undefined, correctAnswer: string | string[] | undefined) => {
     if (!userAnswer) return false;
-    
-    if (Array.isArray(userAnswer)) {
-      const correctAnswers = correctAnswer.split(',').map(a => a.trim());
-      return userAnswer.length === correctAnswers.length && 
-             userAnswer.every(a => correctAnswers.includes(a));
+    // Normalize correctAnswer into an array of strings
+    let correctAnswers: string[] = [];
+    if (Array.isArray(correctAnswer)) {
+      correctAnswers = correctAnswer.map(a => String(a).toLowerCase().trim());
+    } else if (typeof correctAnswer === 'string') {
+      correctAnswers = correctAnswer.split(',').map(a => a.toLowerCase().trim());
     }
-    
+
+    if (Array.isArray(userAnswer)) {
+      const ua = userAnswer.map(a => String(a).toLowerCase().trim());
+      return ua.length === correctAnswers.length && ua.every(a => correctAnswers.includes(a));
+    }
+
     const userAnswerStr = String(userAnswer).toLowerCase().trim();
-    const correctAnswerStr = correctAnswer.toLowerCase().trim();
-    return userAnswerStr === correctAnswerStr;
+    return correctAnswers.includes(userAnswerStr);
   };
 
   const handleRedoTest = () => {
@@ -305,7 +327,7 @@ const ListeningTest = () => {
                 </Button>
               </div>
 
-              {test.sections.map((sec, secIdx) => (
+                        {test.sections.map((sec, secIdx) => (
                 <Card key={sec.sectionNumber} className="overflow-hidden">
                   <div className="bg-primary/5 px-6 py-4 border-b">
                     <h3 className="font-semibold text-lg">Section {sec.sectionNumber}</h3>
@@ -336,8 +358,9 @@ const ListeningTest = () => {
                     <div className="space-y-4">
                       {sec.questions.map((q) => {
                         const userAnswer = answers[q.id];
-                        const isCorrect = showAnswers && q.correctAnswer ? 
-                          checkAnswer(q.id, userAnswer, q.correctAnswer) : null;
+                        const correctAns = q.correctAnswer ?? findCorrectAnswer(q.id);
+                        const isCorrect = showAnswers && correctAns ? 
+                          checkAnswer(q.id, userAnswer, correctAns) : null;
 
                         return (
                           <div 
@@ -413,12 +436,12 @@ const ListeningTest = () => {
                             )}
 
                             {/* Show Correct Answer */}
-                            {showAnswers && q.correctAnswer && (
+                            {showAnswers && correctAns && (
                               <div className={cn(
                                 "mt-3 p-3 rounded text-sm",
                                 isCorrect ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
                               )}>
-                                <strong>Correct Answer:</strong> {q.correctAnswer}
+                                <strong>Correct Answer:</strong> {Array.isArray(correctAns) ? correctAns.join(', ') : String(correctAns)}
                               </div>
                             )}
                           </div>

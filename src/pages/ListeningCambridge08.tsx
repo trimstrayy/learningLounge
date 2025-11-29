@@ -11,36 +11,8 @@ const ListeningCambridge08 = () => {
   const navigate = useNavigate();
   const [selectedTest, setSelectedTest] = useState<number | null>(null);
 
-  const tests = [
-    {
-      id: 1,
-      title: "Test 1",
-      sections: "4 sections",
-      questions: "40 questions",
-      duration: "30 minutes"
-    },
-    {
-      id: 2,
-      title: "Test 2",
-      sections: "4 sections",
-      questions: "40 questions",
-      duration: "30 minutes"
-    },
-    {
-      id: 3,
-      title: "Test 3",
-      sections: "4 sections",
-      questions: "40 questions",
-      duration: "30 minutes"
-    },
-    {
-      id: 4,
-      title: "Test 4",
-      sections: "4 sections",
-      questions: "40 questions",
-      duration: "30 minutes"
-    }
-  ];
+  const books = [13,14,15,16,17,18,19];
+  const tests = [1,2,3,4];
 
   return (
     <div className="min-h-screen bg-background">
@@ -52,60 +24,59 @@ const ListeningCambridge08 = () => {
             <p className="text-lg text-muted-foreground">Listening Tests - Official Cambridge Materials</p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {tests.map((test) => {
-              const isSelected = selectedTest === test.id;
+          <div className="space-y-4">
+            {books.map((book) => {
+              const isOpen = selectedTest === book;
               return (
-                <div key={test.id}>
+                <div key={book}>
                   <Card
                     className={cn(
                       "cursor-pointer transition-all hover:shadow-lg",
-                      isSelected && "ring-2 ring-primary"
+                      isOpen && "ring-2 ring-primary"
                     )}
-                    onClick={() => setSelectedTest(isSelected ? null : test.id)}
+                    onClick={() => setSelectedTest(isOpen ? null : book)}
                   >
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
-                        <span>{test.title}</span>
+                        <span>Book {book}</span>
                         <ChevronRight
                           className={cn(
                             "transition-transform",
-                            isSelected && "rotate-90"
+                            isOpen && "rotate-90"
                           )}
                         />
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2 text-sm text-muted-foreground">
-                        <p>📝 {test.questions}</p>
-                        <p>📁 {test.sections}</p>
-                        <p>⏱️ {test.duration}</p>
+                        <p>4 tests • 4 sections each • 40 questions</p>
                       </div>
                     </CardContent>
                   </Card>
 
-                  {isSelected && (
+                  {isOpen && (
                     <div className="mt-4 p-6 border rounded-lg bg-card">
-                      <h3 className="font-semibold mb-4">Test Format</h3>
-                      <div className="space-y-3 text-sm text-muted-foreground mb-6">
-                        <p>• <strong>Section 1:</strong> A conversation between two people in a social context</p>
-                        <p>• <strong>Section 2:</strong> A monologue in a social context</p>
-                        <p>• <strong>Section 3:</strong> A conversation among up to four people in an educational context</p>
-                        <p>• <strong>Section 4:</strong> A monologue on an academic subject</p>
+                      <h3 className="font-semibold mb-4">Tests in Book {book}</h3>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {tests.map((t) => (
+                          <div key={t} className="p-4 border rounded">
+                            <div className="flex items-center justify-between mb-3">
+                              <div>
+                                <div className="font-semibold">Test {t}</div>
+                                <div className="text-sm text-muted-foreground">4 sections • 40 questions</div>
+                              </div>
+                              <div>
+                                <Button
+                                  onClick={() => navigate(`/test/listening/book${book}-test${t}`)}
+                                  size="sm"
+                                >
+                                  Begin
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                      <div className="bg-muted/50 p-4 rounded mb-6">
-                        <p className="text-sm"><strong>Note:</strong> You will hear each section only once. Answer all questions as you listen. 10 minutes are allowed at the end for transferring your answers to the answer sheet.</p>
-                      </div>
-                      <Button
-                        className="w-full"
-                        size="lg"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/test/listening/cambridge-08-test-${test.id}`);
-                        }}
-                      >
-                        Start Test {test.id}
-                      </Button>
                     </div>
                   )}
                 </div>
