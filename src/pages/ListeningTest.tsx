@@ -376,6 +376,17 @@ const ListeningTest = () => {
                             </div>
                             <div className="text-sm mb-3">{q.question}</div>
 
+                            {/* Image for question if available */}
+                            {(q as any).imageUrl && (
+                              <div className="mb-4">
+                                <img 
+                                  src={(q as any).imageUrl} 
+                                  alt={`Question ${q.id} diagram`}
+                                  className="max-w-full h-auto rounded border"
+                                />
+                              </div>
+                            )}
+
                             {/* Multiple Choice */}
                             {q.type === "multiple-choice" && q.options && !q.multipleSelect && (
                               <div className="space-y-2">
