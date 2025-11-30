@@ -71,7 +71,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-8 pt-6 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} The Learning Lounge. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Powered by LEXORA team members. All rights reserved.</p>
         </div>
       </div>
     </footer>

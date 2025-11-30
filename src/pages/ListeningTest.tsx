@@ -78,14 +78,38 @@ const ListeningTest = () => {
     }
     
     setLoading(true);
-    fetch(`/questions/listening/${testId}.json`)
-      .then(res => res.json())
-      .then((data: ListeningTestData) => setTest(data))
-      .catch((err) => {
-        console.error(err);
+    (async () => {
+      try {
+        const res = await fetch(`/questions/listening/${testId}.json`);
+        if (!res.ok) {
+          const text = await res.text().catch(() => "");
+          console.error('Failed to fetch test:', res.status, text);
+          toast({ title: `Failed to load test (HTTP ${res.status})`, description: text || 'No response body', variant: 'destructive' });
+          setTest(null);
+          return;
+        }
+
+        // Attempt to parse JSON; provide better diagnostics on parse failure
+        let data: ListeningTestData | null = null;
+        try {
+          data = await res.json();
+        } catch (parseErr) {
+          const text = await res.text().catch(() => "(unable to read response text)");
+          console.error('Failed to parse JSON for test', testId, parseErr, text);
+          toast({ title: 'Failed to load test', description: 'Invalid JSON response (check server file).', variant: 'destructive' });
+          setTest(null);
+          return;
+        }
+
+        setTest(data);
+      } catch (err) {
+        console.error('Error loading test', err);
         toast({ title: "Error", description: "Failed to load test", variant: "destructive" });
-      })
-      .finally(() => setLoading(false));
+        setTest(null);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, [testId, navigate, toast]);
 
   const calculateBand = (correctCount: number): number => {

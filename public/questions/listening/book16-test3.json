@@ -12,7 +12,7 @@
         { "id": "Q4", "type": "form-completion", "question": "There are quiet times during the morning for a (4) _______ or a game.", "answerLength": "short" },
         { "id": "Q5", "type": "form-completion", "question": "Classes are held even if there is (5) _______", "answerLength": "short" },
         { "id": "Q6", "type": "form-completion", "question": "What to bring: a (6) _______", "answerLength": "short" },
-        { "id": "Q7", "type": "form-completion", "question": "Charlie\'s (7) _______", "answerLength": "short" },
+        { "id": "Q7", "type": "form-completion", "question": "Charlie's (7) _______", "answerLength": "short" },
         { "id": "Q8", "type": "form-completion", "question": "Before the class, his (8) _______ will be checked.", "answerLength": "short" },
         { "id": "Q9", "type": "form-completion", "question": "He should then go to the (9) _______ to meet his class instructor.", "answerLength": "short" },
         { "id": "Q10", "type": "form-completion", "question": "The course costs (10) $ _______ per week.", "answerLength": "short" }
