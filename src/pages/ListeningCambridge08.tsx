@@ -20,7 +20,7 @@ const ListeningCambridge08 = () => {
       <main className="pt-24 pb-20">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-3 text-foreground">Cambridge IELTS 08</h1>
+            <h1 className="text-4xl font-bold mb-3 text-foreground">IELTS MOCK TESTS</h1>
             <p className="text-lg text-muted-foreground">Listening Tests - Official Cambridge Materials</p>
           </div>
 
