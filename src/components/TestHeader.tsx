@@ -20,23 +20,23 @@ export default function TestHeader({ title, session, recordingIndicator }: Props
     <>
       <div className="fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground shadow-lg">
         <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
               <Button onClick={session.openExit} variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Exit Test
               </Button>
-              <h1 className="text-lg font-semibold">{title}</h1>
+              <h1 className="text-lg font-semibold break-words">{title}</h1>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-shrink-0">
               {recordingIndicator}
               {!session.started ? (
                 <Button onClick={() => session.setStarted(true)} className="bg-primary">Begin Test</Button>
               ) : (
                 <span className="px-3 py-1 rounded bg-muted text-sm text-muted-foreground">Test running</span>
               )}
-              <div className="flex items-center gap-3 bg-primary-foreground/10 px-4 py-2 rounded-lg ml-3">
+              <div className="flex items-center gap-3 bg-primary-foreground/10 px-3 py-2 rounded-lg ml-0 sm:ml-3">
                 <Clock className="w-5 h-5" />
                 <span className="text-lg font-mono font-semibold">{formatTime(session.timeLeft)}</span>
               </div>

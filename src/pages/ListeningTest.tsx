@@ -220,7 +220,7 @@ const ListeningTest = () => {
   return (
     <div className="min-h-screen bg-background">
       <TestHeader title={test?.title || "Listening Test"} session={session} />
-      <main className="pt-24 pb-20">
+      <main className="pt-32 sm:pt-24 pb-20">
         <div className="container mx-auto px-4 max-w-4xl">
           {loading && <div className="text-center">Loading test...</div>}
 
@@ -456,6 +456,38 @@ const ListeningTest = () => {
                                     </label>
                                   );
                                 })}
+                              </div>
+                            )}
+
+                            {/* Matching (render options A-H and actionOptions) */}
+                            {q.type === "matching" && q.options && (
+                              <div className="space-y-3">
+                                {((q as any).actionOptions as string[] | undefined) && (
+                                  <div className="mb-2 text-sm">
+                                    <div className="font-medium mb-1">Actions:</div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                                      {((q as any).actionOptions as string[]).map((act, i) => (
+                                        <div key={i} className="text-sm text-muted-foreground">{act}</div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+
+                                <div className="space-y-2">
+                                  {q.options.map((opt, i) => (
+                                    <label key={i} className="flex items-center gap-2 text-sm cursor-pointer">
+                                      <input
+                                        type="radio"
+                                        name={q.id}
+                                        value={String.fromCharCode(65 + i)}
+                                        checked={answers[q.id] === String.fromCharCode(65 + i)}
+                                        onChange={(e) => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
+                                        className="accent-primary"
+                                      />
+                                      <span>{String.fromCharCode(65 + i)}. {opt}</span>
+                                    </label>
+                                  ))}
+                                </div>
                               </div>
                             )}
 
