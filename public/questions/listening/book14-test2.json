@@ -4,7 +4,7 @@
   "sections": [
     {
       "sectionNumber": 1,
-      "audioUrl": "/audio/book14-test2-sec1.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T2S1.mp3",
       "sectionTitle": "TOTAL HEALTH CLINIC: PATIENT DETAILS",
       "questionType": "completion",
       "instruction": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
@@ -73,7 +73,7 @@
     },
     {
       "sectionNumber": 2,
-      "audioUrl": "/audio/book14-test2-sec2.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T2S2.mp3",
       "sectionTitle": "Visit to Branley Castle",
       "questionType": "multiple-choice-and-matching",
       "questions": [
@@ -221,7 +221,7 @@
     },
     {
       "sectionNumber": 3,
-      "audioUrl": "/audio/book14-test2-sec3.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T2S3.mp3",
       "sectionTitle": "Woolly mammoths on St Paul's Island",
       "questionType": "multiple-choice-and-matching",
       "questions": [
@@ -441,7 +441,7 @@
     },
     {
       "sectionNumber": 4,
-      "audioUrl": "/audio/book14-test2-sec4.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T2S4.mp3",
       "sectionTitle": "The history of weather forecasting",
       "questionType": "completion",
       "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",

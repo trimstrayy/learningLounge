@@ -4,7 +4,7 @@
   "sections": [
     {
       "sectionNumber": 1,
-      "audioUrl": "/audio/book15-test4-sec1.mp3",
+      "audioUrl": "/questions/audio/book15 audios/IELTS15_test4_audio1 [@cambridgematerials].mp3",
       "questions": [
         { "id": "Q1", "type": "form-completion", "question": "Occupation: (1)", "answerLength": "short" },
         { "id": "Q2", "type": "form-completion", "question": "Reason for travel today: (2)", "answerLength": "short" },
@@ -20,7 +20,7 @@
     },
     {
       "sectionNumber": 2,
-      "audioUrl": "/audio/book15-test4-sec2.mp3",
+      "audioUrl": "/questions/audio/book15 audios/IELTS15_test4_audio2 [@cambridgematerials].mp3",
       "questions": [
         { "id": "Q11", "type": "map-label", "question": "Label for 11 (café)" },
         { "id": "Q12", "type": "map-label", "question": "Label for 12 (toilets)" },
@@ -32,7 +32,7 @@
     },
     {
       "sectionNumber": 3,
-      "audioUrl": "/audio/book15-test4-sec3.mp3",
+      "audioUrl": "/questions/audio/book15 audios/IELTS15_test4_audio3 [@cambridgematerials].mp3",
       "questions": [
         { "id": "Q17", "type": "multiple-choice", "multipleSelect": true, "question": "What does the speaker say about the adventure playground? (choose two)", "options": ["A","B","C","D","E"] },
         { "id": "Q18", "type": "multiple-choice", "multipleSelect": true, "question": "What does the speaker say about the adventure playground? (choose two) - Q18", "options": ["A","B","C","D","E"] },
@@ -52,7 +52,7 @@
     },
     {
       "sectionNumber": 4,
-      "audioUrl": "/audio/book15-test4-sec4.mp3",
+      "audioUrl": "/questions/audio/book15 audios/IELTS15_test4_audio4 [@cambridgematerials].mp3",
       "questions": [
         { "id": "Q31", "type": "form-completion", "question": "For the first time, people’s possessions were used to measure Britain’s (31)", "answerLength": "short" },
         { "id": "Q32", "type": "form-completion", "question": "Developments in production of goods and in (32)", "answerLength": "short" },

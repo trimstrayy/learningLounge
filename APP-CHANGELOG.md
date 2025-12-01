@@ -1,108 +1,158 @@
-#+ Mock Tests — Detailed internal behavior (per-test)
+(# Book13 audio mapping — generated 2025-12-01).
 
-This file documents, for each of the four mock tests (Listening, Reading, Writing, Speaking), exactly what exists right now in the app, whether interactive questions are implemented, and what happens when a user clicks Submit / Exit. Use this as a quick developer reference.
+audio files in `public/questions/audio/book13 audios/`:
 
----
+- IELTS13-Tests1-4CD1Track_01.mp3
+- IELTS13-Tests1-4CD1Track_02.mp3
+- IELTS13-Tests1-4CD1Track_04.mp3
+- IELTS13-Tests1-4CD1Track_05.mp3
+- IELTS13-Tests1-4CD1Track_06.mp3
+- IELTS13-Tests1-4CD1Track_07.mp3
+- IELTS13-Tests1-4CD2Track_01.mp3
+- IELTS13-Tests1-4CD2Track_02.mp3
+- IELTS13-Tests1-4CD2Track_03.mp3
+- IELTS13-Tests1-4CD2Track_04.mp3
+- IELTS13-Tests1-4CD2Track_05.mp3
+- IELTS13-Tests1-4CD2Track_06.mp3
+- IELTS13-Tests1-4CD2Track_07.mp3
+- IELTS13-Tests1-4CD2Track_08.mp3
 
-## Summary (one-liner)
-- Listening, Reading, Speaking: mock environments with regulated timing, sample content and timers — but no interactive question UI or answer submission is implemented yet.
-- Writing: a working answer input area exists (typed answer + handwritten image upload) and Submit is implemented client-side; on successful submit the user is redirected back to the Mock Tests listing with a completion flag.
+Proposed mapping (Test → Section → audio filename):
 
----
+- Test 1
+	- Section 1: `IELTS13-Tests1-4CD1Track_01.mp3`
+	- Section 2: `IELTS13-Tests1-4CD1Track_02.mp3`
+	- Section 3: MISSING (expected `IELTS13-Tests1-4CD1Track_03.mp3`)
+	- Section 4: `IELTS13-Tests1-4CD1Track_04.mp3`
 
-## Per-test details
+- Test 2
+	- Section 1: `IELTS13-Tests1-4CD1Track_05.mp3`
+	- Section 2: `IELTS13-Tests1-4CD1Track_06.mp3`
+	- Section 3: `IELTS13-Tests1-4CD1Track_07.mp3`
+	- Section 4: MISSING (expected `IELTS13-Tests1-4CD1Track_08.mp3`)
 
-1) Listening Test (`src/pages/ListeningTest.tsx`)
+- Test 3
+	- Section 1: `IELTS13-Tests1-4CD2Track_01.mp3`
+	- Section 2: `IELTS13-Tests1-4CD2Track_02.mp3`
+	- Section 3: `IELTS13-Tests1-4CD2Track_03.mp3`
+	- Section 4: `IELTS13-Tests1-4CD2Track_04.mp3`
 
-- What exists now:
-	- An overview and section breakdown (4 sections) matching IELTS Listening.
-	- A themed audio placeholder area (visual waveform box) where the real audio player will be added later.
-	- A countdown timer (default 30 minutes) and Begin Test / Exit Test controls.
-	- A small, static list of placeholder question descriptions (e.g., "Section 1 — Questions 1-10 ...").
+- Test 4
+	- Section 1: `IELTS13-Tests1-4CD2Track_05.mp3`
+	- Section 2: `IELTS13-Tests1-4CD2Track_06.mp3`
+	- Section 3: `IELTS13-Tests1-4CD2Track_07.mp3`
+	- Section 4: `IELTS13-Tests1-4CD2Track_08.mp3`
 
-- Are there interactive questions or inputs?
-	- No. There is no interactive question UI (no inputs, no answer fields, no selection controls) for listening questions yet — only placeholder text describing the question types.
 
-- What happens when the user clicks Submit / End test?
-	- There is no Submit button on the Listening page currently. The only exit path is the Exit Test flow which opens a confirmation modal. Confirming exit resets the timer and navigates back to `/mock-tests`.
-
-- Notes / next steps:
-	- Add an audio player component (with playback controls and section-sync) and a UI for per-question inputs (short answer, multiple choice, form completion, etc.).
-	- Wire answer state and a Submit flow that collects answers and either saves to localStorage or posts to a backend.
-
-2) Reading Test (`src/pages/ReadingTest.tsx`)
-
-- What exists now:
-	- An overview and three-section breakdown matching IELTS Reading.
-	- A countdown timer (default 60 minutes) and Begin Test / Exit Test controls.
-	- A description of question types (multiple choice, matching headings, sentence completion) as placeholder content.
-
-- Are there interactive questions or inputs?
-	- No. There is no interactive reading question UI implemented yet — only descriptive placeholders.
-
-- What happens when the user clicks Submit / End test?
-	- There is no Submit button implemented for Reading. The Exit Test button opens the exit confirmation modal; confirming resets the timer and navigates to `/mock-tests`.
-
-- Notes / next steps:
-	- Implement passage rendering, question components (e.g., MCQ, matching, fill-in), per-question state, and a Submit flow.
-	- Consider pagination per section and a clear way to review answers before final submit.
-
-3) Speaking Test (`src/pages/SpeakingTest.tsx`)
-
-- What exists now:
-	- An overview describing the 3 parts of the speaking test and sample prompts.
-	- A timer (default ~14 minutes), Begin Test / Exit Test controls.
-	- A sample Task Card for the Long Turn (Part 2) and practice prompts.
-
-- Are there interactive questions or inputs?
-	- No. There is no audio recording UI or answer-submission UI. The page only presents prompts/instructions and a timer.
-
-- What happens when the user clicks Submit / End test?
-	- There is no Submit button and no local recording storage. Exit Test opens confirmation modal; confirming resets the timer and navigates back to `/mock-tests`.
-
-- Notes / next steps:
-	- Add a simple in-browser recorder (MediaRecorder) with permission handling, local temporary storage and optional upload to a back end.
-	- Provide a review screen showing recorded attempts before final submit.
-
-4) Writing Test (`src/pages/WritingTest.tsx`)
-
-- What exists now:
-	- Full UI for the writing test with Task 1 and Task 2 placeholder prompts and suggested timing.
-	- An editable typed answer area (large `Textarea`) and an upload control to submit an image of a handwritten answer.
-	- A countdown timer (default 60 minutes) visible in the top bar.
-	- A Submit Answer button and a Back to Tests button.
-
-- Are there interactive questions or inputs?
-	- Yes — the writing page contains the actual input fields where a user can type their answers and optionally upload an image file.
-
-- What happens when a user clicks Submit Answer?
-	- Validation: The submit handler checks whether the user provided a typed answer (non-empty `Textarea`) or uploaded an image. If neither is present, it shows a destructive toast asking the user to provide an answer.
-	- If an answer (typed or uploaded) exists:
-		- The UI shows a success toast: "Answer submitted! Your writing test has been submitted for evaluation.".
-		- After a short delay (~1.5 seconds) the app navigates back to `/mock-tests?completed=writing`.
-		- There is no server-side submission or persistence implemented in the current code — the behavior is entirely client-side and only simulates submission by showing a toast and redirecting.
-
-- What happens to the user's typed answer / uploaded image after submit?
-	- Currently: nothing persistent. The app does not save the typed answer nor upload the image to a server. After redirect, the in-memory state is lost. The uploaded image is not persisted beyond the page session.
-
-- Notes / next steps:
-	- Implement a backend endpoint (or cloud storage) to store uploaded images and answers, or persist temporarily in localStorage until a confirmed upload occurs.
-	- Add a confirmation/summary page showing the final answers and optionally allow the user to download a copy.
 
 ---
 
-## Cross-test notes
+# Book14 audio mapping — generated 2025-12-01
 
-- Timers: all test pages use client-side countdown timers. They do not persist across page reloads (unless you implement localStorage persistence).
-- Completion tracking: the only completion flow implemented is the WritingTest redirect which includes a query param `?completed=writing`. The rest of the tests have no submit/complete tracking yet.
-- UX expectations: currently these pages are mock/test-environment placeholders that need question rendering, answer inputs, storage, and scoring to become full exam simulators.
+audio files in `public/questions/audio/book14 audios/`:
+
+- C14T1S1.mp3
+- C14T1S2.mp3
+- C14T1S3.mp3
+- C14T1S4.mp3
+- C14T2S1.mp3
+- C14T2S2.mp3
+- C14T2S3.mp3
+- C14T2S4.mp3
+- C14T3S1.mp3
+- C14T3S2.mp3
+- C14T3S3.mp3
+- C14T3S4.mp3
+- C14T4S1.mp3
+- C14T4S2.mp3
+- C14T4S3.mp3
+- C14T4S4.mp3
+
+Proposed mapping (Test → Section → audio filename):
+
+- Test 1
+	- Section 1: `C14T1S1.mp3`
+	- Section 2: `C14T1S2.mp3`
+	- Section 3: `C14T1S3.mp3`
+	- Section 4: `C14T1S4.mp3`
+
+- Test 2
+	- Section 1: `C14T2S1.mp3`
+	- Section 2: `C14T2S2.mp3`
+	- Section 3: `C14T2S3.mp3`
+	- Section 4: `C14T2S4.mp3`
+
+- Test 3
+	- Section 1: `C14T3S1.mp3`
+	- Section 2: `C14T3S2.mp3`
+	- Section 3: `C14T3S3.mp3`
+	- Section 4: `C14T3S4.mp3`
+
+- Test 4
+	- Section 1: `C14T4S1.mp3`
+	- Section 2: `C14T4S2.mp3`
+	- Section 3: `C14T4S3.mp3`
+	- Section 4: `C14T4S4.mp3`
+
+Notes:
+- Filenames follow `C14T{test}S{section}.mp3` pattern; mapping is direct and unambiguous.
+- These files are located at `/questions/audio/book14 audios/<filename>`; consider renaming the folder to remove the space for cleaner URLs.
+
 
 ---
 
-If you want, I can now implement any of the following (pick one or more):
-- Add per-test question UI and a Submit flow that saves answers to localStorage.
-- Add server upload stubs (mock API) for Writing uploads and implement real persistence.
-- Add a simple in-browser recorder for Speaking and save recordings temporarily.
-- Persist timers and in-progress answers so the user can resume after accidental navigation.
+# Book15 audio mapping — generated 2025-12-01
 
-Tell me which you'd like first and I'll implement it.
+Found audio files in `public/questions/audio/book15 audios/`:
+
+- IELTS15_test1_audio1 [@cambridgematerials].mp3
+- IELTS15_test1_audio2 [@cambridgematerials].mp3
+- IELTS15_test1_audio3 [@cambridgematerials].mp3
+- IELTS15_test1_audio4 [@cambridgematerials].mp3
+- IELTS15_test2_audio1 [@cambridgematerials].mp3
+- IELTS15_test2_audio2 [@cambridgematerials].mp3
+- IELTS15_test2_audio3 [@cambridgematerials].mp3
+- IELTS15_test2_audio4 [@cambridgematerials].mp3
+- IELTS15_test3_audio1 [@cambridgematerials].mp3
+- IELTS15_test3_audio2 [@cambridgematerials].mp3
+- IELTS15_test3_audio3 [@cambridgematerials].mp3
+- IELTS15_test3_audio4 [@cambridgematerials].mp3
+- IELTS15_test4_audio1 [@cambridgematerials].mp3
+- IELTS15_test4_audio2 [@cambridgematerials].mp3
+- IELTS15_test4_audio3 [@cambridgematerials].mp3
+- IELTS15_test4_audio4 [@cambridgematerials].mp3
+
+Proposed mapping (Test → Section → audio filename):
+
+- Test 1
+	- Section 1: `IELTS15_test1_audio1 [@cambridgematerials].mp3`
+	- Section 2: `IELTS15_test1_audio2 [@cambridgematerials].mp3`
+	- Section 3: `IELTS15_test1_audio3 [@cambridgematerials].mp3`
+	- Section 4: `IELTS15_test1_audio4 [@cambridgematerials].mp3`
+
+- Test 2
+	- Section 1: `IELTS15_test2_audio1 [@cambridgematerials].mp3`
+	- Section 2: `IELTS15_test2_audio2 [@cambridgematerials].mp3`
+	- Section 3: `IELTS15_test2_audio3 [@cambridgematerials].mp3`
+	- Section 4: `IELTS15_test2_audio4 [@cambridgematerials].mp3`
+
+- Test 3
+	- Section 1: `IELTS15_test3_audio1 [@cambridgematerials].mp3`
+	- Section 2: `IELTS15_test3_audio2 [@cambridgematerials].mp3`
+	- Section 3: `IELTS15_test3_audio3 [@cambridgematerials].mp3`
+	- Section 4: `IELTS15_test3_audio4 [@cambridgematerials].mp3`
+
+- Test 4
+	- Section 1: `IELTS15_test4_audio1 [@cambridgematerials].mp3`
+	- Section 2: `IELTS15_test4_audio2 [@cambridgematerials].mp3`
+	- Section 3: `IELTS15_test4_audio3 [@cambridgematerials].mp3`
+	- Section 4: `IELTS15_test4_audio4 [@cambridgematerials].mp3`
+
+Notes:
+- Filenames contain spaces and brackets; they will work as static URLs but renaming to a clean folder/name (e.g., `book15-audios`) is recommended.
+- These files are located at `/questions/audio/book15 audios/<filename>`; when you confirm mapping I can add `audioUrl` entries to the working JSONs.
+
+
+
+
+

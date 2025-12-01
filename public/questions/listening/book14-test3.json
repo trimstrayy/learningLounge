@@ -5,7 +5,7 @@
   "sections": [
     {
       "sectionNumber": 1,
-      "audioUrl": "/audio/section1.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T3S1.mp3",
       "sectionTitle": "Flanders Conference Hotel",
       "questionType": "completion",
       "instruction": "Complete the notes below. [cite_start]Write ONE WORD AND/ OR A NUMBER for each answer. [cite: 83]",
@@ -74,7 +74,7 @@
     },
     {
       "sectionNumber": 2,
-      "audioUrl": "/audio/section2.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T3S2.mp3",
       "sectionTitle": "Volunteering",
       "questionType": "multiple-choice-and-matching",
       "questions": [
@@ -272,7 +272,7 @@
     },
     {
       "sectionNumber": 3,
-      "audioUrl": "/audio/section3.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T3S3.mp3",
       "sectionTitle": "Background on school marching band",
       "questionType": "completion-and-matching",
       "questions": [
@@ -412,7 +412,7 @@
     },
     {
       "sectionNumber": 4,
-      "audioUrl": "/audio/section4.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T3S4.mp3",
       "sectionTitle": "Concerts in university arts festival",
       "questionType": "completion",
       "instruction": "Complete the notes below. [cite_start]Write ONE WORD AND/OR A NUMBER for each answer [cite: 108]",

@@ -5,7 +5,7 @@
   "sections": [
     {
       "sectionNumber": 1,
-      "audioUrl": "/audio/section1.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T4S1.mp3",
       "sectionTitle": "Enquiry about booking hotel room for event",
       "questionType": "completion-and-matching",
       "questions": [
@@ -109,7 +109,7 @@
     },
     {
       "sectionNumber": 2,
-      "audioUrl": "/audio/section2.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T4S2.mp3",
       "sectionTitle": "Excursions",
       "questionType": "matching-and-multiple-choice",
       "questions": [
@@ -319,7 +319,7 @@
     },
     {
       "sectionNumber": 3,
-      "audioUrl": "/audio/section3.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T4S3.mp3",
       "sectionTitle": "Children's Literature Discussion",
       "questionType": "multiple-choice-and-matching",
       "questions": [
@@ -512,7 +512,7 @@
     },
     {
       "sectionNumber": 4,
-      "audioUrl": "/audio/section4.mp3",
+      "audioUrl": "/questions/audio/book14 audios/C14T4S4.mp3",
       "sectionTitle": "The hunt for sunken settlements and ancient shipwrecks",
       "questionType": "completion",
       "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
