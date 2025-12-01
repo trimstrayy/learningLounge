@@ -27,11 +27,11 @@
 				{ "id": "Q13", "type": "multiple-choice", "question": "Which event raised most funds this year?", "options": ["the film show","the pancake evening","the cookery demonstration"], "correctOptionIndex": 1 },
 				{ "id": "Q14", "type": "multiple-choice", "question": "For the first evening with the French visitors host families are advised to", "options": ["take them for a walk round the town.","go to a local restaurant.","have a meal at home."], "correctOptionIndex": 2 },
 				{ "id": "Q15", "type": "multiple-choice", "question": "On Saturday evening there will be the chance to", "options": ["listen to a concert.","watch a match.","take part in a competition."], "correctOptionIndex": 0 },
-				{ "id": "Q16", "type": "matching", "question": "Farm shop", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 6, "imageUrl": "/questions/listening_questions/book19/farley-house.png" },
-				{ "id": "Q17", "type": "matching", "question": "Disabled entry", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 2, "imageUrl": "/questions/listening_questions/book19/farley-house.png" },
-				{ "id": "Q18", "type": "matching", "question": "Adventure playground", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 1, "imageUrl": "/questions/listening_questions/book19/farley-house.png" },
-				{ "id": "Q19", "type": "matching", "question": "Kitchen gardens", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 3, "imageUrl": "/questions/listening_questions/book19/farley-house.png" },
-				{ "id": "Q20", "type": "matching", "question": "The Temple of the Four Winds", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 0, "imageUrl": "/questions/listening_questions/book19/farley-house.png" }
+				{ "id": "Q16", "type": "multiple-choice", "question": "Farm shop", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 6, "imageUrl": "/questions/listening_questions/book19/farley-house.png" },
+				{ "id": "Q17", "type": "multiple-choice", "question": "Disabled entry", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 2, "imageUrl": "/questions/listening_questions/book19/farley-house.png" },
+				{ "id": "Q18", "type": "multiple-choice", "question": "Adventure playground", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 1, "imageUrl": "/questions/listening_questions/book19/farley-house.png" },
+				{ "id": "Q19", "type": "multiple-choice", "question": "Kitchen gardens", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 3, "imageUrl": "/questions/listening_questions/book19/farley-house.png" },
+				{ "id": "Q20", "type": "multiple-choice", "question": "The Temple of the Four Winds", "options": ["A","B","C","D","E","F","G","H"], "correctOptionIndex": 0, "imageUrl": "/questions/listening_questions/book19/farley-house.png" }
 			]
 		},
 		{
