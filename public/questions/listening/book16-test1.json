@@ -26,12 +26,12 @@
         { "id": "Q12", "type": "multiple-choice", "question": "Originally, Stevensons manufactured goods for", "options": ["the healthcare industry","the automotive industry","the machine tools industry"], "correctOptionIndex": 0 },
         { "id": "Q13", "type": "multiple-choice", "question": "What does the speaker say about the company premises?", "options": ["The company has recently moved.","The company has no plans to move.","The company is going to move shortly."], "correctOptionIndex": 1 },
         { "id": "Q14", "type": "multiple-choice", "question": "The programme for the work experience group includes", "options": ["time to do research.","meetings with a teacher.","talks by staff."], "correctOptionIndex": 2 },
-        { "id": "Q15", "type": "multiple-choice", "question": "Label the map: coffee room", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 7, "imageUrl": "/questions/listening_questions/book16/map-placeholder.png" },
-        { "id": "Q16", "type": "multiple-choice", "question": "Label the map: warehouse", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 2 },
-        { "id": "Q17", "type": "multiple-choice", "question": "Label the map: staff canteen", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 6 },
-        { "id": "Q18", "type": "multiple-choice", "question": "Label the map: meeting room", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 1 },
-        { "id": "Q19", "type": "multiple-choice", "question": "Label the map: human resources", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 8 },
-        { "id": "Q20", "type": "multiple-choice", "question": "Label the map: boardroom", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 0 }
+        { "id": "Q15", "type": "multiple-choice", "question": "Label the map: coffee room", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 7, "imageUrl": "/questions/listening_questions/book16/book16.png" },
+        { "id": "Q16", "type": "multiple-choice", "question": "Label the map: warehouse", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 2, "imageUrl": "/questions/listening_questions/book16/book16.png" },
+        { "id": "Q17", "type": "multiple-choice", "question": "Label the map: staff canteen", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 6, "imageUrl": "/questions/listening_questions/book16/book16.png" },
+        { "id": "Q18", "type": "multiple-choice", "question": "Label the map: meeting room", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 1, "imageUrl": "/questions/listening_questions/book16/book16.png" },
+        { "id": "Q19", "type": "multiple-choice", "question": "Label the map: human resources", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 8, "imageUrl": "/questions/listening_questions/book16/book16.png" },
+        { "id": "Q20", "type": "multiple-choice", "question": "Label the map: boardroom", "options": ["A","B","C","D","E","F","G","H","I","J"], "correctOptionIndex": 0, "imageUrl": "/questions/listening_questions/book16/book16.png" }
       ]
     },
     {

@@ -20,11 +20,43 @@ const ListeningCambridge08 = () => {
   const [unlockedBooks, setUnlockedBooks] = useState<number[]>(() => {
     try {
       const raw = localStorage.getItem("unlockedBooks");
-      return raw ? JSON.parse(raw) : [];
+      // If the user hasn't set unlockedBooks yet, default to unlocking the locked range
+      return raw ? JSON.parse(raw) : Array.from(LOCKED_RANGE);
     } catch {
-      return [];
+      return Array.from(LOCKED_RANGE);
     }
   });
+
+  // Per-test locks persisted in localStorage. Default: lock Book 13 Test 1.
+  const [lockedTests, setLockedTests] = useState<Record<string, number[]>>(() => {
+    try {
+      const raw = localStorage.getItem("lockedTests");
+      return raw ? JSON.parse(raw) : { "13": [1] };
+    } catch {
+      return { "13": [1] };
+    }
+  });
+
+  // Persist lockedTests and perform a one-time migration: if an existing stored value
+  // locks Book 13 Test 3, replace it so Test 3 is unlocked and Test 1 is locked instead.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("lockedTests");
+      if (raw) {
+        const parsed = JSON.parse(raw) as Record<string, number[]>;
+        const arr = parsed["13"] || [];
+        const has3 = Array.isArray(arr) && arr.includes(3);
+        const has1 = Array.isArray(arr) && arr.includes(1);
+        if (has3 && !has1) {
+          const migrated = { ...parsed, "13": [1] };
+          setLockedTests(migrated);
+          localStorage.setItem("lockedTests", JSON.stringify(migrated));
+          return;
+        }
+      }
+      localStorage.setItem("lockedTests", JSON.stringify(lockedTests));
+    } catch {}
+  }, [lockedTests]);
 
   useEffect(() => {
     try {
@@ -39,6 +71,11 @@ const ListeningCambridge08 = () => {
       if (prev.includes(book)) return prev.filter((b) => b !== book);
       return [...prev, book];
     });
+  };
+
+  const isTestLocked = (book: number, t: number) => {
+    const arr = lockedTests[String(book)];
+    return Array.isArray(arr) && arr.includes(t);
   };
 
   return (
@@ -112,27 +149,30 @@ const ListeningCambridge08 = () => {
                     <div className="mt-4 p-6 border rounded-lg bg-card">
                       <h3 className="font-semibold mb-4">Tests in Book {book}</h3>
                       <div className="grid gap-3 sm:grid-cols-2">
-                        {tests.map((t) => (
-                          <div key={t} className={cn("p-4 border rounded", locked && "opacity-50") }>
-                            <div className="flex items-center justify-between mb-3">
-                              <div>
-                                <div className="font-semibold">Test {t}</div>
-                                <div className="text-sm text-muted-foreground">4 sections • 40 questions</div>
-                              </div>
-                              <div>
-                                <Button
-                                  onClick={() => {
-                                    if (!locked) navigate(`/test/listening/book${book}-test${t}`);
-                                  }}
-                                  size="sm"
-                                  disabled={locked}
-                                >
-                                  {locked ? "Locked" : "Begin"}
-                                </Button>
+                        {tests.map((t) => {
+                          const testLocked = locked || isTestLocked(book, t);
+                          return (
+                            <div key={t} className={cn("p-4 border rounded", testLocked && "opacity-50") }>
+                              <div className="flex items-center justify-between mb-3">
+                                <div>
+                                  <div className="font-semibold">Test {t}</div>
+                                  <div className="text-sm text-muted-foreground">4 sections • 40 questions</div>
+                                </div>
+                                <div>
+                                  <Button
+                                    onClick={() => {
+                                      if (!testLocked) navigate(`/test/listening/book${book}-test${t}`);
+                                    }}
+                                    size="sm"
+                                    disabled={testLocked}
+                                  >
+                                    {testLocked ? "Locked" : "Begin"}
+                                  </Button>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   )}

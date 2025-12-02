@@ -100,12 +100,12 @@
     "Q30": "F",
     "Q31": "Irrigation",
     "Q32": "Women",
-    "Q33": "Wire(s)",
-    "Q34": "Seed(s)",
+    "Q33": ["Wire","Wires"],
+    "Q34": ["Seed","Seeds"],
     "Q35": "Posts",
     "Q36": "Transport",
     "Q37": "Preservation",
-    "Q38": "Fish(es)",
+    "Q38": ["Fish","Fishes"],
     "Q39": "Bees",
     "Q40": "design"
   }

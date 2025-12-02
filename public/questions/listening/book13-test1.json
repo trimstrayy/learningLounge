@@ -106,12 +106,12 @@
 		"Q31": "crow",
 		"Q32": "cliffs",
 		"Q33": "speed",
-		"Q34": "brain(s)",
+		"Q34": ["brain","brains"],
 		"Q35": "food",
-		"Q36": ["behaviour(s)","behavior(s)"],
+		"Q36": ["behaviour","behaviours","behavior","behaviors"],
 		"Q37": "new",
 		"Q38": "stress",
-		"Q39": "tail(s)",
+		"Q39": ["tail","tails"],
 		"Q40": "permanent"
 	}
 }

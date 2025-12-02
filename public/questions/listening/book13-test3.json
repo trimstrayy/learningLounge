@@ -74,7 +74,7 @@
 		"Q2": "bike",
 		"Q3": "parking",
 		"Q4": ["30","thirty"],
-		"Q5": ["weekend","weekends","weekend(s)"],
+		"Q5": ["weekend","weekends"],
 		"Q6": "cinema",
 		"Q7": "hospital",
 		"Q8": "dentist",
@@ -104,14 +104,14 @@
 		"Q29": "A",
 		"Q30": "E",
 
-		"Q31": "tongue(s)",
+		"Q31": ["tongue","tongues"],
 		"Q32": "plants",
 		"Q33": "snakes",
 		"Q34": "sky",
-		"Q35": "partner(s)",
+		"Q35": ["partner","partners"],
 		"Q36": "contact",
 		"Q37": "protection",
-		"Q38": "tail(s)",
+		"Q38": ["tail","tails"],
 		"Q39": "steps",
 		"Q40": ["injury","injuries","injury/ injuries"]
 	}
