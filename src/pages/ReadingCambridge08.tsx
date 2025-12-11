@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Lock, Unlock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -9,38 +9,55 @@ import Footer from "@/components/Footer";
 
 const ReadingCambridge08 = () => {
   const navigate = useNavigate();
-  const [selectedTest, setSelectedTest] = useState<number | null>(null);
+  const [selectedBook, setSelectedBook] = useState<number | null>(null);
 
-  const tests = [
-    {
-      id: 1,
-      title: "Test 1",
-      passages: "3 passages",
-      questions: "40 questions",
-      duration: "60 minutes"
-    },
-    {
-      id: 2,
-      title: "Test 2",
-      passages: "3 passages",
-      questions: "40 questions",
-      duration: "60 minutes"
-    },
-    {
-      id: 3,
-      title: "Test 3",
-      passages: "3 passages",
-      questions: "40 questions",
-      duration: "60 minutes"
-    },
-    {
-      id: 4,
-      title: "Test 4",
-      passages: "3 passages",
-      questions: "40 questions",
-      duration: "60 minutes"
+  const books = [13, 14, 15, 16, 17, 18, 19];
+  const tests = [1, 2, 3, 4];
+  const LOCKED_RANGE = new Set([16, 17, 18, 19]);
+
+  const [unlockedBooks, setUnlockedBooks] = useState<number[]>(() => {
+    try {
+      const stored = localStorage.getItem("readingUnlockedBooks");
+      return stored ? JSON.parse(stored) : Array.from(LOCKED_RANGE);
+    } catch {
+      return Array.from(LOCKED_RANGE);
     }
-  ];
+  });
+
+  const [lockedTests, setLockedTests] = useState<Record<string, number[]>>(() => {
+    try {
+      const stored = localStorage.getItem("readingLockedTests");
+      return stored ? JSON.parse(stored) : { "13": [1] };
+    } catch {
+      return { "13": [1] };
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("readingUnlockedBooks", JSON.stringify(unlockedBooks));
+    } catch {}
+  }, [unlockedBooks]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("readingLockedTests", JSON.stringify(lockedTests));
+    } catch {}
+  }, [lockedTests]);
+
+  const isBookLocked = (book: number) => LOCKED_RANGE.has(book) && !unlockedBooks.includes(book);
+
+  const toggleLock = (book: number) => {
+    setUnlockedBooks((prev) => {
+      if (prev.includes(book)) return prev.filter((b) => b !== book);
+      return [...prev, book];
+    });
+  };
+
+  const isTestLocked = (book: number, test: number) => {
+    const locked = lockedTests[String(book)];
+    return Array.isArray(locked) && locked.includes(test);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -48,81 +65,95 @@ const ReadingCambridge08 = () => {
       <main className="pt-24 pb-20">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-3 text-foreground">Cambridge IELTS 08</h1>
+            <h1 className="text-4xl font-bold mb-3 text-foreground">IELTS MOCK TESTS</h1>
             <p className="text-lg text-muted-foreground">Reading Tests - Official Cambridge Materials</p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {tests.map((test) => {
-              const isSelected = selectedTest === test.id;
+          <div className="space-y-4">
+            {books.map((book) => {
+              const expanded = selectedBook === book;
+              const locked = isBookLocked(book);
               return (
-                <div key={test.id}>
+                <div key={book}>
                   <Card
                     className={cn(
-                      "cursor-pointer transition-all hover:shadow-lg",
-                      isSelected && "ring-2 ring-primary"
+                      "transition-all hover:shadow-lg",
+                      expanded && "ring-2 ring-primary",
+                      locked ? "opacity-60" : "cursor-pointer",
+                      !locked && "hover:shadow-lg"
                     )}
-                    onClick={() => setSelectedTest(isSelected ? null : test.id)}
+                    onClick={() => {
+                      if (!locked) {
+                        setSelectedBook(expanded ? null : book);
+                      }
+                    }}
                   >
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
-                        <span>{test.title}</span>
-                        <ChevronRight
-                          className={cn(
-                            "transition-transform",
-                            isSelected && "rotate-90"
-                          )}
-                        />
+                        <div className="flex items-center gap-3">
+                          <span>Book {book}</span>
+                          {locked && <span className="text-xs text-muted-foreground">(Locked)</span>}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            aria-label={locked ? "Unlock book" : "Lock book"}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              toggleLock(book);
+                            }}
+                            className="inline-flex items-center p-1 rounded hover:bg-muted"
+                          >
+                            {locked ? <Unlock className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
+                          </button>
+                          <ChevronRight className={cn("transition-transform", expanded && "rotate-90")} />
+                        </div>
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2 text-sm text-muted-foreground">
-                        <p>📝 {test.questions}</p>
-                        <p>📁 {test.passages}</p>
-                        <p>⏱️ {test.duration}</p>
+                        <p>4 tests • 3 passages each • 40 questions</p>
+                        <p>Academic Reading • 60 minutes</p>
                       </div>
                     </CardContent>
                   </Card>
 
-                  {isSelected && (
+                  {expanded && (
                     <div className="mt-4 p-6 border rounded-lg bg-card">
-                      <h3 className="font-semibold mb-4">Test Format</h3>
-                      <div className="space-y-3 text-sm text-muted-foreground mb-6">
-                        <p>• <strong>Passage 1:</strong> Texts on general interest topics suitable for candidates</p>
-                        <p>• <strong>Passage 2:</strong> Topics of general academic interest</p>
-                        <p>• <strong>Passage 3:</strong> More complex texts on academic subjects</p>
+                      <h3 className="font-semibold mb-4">Tests in Book {book}</h3>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {tests.map((test) => {
+                          const testLocked = locked || isTestLocked(book, test);
+                          return (
+                            <div key={test} className={cn("p-4 border rounded", testLocked && "opacity-50") }>
+                              <div className="flex items-center justify-between mb-3">
+                                <div>
+                                  <div className="font-semibold">Test {test}</div>
+                                  <div className="text-sm text-muted-foreground">3 passages • 40 questions</div>
+                                </div>
+                                <div>
+                                  <Button
+                                    onClick={() => {
+                                      if (!testLocked) {
+                                        navigate(`/test/reading/book${book}-test${test}`);
+                                      }
+                                    }}
+                                    size="sm"
+                                    disabled={testLocked}
+                                  >
+                                    {testLocked ? "Locked" : "Begin"}
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                      <div className="bg-muted/50 p-4 rounded mb-6">
-                        <p className="text-sm"><strong>Note:</strong> You have 60 minutes to complete all three passages. There is no extra time for transferring answers, so write your answers directly on the answer sheet.</p>
-                      </div>
-                      <Button
-                        className="w-full"
-                        onClick={() => navigate(`/test/reading/cambridge-08-test-${test.id}`)}
-                      >
-                        Start {test.title}
-                      </Button>
                     </div>
                   )}
                 </div>
               );
             })}
-          </div>
-
-          <div className="mt-12 p-6 bg-muted/50 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">About Cambridge IELTS 08 Reading Tests</h2>
-            <div className="space-y-3 text-sm text-muted-foreground">
-              <p>These reading tests are from the official Cambridge IELTS 08 practice materials. Each test contains three reading passages with a variety of question types.</p>
-              <p><strong>Question Types Include:</strong></p>
-              <ul className="list-disc list-inside space-y-1 ml-4">
-                <li>Multiple choice questions</li>
-                <li>True/False/Not Given statements</li>
-                <li>Matching headings to paragraphs</li>
-                <li>Sentence completion</li>
-                <li>Summary completion</li>
-                <li>Matching information</li>
-              </ul>
-              <p className="mt-4"><strong>Scoring:</strong> Each correct answer receives one mark. Scores out of 40 are converted to the IELTS 9-band scale.</p>
-            </div>
           </div>
         </div>
       </main>

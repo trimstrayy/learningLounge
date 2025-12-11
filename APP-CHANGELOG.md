@@ -102,8 +102,7 @@ Notes:
 ---
 
 # Book15 audio mapping — generated 2025-12-01
-
-Found audio files in `public/questions/audio/book15 audios/`:
+audio files in `public/questions/audio/book15 audios/`:
 
 - IELTS15_test1_audio1 [@cambridgematerials].mp3
 - IELTS15_test1_audio2 [@cambridgematerials].mp3
