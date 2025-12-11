@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, GraduationCap } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import UserMenu from "@/components/UserMenu";
 
 const navItems = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Testimonials", path: "/testimonials" },
   { name: "Mock IELTS Tests", path: "/mock-tests" },
-  { name: "Contact", path: "/contact" },
 ];
 
 const Navbar = () => {
@@ -42,6 +38,9 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+            <div className="ml-2">
+              <UserMenu />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -77,6 +76,9 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
+              <div className="px-4 py-2">
+                <UserMenu />
+              </div>
             </div>
           </div>
         )}

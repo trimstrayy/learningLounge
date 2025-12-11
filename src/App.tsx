@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { AuthProvider } from "./hooks/useAuth";
 import PageTransition from "./components/PageTransition";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -18,19 +19,22 @@ import ReadingCambridge08 from "./pages/ReadingCambridge08";
 import SpeakingTest from "./pages/SpeakingTest";
 import SpeakingCambridge08 from "./pages/SpeakingCambridge08";
 import WritingCambridge08 from "./pages/WritingCambridge08";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <AuthProvider>
       <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <InnerRoutes />
-      </BrowserRouter>
-    </TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <InnerRoutes />
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
@@ -43,6 +47,7 @@ function InnerRoutes() {
     <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+        <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
         <Route path="/about" element={<PageTransition><About /></PageTransition>} />
         <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
         <Route path="/mock-tests" element={<PageTransition><MockTests /></PageTransition>} />
