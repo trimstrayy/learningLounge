@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -147,7 +149,7 @@ const ListeningTest = () => {
     return undefined;
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!test) return;
 
     // Calculate score
@@ -177,13 +179,26 @@ const ListeningTest = () => {
       wrongQuestions
     });
 
-    const payload = {
-      testId: test.testId,
-      answers,
-      submittedAt: new Date().toISOString(),
-      score: { correctCount, totalQuestions, band }
-    };
-    console.log("Test submitted", payload);
+    // Save to database if user is logged in
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { error } = await supabase.from('test_results').insert({
+        user_id: user.id,
+        test_id: test.testId,
+        test_type: 'listening',
+        correct_count: correctCount,
+        total_questions: totalQuestions,
+        band_score: band,
+        duration_minutes: durationMinutes,
+        answers: answers
+      });
+      
+      if (error) {
+        console.error('Failed to save test result:', error);
+        toast({ title: "Warning", description: "Test completed but failed to save results", variant: "destructive" });
+      }
+    }
+
     setSubmitted(true);
     setShowResultsModal(true);
   };

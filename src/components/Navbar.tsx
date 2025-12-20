@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import UserMenu from "@/components/UserMenu";
 
 const navItems = [
+  { name: "Dashboard", path: "/dashboard" },
   { name: "Mock IELTS Tests", path: "/mock-tests" },
 ];
 

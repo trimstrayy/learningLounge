@@ -41,6 +41,45 @@ export type Database = {
         }
         Relationships: []
       }
+      test_results: {
+        Row: {
+          answers: Json | null
+          band_score: number
+          correct_count: number
+          created_at: string
+          duration_minutes: number | null
+          id: string
+          test_id: string
+          test_type: string
+          total_questions: number
+          user_id: string
+        }
+        Insert: {
+          answers?: Json | null
+          band_score?: number
+          correct_count?: number
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          test_id: string
+          test_type: string
+          total_questions?: number
+          user_id: string
+        }
+        Update: {
+          answers?: Json | null
+          band_score?: number
+          correct_count?: number
+          created_at?: string
+          duration_minutes?: number | null
+          id?: string
+          test_id?: string
+          test_type?: string
+          total_questions?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
