@@ -21,6 +21,7 @@ import SpeakingCambridge08 from "./pages/SpeakingCambridge08";
 import WritingCambridge08 from "./pages/WritingCambridge08";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import ScoreCalculator from "./pages/ScoreCalculator";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ function InnerRoutes() {
         <Route path="/" element={<PageTransition><MockTests /></PageTransition>} />
         <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
         <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
+        <Route path="/score-calculator" element={<PageTransition><ScoreCalculator /></PageTransition>} />
         <Route path="/about" element={<PageTransition><About /></PageTransition>} />
         <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
         <Route path="/mock-tests" element={<PageTransition><MockTests /></PageTransition>} />

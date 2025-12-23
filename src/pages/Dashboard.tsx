@@ -2,10 +2,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Headphones, Mic, PenTool, TrendingUp, Clock, Target } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BookOpen, Headphones, Mic, PenTool, TrendingUp, Clock, Target, Edit2, Check, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 
 interface TestResult {
   id: string;
@@ -22,26 +25,59 @@ const Dashboard = () => {
   const { user, loading } = useAuth();
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [loadingResults, setLoadingResults] = useState(true);
+  const [targetScore, setTargetScore] = useState<number>(7.0);
+  const [editingTarget, setEditingTarget] = useState(false);
+  const [tempTarget, setTempTarget] = useState("");
 
   useEffect(() => {
-    const fetchResults = async () => {
+    const fetchData = async () => {
       if (!user) return;
       
-      const { data, error } = await supabase
+      // Fetch test results
+      const { data: results } = await supabase
         .from('test_results')
         .select('*')
         .order('created_at', { ascending: false });
       
-      if (!error && data) {
-        setTestResults(data);
+      if (results) setTestResults(results);
+
+      // Fetch profile for target score
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('target_score')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (profile?.target_score) {
+        setTargetScore(Number(profile.target_score));
       }
+      
       setLoadingResults(false);
     };
 
-    if (user) {
-      fetchResults();
-    }
+    if (user) fetchData();
   }, [user]);
+
+  const handleSaveTarget = async () => {
+    const newScore = parseFloat(tempTarget);
+    if (isNaN(newScore) || newScore < 1 || newScore > 9) {
+      toast({ title: "Invalid score", description: "Please enter a score between 1 and 9", variant: "destructive" });
+      return;
+    }
+
+    const { error } = await supabase
+      .from('profiles')
+      .update({ target_score: newScore })
+      .eq('user_id', user?.id);
+
+    if (error) {
+      toast({ title: "Error", description: "Failed to update target score", variant: "destructive" });
+    } else {
+      setTargetScore(newScore);
+      setEditingTarget(false);
+      toast({ title: "Success", description: "Target score updated!" });
+    }
+  };
 
   if (loading) {
     return (
@@ -153,7 +189,37 @@ const Dashboard = () => {
                 <Target className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-primary">7.0</div>
+                {editingTarget ? (
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      min={1}
+                      max={9}
+                      step={0.5}
+                      value={tempTarget}
+                      onChange={(e) => setTempTarget(e.target.value)}
+                      className="w-20 h-8 text-lg"
+                    />
+                    <Button size="icon" variant="ghost" className="h-8 w-8" onClick={handleSaveTarget}>
+                      <Check className="h-4 w-4 text-green-600" />
+                    </Button>
+                    <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => setEditingTarget(false)}>
+                      <X className="h-4 w-4 text-destructive" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold text-primary">{targetScore.toFixed(1)}</span>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="h-6 w-6"
+                      onClick={() => { setTempTarget(targetScore.toString()); setEditingTarget(true); }}
+                    >
+                      <Edit2 className="h-3 w-3 text-muted-foreground" />
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
