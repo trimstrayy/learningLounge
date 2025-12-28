@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
+import { Switch } from '@/components/ui/switch';
 import { Loader2, BookOpen } from 'lucide-react';
 
 const loginSchema = z.object({
@@ -40,6 +41,7 @@ export default function Auth() {
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
   const [signupConfirmPassword, setSignupConfirmPassword] = useState('');
+  const [isTeacher, setIsTeacher] = useState(false);
   const [signupErrors, setSignupErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -106,7 +108,8 @@ export default function Auth() {
     }
 
     setIsSubmitting(true);
-    const { error } = await signUp(signupEmail, signupPassword, signupName);
+    const role = isTeacher ? 'consultancy_owner' : 'student';
+    const { error } = await signUp(signupEmail, signupPassword, signupName, role);
     setIsSubmitting(false);
 
     if (error) {
@@ -131,7 +134,7 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 px-4">
-      <Card className="w-full max-w-md shadow-lg border-border/50">
+      <Card className={`w-full max-w-md shadow-lg border-border/50 ${isTeacher ? 'border-red-500 bg-red-50' : ''}`}>
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
             <div className="p-3 rounded-full bg-primary/10">
@@ -198,6 +201,14 @@ export default function Auth() {
             </TabsContent>
 
             <TabsContent value="signup">
+              <div className="flex items-center justify-start space-x-2 mb-4">
+                <Switch
+                  id="teacher-mode"
+                  checked={isTeacher}
+                  onCheckedChange={setIsTeacher}
+                />
+                <Label htmlFor="teacher-mode">Register as Teacher</Label>
+              </div>
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="signup-name">Full Name</Label>
