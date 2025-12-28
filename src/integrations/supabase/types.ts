@@ -14,6 +14,242 @@ export type Database = {
   }
   public: {
     Tables: {
+      assignment_submissions: {
+        Row: {
+          assignment_id: string
+          created_at: string
+          id: string
+          status: string
+          student_id: string
+          submitted_at: string | null
+          test_result_id: string | null
+        }
+        Insert: {
+          assignment_id: string
+          created_at?: string
+          id?: string
+          status?: string
+          student_id: string
+          submitted_at?: string | null
+          test_result_id?: string | null
+        }
+        Update: {
+          assignment_id?: string
+          created_at?: string
+          id?: string
+          status?: string
+          student_id?: string
+          submitted_at?: string | null
+          test_result_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assignment_submissions_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "assignments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assignment_submissions_test_result_id_fkey"
+            columns: ["test_result_id"]
+            isOneToOne: false
+            referencedRelation: "test_results"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assignments: {
+        Row: {
+          book_id: string
+          classroom_id: string
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          section_ids: string[] | null
+          teacher_id: string
+          test_id: string
+          test_type: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          book_id: string
+          classroom_id: string
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          section_ids?: string[] | null
+          teacher_id: string
+          test_id: string
+          test_type: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          book_id?: string
+          classroom_id?: string
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          section_ids?: string[] | null
+          teacher_id?: string
+          test_id?: string
+          test_type?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assignments_classroom_id_fkey"
+            columns: ["classroom_id"]
+            isOneToOne: false
+            referencedRelation: "classrooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      classroom_memberships: {
+        Row: {
+          classroom_id: string
+          id: string
+          joined_at: string
+          student_id: string
+        }
+        Insert: {
+          classroom_id: string
+          id?: string
+          joined_at?: string
+          student_id: string
+        }
+        Update: {
+          classroom_id?: string
+          id?: string
+          joined_at?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "classroom_memberships_classroom_id_fkey"
+            columns: ["classroom_id"]
+            isOneToOne: false
+            referencedRelation: "classrooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      classroom_posts: {
+        Row: {
+          attachment_url: string | null
+          classroom_id: string
+          content: string | null
+          created_at: string
+          id: string
+          post_type: string
+          teacher_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          attachment_url?: string | null
+          classroom_id: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          post_type: string
+          teacher_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          attachment_url?: string | null
+          classroom_id?: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          post_type?: string
+          teacher_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "classroom_posts_classroom_id_fkey"
+            columns: ["classroom_id"]
+            isOneToOne: false
+            referencedRelation: "classrooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      classrooms: {
+        Row: {
+          consultancy_id: string
+          created_at: string
+          description: string | null
+          id: string
+          invite_code: string
+          name: string
+          teacher_id: string
+          updated_at: string
+        }
+        Insert: {
+          consultancy_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          invite_code?: string
+          name: string
+          teacher_id: string
+          updated_at?: string
+        }
+        Update: {
+          consultancy_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          invite_code?: string
+          name?: string
+          teacher_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "classrooms_consultancy_id_fkey"
+            columns: ["consultancy_id"]
+            isOneToOne: false
+            referencedRelation: "consultancies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      consultancies: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          owner_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          owner_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          owner_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -114,6 +350,18 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      is_classroom_member: {
+        Args: { _classroom_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_classroom_teacher: {
+        Args: { _classroom_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_consultancy_owner: {
+        Args: { _consultancy_id: string; _user_id: string }
         Returns: boolean
       }
     }

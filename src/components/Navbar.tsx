@@ -6,6 +6,7 @@ import UserMenu from "@/components/UserMenu";
 
 const navItems = [
   { name: "Dashboard", path: "/dashboard" },
+  { name: "Classrooms", path: "/classrooms" },
   { name: "Mock IELTS Tests", path: "/mock-tests" },
   { name: "Score Calculator", path: "/score-calculator" },
 ];
