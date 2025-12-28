@@ -4,7 +4,7 @@
   "sections": [
     {
       "sectionNumber": 1,
-      "audioUrl": "/audio/section1.mp3",
+      "audioUrl": "/questions/audio/book18 audios/cam18-test2-part1.mp3",
       "sectionTitle": "Working at Milo’s Restaurants",
       "questionType": "completion",
       "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer (Questions 1-5). Complete the table below. Write ONE WORD AND/ OR A NUMBER for each answer (Questions 6-10).",
@@ -73,7 +73,7 @@
     },
     {
       "sectionNumber": 2,
-      "audioUrl": "/audio/section2.mp3",
+      "audioUrl": "/questions/audio/book18 audios/cam18-test2-part2.mp3",
       "sectionTitle": "Housing Development Plan",
       "questionType": "multiple-choice-and-map-matching",
       "questions": [
@@ -158,7 +158,7 @@
     },
     {
       "sectionNumber": 3,
-      "audioUrl": "/audio/section3.mp3",
+      "audioUrl": "/questions/audio/book18 audios/cam18-test2-part3.mp3",
       "sectionTitle": "Presentation on the subject of the tsunami in the Pacific in 2011",
       "questionType": "multiple-choice-and-matching",
       "questions": [
@@ -341,7 +341,7 @@
     },
     {
       "sectionNumber": 4,
-      "audioUrl": "/audio/section4.mp3",
+      "audioUrl": "/questions/audio/book18 audios/cam18-test2-part4.mp3",
       "sectionTitle": "Pockets",
       "questionType": "completion",
       "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",

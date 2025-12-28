@@ -4,7 +4,7 @@
   "sections": [
     {
       "sectionNumber": 1,
-      "audioUrl": "/audio/book17-test4-sec1.mp3",
+      "audioUrl": "/questions/audio/book17 audios/cam17-test4-part1.mp3",
       "questions": [
         { "id": "Q1", "type": "form-completion", "question": "Cleaning all surfaces and cleaning the (1) _______ throughout the apartment", "answerLength": "short" },
         { "id": "Q2", "type": "form-completion", "question": "Every week: Cleaning the (2) _______", "answerLength": "short" },
@@ -20,7 +20,7 @@
     },
     {
       "sectionNumber": 2,
-      "audioUrl": "/audio/book17-test4-sec2.mp3",
+      "audioUrl": "/questions/audio/book17 audios/cam17-test4-part2.mp3",
       "questions": [
         { "id": "Q11", "type": "multiple-choice", "question": "Many hotel managers are unaware that their staff often", "options": ["a lack of training.","long hours.","low pay."] },
         { "id": "Q12", "type": "multiple-choice", "question": "What is the impact of high staff turnover on managers?", "options": ["an increased workload","low morale","an inability to meet targets"] },
@@ -36,7 +36,7 @@
     },
     {
       "sectionNumber": 3,
-      "audioUrl": "/audio/book17-test4-sec3.mp3",
+      "audioUrl": "/questions/audio/book17 audios/cam17-test4-part3.mp3",
       "questions": [
         { "id": "Q21", "type": "multiple-choice", "multipleSelect": true, "question": "Which TWO points do Thomas and Jeanne make about Thomas’s sporting activities at school? (21)", "options": ["He should have felt more positive about them.","The training was too challenging for him.","He could have worked harder at them.","His parents were disappointed in him.","His fellow students admired him."] },
         { "id": "Q22", "type": "multiple-choice", "multipleSelect": true, "question": "Which TWO points do Thomas and Jeanne make about Thomas’s sporting activities at school? (22)", "options": ["He should have felt more positive about them.","The training was too challenging for him.","He could have worked harder at them.","His parents were disappointed in him.","His fellow students admired him."] },
@@ -52,7 +52,7 @@
     },
     {
       "sectionNumber": 4,
-      "audioUrl": "/audio/book17-test4-sec4.mp3",
+      "audioUrl": "/questions/audio/book17 audios/cam17-test4-part4.mp3",
       "questions": [
         { "id": "Q31", "type": "form-completion", "question": "Color described as (31) _______", "answerLength": "short" },
         { "id": "Q32", "type": "form-completion", "question": "Very (32) _______ compared to refined sugar", "answerLength": "short" },
