@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Headphones, BookOpen, PenTool, Mic, Clock, FileText, Target, CheckCircle, X } from "lucide-react";
+import { Headphones, BookOpen, PenTool, Mic, Clock, FileText, CheckCircle } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const testTypes = [
@@ -81,7 +79,6 @@ const testTypes = [
 
 const MockTests = () => {
   const [searchParams] = useSearchParams();
-  const [selectedTest, setSelectedTest] = useState<string | null>(null);
   const [completedTests, setCompletedTests] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -103,22 +100,6 @@ const MockTests = () => {
     localStorage.setItem('completedTests', JSON.stringify([...completedTests]));
   }, [completedTests]);
 
-  const handleTestClick = (testId: string) => {
-    setSelectedTest(selectedTest === testId ? null : testId);
-  };
-
-  const closeDetails = () => setSelectedTest(null);
-
-  // lock body scroll on mobile modal open
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    if (selectedTest && isMobile) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => { document.body.style.overflow = prev; };
-    }
-  }, [selectedTest]);
-
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -132,28 +113,19 @@ const MockTests = () => {
             </p>
           </div>
 
-          {/* Test Overview Cards with Inline Details */}
+          {/* Test Overview Cards */}
       <div className="grid md:grid-cols-4 gap-4 mb-12">
         {testTypes.map((test, index) => {
               const Icon = test.icon;
               const isCompleted = completedTests.has(test.id);
-              const isSelected = selectedTest === test.id;
-              const dimmed = selectedTest !== null && !isSelected;
-              const isLastInRow = (index + 1) % 4 === 0;
-              const isLastCard = index === testTypes.length - 1;
               
               return (
-                <>
+                <Link key={test.id} to={test.link}>
                   <Card 
-                    key={test.id} 
                     className={cn(
-                      "p-4 border-2 cursor-pointer transition-all",
-                      isCompleted && "border-green-500 bg-green-50 dark:bg-green-950/20",
-                      isSelected && !isCompleted && "border-primary shadow-lg rounded-b-none",
-                      !isCompleted && !isSelected && "border-border hover:shadow-md hover:border-primary/50",
-                      dimmed && "opacity-50"
+                      "p-4 border-2 cursor-pointer transition-all hover:shadow-md hover:border-primary/50",
+                      isCompleted && "border-green-500 bg-green-50 dark:bg-green-950/20"
                     )}
-                    onClick={() => handleTestClick(test.id)}
                   >
                     <div className="flex items-center gap-3 mb-2">
                       <div className={cn(
@@ -189,127 +161,10 @@ const MockTests = () => {
                       </div>
                     )}
                   </Card>
-
-                  {/* Inline expanded panel removed — expanded details render below the grid to avoid shifting cards */}
-                </>
+                </Link>
               );
             })}
           </div>
-
-          {/* Expanded details panel (renders below the grid so cards keep their positions) */}
-          {selectedTest && (() => {
-            const activeTest = testTypes.find((t) => t.id === selectedTest);
-            if (!activeTest) return null;
-            const Icon = activeTest.icon;
-            return (
-              <div className="md:col-span-4 animate-fade-in mt-4">
-                <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
-                  <Card className="border-2 border-primary overflow-hidden bg-card rounded-t-none">
-                    <div className="px-6 py-6 space-y-4">
-                      <p className="text-muted-foreground leading-relaxed">{activeTest.description}</p>
-
-                      <div>
-                        <h4 className="font-semibold text-card-foreground mb-2 flex items-center gap-2">
-                          <Target className="w-4 h-4" />
-                          Test Format
-                        </h4>
-                        <ul className="space-y-2 text-muted-foreground">
-                          {activeTest.format.map((item, idx) => (
-                            <li key={idx} className="flex gap-2">
-                              <span className="text-primary mt-1">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold text-card-foreground mb-2">Scoring</h4>
-                        <p className="text-muted-foreground">{activeTest.scoring}</p>
-                      </div>
-
-                      <Link to={activeTest.link || `/test/${activeTest.id}`}>
-                        <Button className="mt-4 bg-primary hover:bg-primary/90">
-                          {activeTest.id === 'listening' ? 'View Tests' : `Start ${activeTest.title}`}
-                        </Button>
-                      </Link>
-                    </div>
-                  </Card>
-                </motion.div>
-              </div>
-            );
-          })()}
-
-          {/* Mobile modal: fixed, viewport-centered overlay (center of device screen, not page length) */}
-          {selectedTest && typeof window !== 'undefined' && window.innerWidth < 768 && (() => {
-            const activeTest = testTypes.find((t) => t.id === selectedTest);
-            if (!activeTest) return null;
-
-            const modal = (
-              <div className="fixed inset-0 z-50">
-                {/* backdrop */}
-                <div className="absolute inset-0 bg-black/50" onClick={closeDetails} />
-
-                {/* dialog fixed to viewport center (portal prevents ancestor transform issues) */}
-                <motion.div
-                  initial={{ opacity: 0, translateY: 12 }}
-                  animate={{ opacity: 1, translateY: 0 }}
-                  exit={{ opacity: 0, translateY: 12 }}
-                  transition={{ duration: 0.18 }}
-                  role="dialog"
-                  aria-modal="true"
-                  onClick={(e) => e.stopPropagation()}
-                  className="fixed left-0 right-0 bottom-0 z-50 w-full px-4"
-                >
-                  {/* Bottom sheet style for small screens: full width, rounded top, and constrained height with internal scroll */}
-                  <Card className="p-4 overflow-hidden rounded-t-xl shadow-xl">
-                    <div className="relative">
-                      <button aria-label="Close" onClick={closeDetails} className="absolute top-3 right-3 p-2 rounded-full hover:bg-gray-100">
-                        <X className="w-5 h-5" />
-                      </button>
-                      <div className="mx-auto w-full max-w-none">
-                        <div className="h-1.5 w-12 bg-muted rounded-full mx-auto mb-3" />
-                        {/* Scrollable content */}
-                        <div className="pt-2 overflow-y-auto max-h-[80vh] pr-2">
-                          <h3 className="text-xl font-semibold mb-2">{activeTest.title}</h3>
-                          <p className="text-sm text-muted-foreground mb-4">{activeTest.duration} • {activeTest.questions}</p>
-                          <p className="text-muted-foreground leading-relaxed mb-4">{activeTest.description}</p>
-                          <div>
-                            <h4 className="font-semibold text-card-foreground mb-2 flex items-center gap-2">
-                              <Target className="w-4 h-4" />
-                              Test Format
-                            </h4>
-                            <ul className="space-y-2 text-muted-foreground">
-                              {activeTest.format.map((item, idx) => (
-                                <li key={idx} className="flex gap-2">
-                                  <span className="text-primary mt-1">•</span>
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div className="mt-4">
-                            <h4 className="font-semibold text-card-foreground mb-2">Scoring</h4>
-                            <p className="text-muted-foreground">{activeTest.scoring}</p>
-                          </div>
-                          <div className="mt-4 text-right">
-                            <Link to={activeTest.link || `/test/${activeTest.id}`}>
-                              <Button className="bg-primary hover:bg-primary/90">
-                                {activeTest.id === 'listening' ? 'View Tests' : `Start ${activeTest.title}`}
-                              </Button>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              </div>
-            );
-
-            // render modal into document.body to avoid ancestor transform/layout affecting fixed positioning
-            return createPortal(modal, document.body);
-          })()}
         </div>
       </main>
       <Footer />
