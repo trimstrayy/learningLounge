@@ -1,0 +1,47 @@
+{
+  "testId": "book13-test2",
+  "title": "IELTS Reading Book 13 Test 2",
+  "sections": [
+    {
+      "sectionNumber": 1,
+      "passageTitle": "The dynamics of musical collaboration",
+      "passageContent": "A Collaboration is a central aspect of modern music-making, and it takes many forms. Musicians are often required to work with others, whether in traditional ensembles, studio settings or increasingly via remote collaborations over the internet. In collaborative contexts, participants must balance individual expression with the unified outcome of the group.\n\nB A study by Helena Searle looked at how jazz trios coordinate during improvisation. She observed non-verbal cues such as eye contact and subtle gestures, which allowed band members to anticipate changes and adapt. Searle concluded that in successful trios, members develop a shared vocabulary and a sense of mutual trust, enabling spontaneous, coherent performances.\n\nC Not all collaborative efforts are seamless; conflict can arise over leadership, creative control and differing musical visions. The role of a producer or director can mitigate these issues, providing a framework for decision-making. But in some cases, heavy-handed direction can stifle creativity and cause resentment.\n\nD Technological advancements are reshaping collaborations. Digital audio workstations (DAWs) and collaborative platforms permit musicians to share high-quality tracks and project settings across distances, while cloud-based tools facilitate version control and asynchronous contributions. This technological shift enables people to collaborate beyond geographic constraints, but it also raises questions about the nature of live performance and the authenticity of the resulting work.\n\nE Despite challenges, collaborative music practices can enhance individual creativity, lead to innovative genres and build communities of practice that support artists’ careers.",
+      "questions": [
+        { "id": "Q1", "type": "multiple-choice", "question": "In collaborative music, musicians must always prioritise group harmony over individual expression.", "options": ["True", "False", "Not Given"] },
+        { "id": "Q2", "type": "multiple-choice", "question": "Searle observed that jazz trios use verbal discussion to coordinate improvisation.", "options": ["True", "False", "Not Given"] },
+        { "id": "Q3", "type": "multiple-choice", "question": "Producers always help to avoid conflicts in collaborative projects.", "options": ["True", "False", "Not Given"] },
+        { "id": "Q4", "type": "form-completion", "question": "Complete: In successful jazz trios, members develop a shared _______.", "answerLength": "1 word" }
+      ]
+    },
+    {
+      "sectionNumber": 2,
+      "passageTitle": "The resilience of urban ecosystems",
+      "passageContent": "A Cities are complex ecosystems that can show surprising resilience in the face of change. Urban planners and ecologists increasingly argue for designing cities that can adapt to social, economic and environmental pressures.\n\nB One aspect of resilient cities is the incorporation of green infrastructure such as parks, green roofs and restored rivers, which can reduce flooding, improve air quality and provide recreational spaces for residents.\n\nC Community involvement is essential to the success of such projects; residents’ participation in planning and maintenance ensures long-term sustainability.\n\nD However, socio-economic inequalities can undermine resilience; wealthier neighborhoods often receive more investment and better maintenance than poorer areas. Ensuring equitable access to green infrastructure is therefore a critical policy challenge.\n\nE Case studies from multiple countries show that combining expert planning with community stewardship can yield significant improvements in urban resilience.",
+      "questions": [
+        { "id": "Q5", "type": "multiple-choice", "question": "The main idea of paragraph A is: ", "options": ["Cities are fragile and cannot adapt to change.", "Resilient design can help cities cope with various pressures.", "Green infrastructure is expensive and not widely used.", "Community involvement is more important than planning."] },
+        { "id": "Q6", "type": "multiple-choice", "question": "According to paragraph B, green infrastructure can: ", "options": ["Increase flooding in urban areas.", "Improve air quality and reduce flooding.", "Replace the need for community involvement.", "Make parks and rivers unnecessary."] },
+        { "id": "Q7", "type": "form-completion", "question": "Complete: To succeed, green projects require _______ from local people.", "answerLength": "1 word" }
+      ]
+    },
+    {
+      "sectionNumber": 3,
+      "passageTitle": "Reconceptualising leadership",
+      "passageContent": "A Leadership in the modern world is moving away from hierarchical models toward more collaborative and adaptive styles. This reflects changes in organisations where flexibility and rapid response are valued.\n\nB Some theorists argue that leadership should be distributed across teams rather than concentrated in a single leader, allowing for diverse input and shared responsibility.\n\nC This approach can improve decision-making and foster innovation by drawing on a wider range of perspectives, though it may also create challenges of coordination.\n\nD Effective distributed leadership relies on clear communication, mutual trust and aligned goals. Training leaders and teams to operate in this manner is crucial for success.",
+      "questions": [
+        { "id": "Q8", "type": "multiple-choice", "question": "Which feature does the author emphasize about distributed leadership?", "options": ["It reduces responsibility for all team members.", "It hinders innovation through lack of clear decision-making.", "It can improve decision-making by including diverse input.", "It is a return to traditional hierarchical styles."] },
+        { "id": "Q9", "type": "form-completion", "question": "Complete: Distributed leadership depends on clear _______.", "answerLength": "1 word" }
+      ]
+    }
+  ],
+  "answers": {
+    "Q1": "C",
+    "Q2": "B",
+    "Q3": "B",
+    "Q4": "Vocabulary",
+    "Q5": "B",
+    "Q6": "B",
+    "Q7": "Participation",
+    "Q8": "C",
+    "Q9": "Communication"
+  }
+}
