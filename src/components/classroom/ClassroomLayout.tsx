@@ -28,7 +28,7 @@ export default function ClassroomLayout({ children }: ClassroomLayoutProps) {
   const isTeacher = role === 'consultancy_owner' || role === 'super_admin';
 
   const navItems = [
-    { name: 'Home', path: '/', icon: Home },
+    { name: 'Dashboard', path: '/dashboard', icon: Home },
     { name: 'Classrooms', path: '/classrooms', icon: GraduationCap },
     { name: 'Mock Tests', path: '/mock-tests', icon: BookOpen },
     ...(isTeacher ? [{ name: 'Analytics', path: '/classrooms/analytics', icon: BarChart3 }] : []),
