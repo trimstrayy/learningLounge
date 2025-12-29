@@ -1,3 +1,40 @@
+# LearningLounge - IELTS Practice Platform
+
+**LearningLounge** is a comprehensive IELTS preparation platform that combines interactive test practice with classroom management features. Built with React, TypeScript, and Supabase, it offers students and teachers a complete learning ecosystem.
+
+## Key Features
+
+### 🎯 **IELTS Test Practice**
+- **Complete Test Coverage**: Listening, Reading, Writing, and Speaking modules
+- **Official Cambridge Materials**: Tests from Cambridge IELTS books (8-16)
+- **Interactive Interface**: Real-time feedback, progress tracking, and detailed scoring
+- **Multimedia Support**: Audio files for listening tests, images for writing tasks
+
+### 👥 **Classroom Management**
+- **Multi-Role System**: Students, Teachers, Consultancy Owners, and Super Admins
+- **Classroom Creation**: Teachers can create and manage virtual classrooms
+- **Assignment System**: Assign specific tests or sections to students
+- **Progress Monitoring**: Track student performance and completion rates
+
+### 📊 **Progress & Analytics**
+- **Test Results Storage**: Comprehensive scoring and answer tracking
+- **Band Score Calculation**: Automatic IELTS band score computation
+- **Personalized Learning**: Target score setting and progress visualization
+
+### 🔐 **Security & Access Control**
+- **Row-Level Security**: Database-level access control via Supabase RLS
+- **Role-Based Permissions**: Hierarchical access system with proper authorization
+- **Secure Authentication**: Supabase Auth integration with persistent sessions
+
+## Technical Stack
+- **Frontend**: React 18 + TypeScript + Vite
+- **UI Framework**: Shadcn/UI + Tailwind CSS
+- **Backend**: Supabase (PostgreSQL + Auth + Storage)
+- **State Management**: React hooks with local storage persistence
+- **Build Tools**: Vite for fast development and optimized production builds
+
+---
+
 (# Book13 audio mapping — generated 2025-12-01).
 
 audio files in `public/questions/audio/book13 audios/`:
@@ -155,3 +192,7 @@ Notes:
 
 
 
+
+
+
+//system

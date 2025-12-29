@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
-import { Loader2, BookOpen } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const loginSchema = z.object({
   email: z.string().trim().email({ message: 'Invalid email address' }),
@@ -137,9 +137,12 @@ export default function Auth() {
       <Card className={`w-full max-w-md shadow-lg border-border/50 ${isTeacher ? 'border-red-500 bg-red-50' : ''}`}>
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
-            <div className="p-3 rounded-full bg-primary/10">
-              <BookOpen className="h-8 w-8 text-primary" />
-            </div>
+            <button
+              onClick={() => navigate('/mock-tests')}
+              className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg p-2"
+            >
+              <img src="/logo.jpg" alt="Lexora Logo" className="h-12 w-auto" />
+            </button>
           </div>
           <div>
             <CardTitle className="text-2xl font-bold text-foreground">

@@ -50,7 +50,7 @@ function InnerRoutes() {
   return (
     <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><MockTests /></PageTransition>} />
+        <Route path="/" element={<PageTransition><Dashboard /></PageTransition>} />
         <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
         <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
         <Route path="/score-calculator" element={<PageTransition><ScoreCalculator /></PageTransition>} />
