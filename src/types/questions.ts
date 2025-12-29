@@ -63,21 +63,19 @@ export interface ReadingTest {
 }
 
 // Writing schema
-export interface WritingTask1 {
-  type: "visual-report";
+export interface WritingTask {
+  taskId: number;
+  type: string;
+  instruction: string;
   prompt: string;
   imageUrl?: string;
-}
-
-export interface WritingTask2 {
-  type: "essay";
-  prompt: string;
+  minWords: number;
+  suggestedTime: string;
 }
 
 export interface WritingTest {
   testId: string;
-  task1: WritingTask1;
-  task2: WritingTask2;
+  writing: WritingTask[];
 }
 
 // Speaking schema
