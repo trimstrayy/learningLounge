@@ -27,33 +27,30 @@ const ListeningCambridge08 = () => {
     }
   });
 
-  // Per-test locks persisted in localStorage. Default: lock Book 13 Test 1.
+  // Per-test locks persisted in localStorage. Default: no tests locked.
   const [lockedTests, setLockedTests] = useState<Record<string, number[]>>(() => {
-    try {
-      const raw = localStorage.getItem("lockedTests");
-      return raw ? JSON.parse(raw) : { "13": [1] };
-    } catch {
-      return { "13": [1] };
-    }
-  });
-
-  // Persist lockedTests and perform a one-time migration: if an existing stored value
-  // locks Book 13 Test 3, replace it so Test 3 is unlocked and Test 1 is locked instead.
-  useEffect(() => {
     try {
       const raw = localStorage.getItem("lockedTests");
       if (raw) {
         const parsed = JSON.parse(raw) as Record<string, number[]>;
-        const arr = parsed["13"] || [];
-        const has3 = Array.isArray(arr) && arr.includes(3);
-        const has1 = Array.isArray(arr) && arr.includes(1);
-        if (has3 && !has1) {
-          const migrated = { ...parsed, "13": [1] };
-          setLockedTests(migrated);
-          localStorage.setItem("lockedTests", JSON.stringify(migrated));
-          return;
+        // Migration: Remove Book 13 Test 1 from locks if it exists
+        if (parsed["13"] && Array.isArray(parsed["13"])) {
+          parsed["13"] = parsed["13"].filter((t: number) => t !== 1);
+          if (parsed["13"].length === 0) {
+            delete parsed["13"];
+          }
         }
+        return parsed;
       }
+      return {};
+    } catch {
+      return {};
+    }
+  });
+
+  // Persist lockedTests
+  useEffect(() => {
+    try {
       localStorage.setItem("lockedTests", JSON.stringify(lockedTests));
     } catch {}
   }, [lockedTests]);

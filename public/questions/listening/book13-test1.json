@@ -36,8 +36,7 @@
 		},
 		{
 			"sectionNumber": 3,
-			"audioUrl": null,
-			"expectedAudioFilename": "IELTS13-Tests1-4CD1Track_03.mp3",
+			"audioUrl": "/questions/audio/book13 audios/Cam13-Test1-Section3.mp3",
 			"questions": [
 				{ "id": "Q21", "type": "multiple-choice", "question": "Why is Jack interested in investigating seed germination?", "options": ["He may do a module on a related topic later on.", "He wants to have a career in plant science.", "He is thinking of choosing this topic for his dissertation."], "correctOptionIndex": 0 },
 				{ "id": "Q22", "type": "multiple-choice", "question": "Jack and Emma agree the main advantage of their present experiment is that it can be", "options": ["described very easily.", "carried out inside the laboratory.", "completed in the time available."], "correctOptionIndex": 2 },
