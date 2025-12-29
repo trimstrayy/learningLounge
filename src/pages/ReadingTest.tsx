@@ -33,6 +33,7 @@ interface Section {
   audioUrl?: string;
   passageTitle?: string;
   passageContent?: string;
+  passageText?: string; // legacy field support
   questions: Question[];
 }
 
@@ -400,16 +401,16 @@ const ReadingTest = () => {
                     )}
 
                     {/* Reading Passage */}
-                    {(sec.passageTitle || sec.passageContent) && (
+                    {(sec.passageTitle || sec.passageContent || sec.passageText) && (
                       <div className="space-y-2">
                         <h4 className="font-semibold text-base">{sec.passageTitle ?? `Passage ${sec.sectionNumber}`}</h4>
-                        {sec.passageContent && (
+                        {(sec.passageContent || sec.passageText) && (
                           <p className="text-sm text-muted-foreground whitespace-pre-line">
-                            {sec.passageContent}
+                            {sec.passageContent ?? sec.passageText}
                           </p>
                         )}
                       </div>
-                    )}
+                    )} 
 
                     {/* Questions */}
                     <div className="space-y-4">
@@ -530,8 +531,8 @@ const ReadingTest = () => {
                               </div>
                             )}
 
-                            {/* Form Completion */}
-                            {q.type === "form-completion" && (
+                            {/* Form Completion and Short Answer */}
+                            {(q.type === "form-completion" || q.type === "short-answer") && (
                               <Input
                                 type="text"
                                 placeholder="Type your answer here"
@@ -540,6 +541,31 @@ const ReadingTest = () => {
                                 className="max-w-md"
                               />
                             )}
+
+                            {/* True/False/Not Given (or Yes/No/Not given) */}
+                            {q.type === "true-false-not-given" && (() => {
+                              const candidateAns = (test as any)?.answers?.[q.id] ?? findCorrectAnswer(q.id);
+                              const useYesNo = typeof candidateAns === 'string' && /^(yes|no)$/i.test(candidateAns);
+                              const tfOptions = useYesNo ? ["Yes", "No", "Not given"] : ["True", "False", "Not given"];
+
+                              return (
+                                <div className="space-y-2">
+                                  {tfOptions.map((opt, i) => (
+                                    <label key={i} className="flex items-center gap-2 text-sm cursor-pointer">
+                                      <input
+                                        type="radio"
+                                        name={q.id}
+                                        value={opt}
+                                        checked={answers[q.id] === opt}
+                                        onChange={(e) => setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
+                                        className="accent-primary"
+                                      />
+                                      <span>{opt}</span>
+                                    </label>
+                                  ))}
+                                </div>
+                              );
+                            })()}
 
                             {/* Show Correct Answer */}
                             {showAnswers && correctAns && (
