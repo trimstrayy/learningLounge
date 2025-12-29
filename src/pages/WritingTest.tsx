@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "@/components/Footer";
 import TestHeader from "@/components/TestHeader";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,7 @@ const countWords = (value: string) =>
 
 const WritingTest = () => {
   const navigate = useNavigate();
+  const { testId } = useParams();
   const { toast } = useToast();
   const durationMinutes = 60;
 
@@ -70,7 +71,7 @@ const WritingTest = () => {
 
   useEffect(() => {
     setLoadingTest(true);
-    loadQuestions("writing", "writing-sample-1")
+    loadQuestions("writing", testId!)
       .then((data) => setTest(data as WritingTestData))
       .catch((error) => {
         console.error("Failed to load writing test", error);
@@ -81,7 +82,7 @@ const WritingTest = () => {
         setTest(null);
       })
       .finally(() => setLoadingTest(false));
-  }, [toast]);
+  }, [toast, testId]);
 
   useEffect(() => {
     try {
@@ -305,16 +306,18 @@ const WritingTest = () => {
               <Card className="p-6 border-border">
                 <div className="flex items-center justify-between mb-3">
                   <h2 className="text-2xl font-bold text-primary">Task 1</h2>
-                  <span className="text-sm text-muted-foreground">Minimum 150 words • 20 minutes</span>
+                  <span className="text-sm text-muted-foreground">Minimum {test.writing[0].minWords} words • {test.writing[0].suggestedTime}</span>
                 </div>
                 <div className="p-4 bg-secondary/50 rounded-lg">
-                  <p className="text-card-foreground leading-relaxed">
-                    <strong>Task:</strong> {test.task1.prompt}
+                  <p className="text-card-foreground leading-relaxed mb-3">
+                    <strong>Instruction:</strong> {test.writing[0].instruction}
                   </p>
-                  <p className="text-muted-foreground mt-3">Summarise the visual information and highlight key comparisons.</p>
-                  {test.task1.imageUrl ? (
+                  <p className="text-card-foreground leading-relaxed">
+                    <strong>Task:</strong> {test.writing[0].prompt}
+                  </p>
+                  {test.writing[0].imageUrl ? (
                     <div className="mt-4 p-4 bg-muted rounded-lg text-center">
-                      <img src={test.task1.imageUrl} alt="Task 1 visual" className="mx-auto max-w-full" />
+                      <img src={test.writing[0].imageUrl} alt="Task 1 visual" className="mx-auto max-w-full" />
                     </div>
                   ) : (
                     <div className="mt-4 p-8 bg-muted rounded-lg text-center">
@@ -327,12 +330,24 @@ const WritingTest = () => {
               <Card className="p-6 border-border">
                 <div className="flex items-center justify-between mb-3">
                   <h2 className="text-2xl font-bold text-primary">Task 2</h2>
-                  <span className="text-sm text-muted-foreground">Minimum 250 words • 40 minutes</span>
+                  <span className="text-sm text-muted-foreground">Minimum {test.writing[1].minWords} words • {test.writing[1].suggestedTime}</span>
                 </div>
                 <div className="p-4 bg-secondary/50 rounded-lg">
-                  <p className="text-card-foreground leading-relaxed">
-                    <strong>Prompt:</strong> {test.task2.prompt}
+                  <p className="text-card-foreground leading-relaxed mb-3">
+                    <strong>Instruction:</strong> {test.writing[1].instruction}
                   </p>
+                  <p className="text-card-foreground leading-relaxed">
+                    <strong>Task:</strong> {test.writing[1].prompt}
+                  </p>
+                  {test.writing[1].imageUrl ? (
+                    <div className="mt-4 p-4 bg-muted rounded-lg text-center">
+                      <img src={test.writing[1].imageUrl} alt="Task 2 visual" className="mx-auto max-w-full" />
+                    </div>
+                  ) : (
+                    <div className="mt-4 p-8 bg-muted rounded-lg text-center">
+                      <p className="text-muted-foreground italic">[No image provided for this task]</p>
+                    </div>
+                  )}
                 </div>
               </Card>
 

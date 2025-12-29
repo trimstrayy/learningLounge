@@ -4,7 +4,7 @@
   "sections": [
     {
       "sectionNumber": 1,
-      "audioUrl": "/audio/book17-test1-sec1.mp3",
+      "audioUrl": "/questions/audio/book17 audios/cam17-test1-part1.mp3",
       "questions": [
         { "id": "Q1", "type": "form-completion", "question": "making sure the beach does not have (1) _______", "answerLength": "short" },
         { "id": "Q2", "type": "form-completion", "question": "no (2) _______", "answerLength": "short" },
@@ -20,7 +20,7 @@
     },
     {
       "sectionNumber": 2,
-      "audioUrl": "/audio/book17-test1-sec2.mp3",
+      "audioUrl": "/questions/audio/book17 audios/cam17-test1-part2.mp3",
       "questions": [
         { "id": "Q11", "type": "multiple-choice", "question": "What is the maximum number of people who can stand on each side of the boat?", "options": ["9","15","18"], "correctOptionIndex": 0 },
         { "id": "Q12", "type": "multiple-choice", "question": "What color are the tour boats?", "options": ["dark red","jet black","light green"], "correctOptionIndex": 2 },
@@ -39,7 +39,7 @@
     },
     {
       "sectionNumber": 3,
-      "audioUrl": "/audio/book17-test1-sec3.mp3",
+      "audioUrl": "/questions/audio/book17 audios/cam17-test1-part3.mp3",
       "questions": [
         { "id": "Q21", "type": "multiple-choice", "question": "What problem did both Diana and Tim have when arranging their work experience?", "options": ["making initial contact with suitable farms","organising transport to and from the farm","finding a placement for the required length of time"], "correctOptionIndex": 0 },
         { "id": "Q22", "type": "multiple-choice", "question": "Tim was pleased to be able to help", "options": ["a lamb that had a broken leg","a sheep that was having difficulty giving birth","a newly born lamb that was having trouble feeding"], "correctOptionIndex": 1 },
@@ -56,7 +56,7 @@
     },
     {
       "sectionNumber": 4,
-      "audioUrl": "/audio/book17-test1-sec4.mp3",
+      "audioUrl": "/questions/audio/book17 audios/cam17-test1-part4.mp3",
       "questions": [
         { "id": "Q31", "type": "form-completion", "question": "Mazes are a type of (31) _______", "answerLength": "short" },
         { "id": "Q32", "type": "form-completion", "question": "(32) _______ is needed to navigate through a maze", "answerLength": "short" },

@@ -413,7 +413,7 @@ const ListeningTest = () => {
                             <div className="font-medium mb-2">
                               Question {q.id}
                             </div>
-                            <div className="text-sm mb-3">{q.question}</div>
+                            <div className="text-sm mb-3 whitespace-pre-line">{q.question}</div>
 
                             {/* Image for question if available */}
                             {(q as any).imageUrl && (
@@ -507,7 +507,7 @@ const ListeningTest = () => {
                             )}
 
                             {/* Form Completion */}
-                            {q.type === "form-completion" && (
+                            {q.type === "form-completion" && (q as any).answerLength !== "none" && (
                               <Input
                                 type="text"
                                 placeholder="Type your answer here"

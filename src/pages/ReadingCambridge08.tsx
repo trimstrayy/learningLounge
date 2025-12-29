@@ -26,10 +26,10 @@ const ReadingCambridge08 = () => {
 
   const [lockedTests, setLockedTests] = useState<Record<string, number[]>>(() => {
     try {
-      const stored = localStorage.getItem("readingLockedTests");
-      return stored ? JSON.parse(stored) : { "13": [1] };
+      const stored = localStorage.getItem("readingLockedTestsV2");
+      return stored ? JSON.parse(stored) : {};
     } catch {
-      return { "13": [1] };
+      return {};
     }
   });
 
@@ -41,7 +41,7 @@ const ReadingCambridge08 = () => {
 
   useEffect(() => {
     try {
-      localStorage.setItem("readingLockedTests", JSON.stringify(lockedTests));
+      localStorage.setItem("readingLockedTestsV2", JSON.stringify(lockedTests));
     } catch {}
   }, [lockedTests]);
 

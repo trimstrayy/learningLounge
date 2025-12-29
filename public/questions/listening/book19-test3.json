@@ -4,7 +4,7 @@
 	"sections": [
 		{
 			"sectionNumber": 1,
-			"audioUrl": "/audio/book19-test3-sec1.mp3",
+			"audioUrl": "/questions/audio/book19 audios/cam19-test3-part1.m4a",
 			"questions": [
 				{ "id": "Q1", "type": "form-completion", "question": "Kite Place – near the (1) __________", "answerLength": "short" },
 				{ "id": "Q2", "type": "form-completion", "question": "Fish market: cross the (2) __________ and turn right", "answerLength": "short" },
@@ -20,7 +20,7 @@
 		},
 		{
 			"sectionNumber": 2,
-			"audioUrl": "/audio/book19-test3-sec2.mp3",
+			"audioUrl": "/questions/audio/book19 audios/cam19-test3-part2.m4a",
 			"questions": [
 				{ "id": "Q11", "type": "matching", "question": "Superheroes workshop", "options": ["involves painting and drawing","will be led by a prize-winning author","is aimed at children with a disability","involves a drama activity","focuses on new relationships","is aimed at a specific age group","explores an unhappy feeling","raises awareness of a particular culture"], "correctOptionIndex": 2 },
 				{ "id": "Q12", "type": "matching", "question": "Just do it workshop", "options": ["involves painting and drawing","will be led by a prize-winning author","is aimed at children with a disability","involves a drama activity","focuses on new relationships","is aimed at a specific age group","explores an unhappy feeling","raises awareness of a particular culture"], "correctOptionIndex": 3 },
@@ -36,7 +36,7 @@
 		},
 		{
 			"sectionNumber": 3,
-			"audioUrl": "/audio/book19-test3-sec3.mp3",
+			"audioUrl": "/questions/audio/book19 audios/cam19-test3-part3.m4a",
 			"questions": [
 				{ "id": "Q21", "type": "multiple-choice", "question": "How does Clare feel about the students in her Year 12 science class?", "options": ["worried that they are not making progress","challenged by their poor behaviour in class","frustrated at their lack of interest in the subject"], "correctOptionIndex": 2 },
 				{ "id": "Q22", "type": "multiple-choice", "question": "How does Jake react to Clare's suggestion about an experiment based on children's diet?", "options": ["He is concerned the results might not be meaningful.","He feels some data might be difficult to obtain.","He suspects the conclusions might be upsetting."], "correctOptionIndex": 1 },
@@ -52,7 +52,7 @@
 		},
 		{
 			"sectionNumber": 4,
-			"audioUrl": "/audio/book19-test3-sec4.mp3",
+			"audioUrl": "/questions/audio/book19 audios/cam19-test3-part4.m4a",
 			"questions": [
 				{ "id": "Q31", "type": "form-completion", "question": "Fibres from some (31) __________ during washing", "answerLength": "short" },
 				{ "id": "Q32", "type": "form-completion", "question": "They cause injuries to the (32) __________ of wildlife", "answerLength": "short" },
