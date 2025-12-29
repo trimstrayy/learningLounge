@@ -409,6 +409,17 @@ const ReadingTest = () => {
                             {sec.passageContent ?? sec.passageText}
                           </p>
                         )}
+
+                        {/* Section image/diagram if available */}
+                        {(sec as any).imageUrl && (
+                          <div className="mb-4">
+                            <img
+                              src={(sec as any).imageUrl}
+                              alt={`Section ${sec.sectionNumber} diagram`}
+                              className="max-w-full h-auto rounded border"
+                            />
+                          </div>
+                        )} 
                       </div>
                     )} 
 
