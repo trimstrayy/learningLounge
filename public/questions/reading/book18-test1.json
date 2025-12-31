@@ -57,10 +57,10 @@
         { "id": "Q34", "type": "form-completion", "question": "Any pressurised material that could cause ______ should be removed.", "answerLength": "1 word" },
         { "id": "Q35", "type": "form-completion", "question": "Operators that become ______ are unlikely to prioritise removing their satellites from space.", "answerLength": "1 word" },
         { "id": "Q36", "type": "multiple-choice", "question": "Match each statement with the correct person: Knowing the exact location of space junk would help prevent any possible danger.", "options": ["A Carolin Frueh","B Holger Krag","C Marlon Sorge","D  Moriba Jah"] },
-        { "id": "Q37", "type": "multiple-choice", "question": "Space should be available to everyone and should be preserved for the future.", "options": ["A Carolin Frueh","B Holger Krag","C Marlon Sorge","D  Moriba Jah"] },
-        { "id": "Q38", "type": "multiple-choice", "question": "A recommendation regarding satellites is widely ignored.", "options":["A Carolin Frueh","B Holger Krag","C Marlon Sorge","D  Moriba Jah"] },
-        { "id": "Q39", "type": "multiple-choice", "question": "There is conflicting information about where some satellites are in space.", "options": ["A Carolin Frueh","B Holger Krag","C Marlon Sorge","D  Moriba Jah"] },
-        { "id": "Q40", "type": "multiple-choice", "question": "There is a risk we will not be able to undo the damage that occurs in space.", "options": ["A Carolin Frueh","B Holger Krag","C Marlon Sorge","D  Moriba Jah"] }
+        { "id": "Q37", "type": "multiple-choice", "question": "Match each statement with the correct person: Space should be available to everyone and should be preserved for the future.", "options": ["A Carolin Frueh","B Holger Krag","C Marlon Sorge","D  Moriba Jah"] },
+        { "id": "Q38", "type": "multiple-choice", "question": "Match each statement with the correct person: A recommendation regarding satellites is widely ignored.", "options":["A Carolin Frueh","B Holger Krag","C Marlon Sorge","D  Moriba Jah"] },
+        { "id": "Q39", "type": "multiple-choice", "question": "Match each statement with the correct person: There is conflicting information about where some satellites are in space.", "options": ["A Carolin Frueh","B Holger Krag","C Marlon Sorge","D  Moriba Jah"] },
+        { "id": "Q40", "type": "multiple-choice", "question": "Match each statement with the correct person: There is a risk we will not be able to undo the damage that occurs in space.", "options": ["A Carolin Frueh","B Holger Krag","C Marlon Sorge","D  Moriba Jah"] }
       ]
     }
   ],
@@ -71,7 +71,7 @@
     "Q4": "Pesticides",
     "Q5": "Journeys",
     "Q6": "Producers",
-    "Q7": "Flavor/Flavour",
+    "Q7": "Flavour",
     "Q8": "True",
     "Q9": "Not given",
     "Q10": "False",
