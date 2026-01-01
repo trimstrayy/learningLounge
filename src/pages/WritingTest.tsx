@@ -40,6 +40,7 @@ const WritingTest = () => {
   const [loadingTest, setLoadingTest] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);
+  const [currentTask, setCurrentTask] = useState<1 | 2>(1);
 
   const clearStoredDrafts = useCallback(() => {
     try {
@@ -59,6 +60,7 @@ const WritingTest = () => {
     setTask2ImageData(null);
     setSubmitted(false);
     setShowResultsModal(false);
+    setCurrentTask(1);
   }, []);
 
   const session = useTestSession(durationMinutes, {
@@ -215,6 +217,18 @@ const WritingTest = () => {
     navigate("/mock-tests");
   };
 
+  const handleNextTask = () => {
+    if (currentTask === 1) {
+      setCurrentTask(2);
+    }
+  };
+
+  const handlePreviousTask = () => {
+    if (currentTask === 2) {
+      setCurrentTask(1);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <TestHeader title={test?.testId ? `IELTS Writing — ${test.testId}` : "IELTS Writing Test"} session={session} />
@@ -303,119 +317,145 @@ const WritingTest = () => {
                 </div>
               </Card>
 
-              <Card className="p-6 border-border">
-                <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-2xl font-bold text-primary">Task 1</h2>
-                  <span className="text-sm text-muted-foreground">Minimum {test.writing[0].minWords} words • {test.writing[0].suggestedTime}</span>
-                </div>
-                <div className="p-4 bg-secondary/50 rounded-lg">
-                  <p className="text-card-foreground leading-relaxed mb-3">
-                    <strong>Instruction:</strong> {test.writing[0].instruction}
-                  </p>
-                  <p className="text-card-foreground leading-relaxed">
-                    <strong>Task:</strong> {test.writing[0].prompt}
-                  </p>
-                  {test.writing[0].imageUrl ? (
-                    <div className="mt-4 p-4 bg-muted rounded-lg text-center">
-                      <img src={test.writing[0].imageUrl} alt="Task 1 visual" className="mx-auto max-w-full" />
+              {currentTask === 1 && (
+                <>
+                  <Card className="p-6 border-border">
+                    <div className="flex items-center justify-between mb-3">
+                      <h2 className="text-2xl font-bold text-primary">Task 1</h2>
+                      <span className="text-sm text-muted-foreground">Minimum {test.writing[0].minWords} words • {test.writing[0].suggestedTime}</span>
                     </div>
-                  ) : (
-                    <div className="mt-4 p-8 bg-muted rounded-lg text-center">
-                      <p className="text-muted-foreground italic">[No image provided for this task]</p>
+                    <div className="p-4 bg-secondary/50 rounded-lg">
+                      <p className="text-card-foreground leading-relaxed mb-3">
+                        <strong>Instruction:</strong> {test.writing[0].instruction}
+                      </p>
+                      <p className="text-card-foreground leading-relaxed">
+                        <strong>Task:</strong> {test.writing[0].prompt}
+                      </p>
+                      {test.writing[0].imageUrl ? (
+                        <div className="mt-4 p-4 bg-muted rounded-lg text-center">
+                          <img src={test.writing[0].imageUrl} alt="Task 1 visual" className="mx-auto max-w-full" />
+                        </div>
+                      ) : (
+                        <div className="mt-4 p-8 bg-muted rounded-lg text-center">
+                          <p className="text-muted-foreground italic">[No image provided for this task]</p>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </Card>
+                  </Card>
 
-              <Card className="p-6 border-border">
-                <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-2xl font-bold text-primary">Task 2</h2>
-                  <span className="text-sm text-muted-foreground">Minimum {test.writing[1].minWords} words • {test.writing[1].suggestedTime}</span>
-                </div>
-                <div className="p-4 bg-secondary/50 rounded-lg">
-                  <p className="text-card-foreground leading-relaxed mb-3">
-                    <strong>Instruction:</strong> {test.writing[1].instruction}
-                  </p>
-                  <p className="text-card-foreground leading-relaxed">
-                    <strong>Task:</strong> {test.writing[1].prompt}
-                  </p>
-                  {test.writing[1].imageUrl ? (
-                    <div className="mt-4 p-4 bg-muted rounded-lg text-center">
-                      <img src={test.writing[1].imageUrl} alt="Task 2 visual" className="mx-auto max-w-full" />
-                    </div>
-                  ) : (
-                    <div className="mt-4 p-8 bg-muted rounded-lg text-center">
-                      <p className="text-muted-foreground italic">[No image provided for this task]</p>
-                    </div>
-                  )}
-                </div>
-              </Card>
+                  <Card className="p-6 border-border">
+                    <h3 className="text-xl font-semibold text-card-foreground mb-4">Task 1 Answer</h3>
 
-              <Card className="p-6 border-border">
-                <h3 className="text-xl font-semibold text-card-foreground mb-4">Your Answers</h3>
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium text-card-foreground mb-2">Type your answer</label>
+                      <Textarea
+                        value={task1Answer}
+                        onChange={(event) => setTask1Answer(event.target.value)}
+                        placeholder="Type your Task 1 answer here (minimum 150 words)"
+                        className="min-h-[200px] font-mono text-base"
+                      />
+                      <p className="text-sm text-muted-foreground mt-2">Word count: {task1WordCount}</p>
 
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-card-foreground mb-2">Task 1 — Type your answer</label>
-                  <Textarea
-                    value={task1Answer}
-                    onChange={(event) => setTask1Answer(event.target.value)}
-                    placeholder="Type your Task 1 answer here (minimum 150 words)"
-                    className="min-h-[200px] font-mono text-base"
-                  />
-                  <p className="text-sm text-muted-foreground mt-2">Word count: {task1WordCount}</p>
-
-                  <label className="block text-sm font-medium text-card-foreground mb-2 mt-4">Or upload a photo of your handwritten Task 1 answer</label>
-                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
-                    <input type="file" accept="image/*" onChange={(event) => handleImageUpload(event, 1)} className="hidden" id="image-upload-1" />
-                    <label htmlFor="image-upload-1" className="cursor-pointer">
-                      <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                      <p className="text-muted-foreground mb-2">{task1ImageData ? "Image uploaded" : "Click to upload image for Task 1"}</p>
-                      <p className="text-sm text-muted-foreground">PNG, JPG up to 10MB</p>
-                    </label>
-                    {task1ImageData && (
-                      <div className="mt-4">
-                        <img src={task1ImageData} alt="Task 1 upload" className="mx-auto max-w-full" />
+                      <label className="block text-sm font-medium text-card-foreground mb-2 mt-4">Or upload a photo of your handwritten answer</label>
+                      <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
+                        <input type="file" accept="image/*" onChange={(event) => handleImageUpload(event, 1)} className="hidden" id="image-upload-1" />
+                        <label htmlFor="image-upload-1" className="cursor-pointer">
+                          <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                          <p className="text-muted-foreground mb-2">{task1ImageData ? "Image uploaded" : "Click to upload image for Task 1"}</p>
+                          <p className="text-sm text-muted-foreground">PNG, JPG up to 10MB</p>
+                        </label>
+                        {task1ImageData && (
+                          <div className="mt-4">
+                            <img src={task1ImageData} alt="Task 1 upload" className="mx-auto max-w-full" />
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
+                  </Card>
+
+                  <div className="flex flex-col sm:flex-row justify-end gap-3">
+                    <Button variant="outline" onClick={handleExitToMockTests}>
+                      Exit Test
+                    </Button>
+                    <Button size="lg" onClick={handleNextTask} className="sm:w-auto">
+                      Next Task
+                    </Button>
                   </div>
-                </div>
+                </>
+              )}
 
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-card-foreground mb-2">Task 2 — Type your answer</label>
-                  <Textarea
-                    value={task2Answer}
-                    onChange={(event) => setTask2Answer(event.target.value)}
-                    placeholder="Type your Task 2 answer here (minimum 250 words)"
-                    className="min-h-[200px] font-mono text-base"
-                  />
-                  <p className="text-sm text-muted-foreground mt-2">Word count: {task2WordCount}</p>
+              {currentTask === 2 && (
+                <>
+                  <Card className="p-6 border-border">
+                    <div className="flex items-center justify-between mb-3">
+                      <h2 className="text-2xl font-bold text-primary">Task 2</h2>
+                      <span className="text-sm text-muted-foreground">Minimum {test.writing[1].minWords} words • {test.writing[1].suggestedTime}</span>
+                    </div>
+                    <div className="p-4 bg-secondary/50 rounded-lg">
+                      <p className="text-card-foreground leading-relaxed mb-3">
+                        <strong>Instruction:</strong> {test.writing[1].instruction}
+                      </p>
+                      <p className="text-card-foreground leading-relaxed">
+                        <strong>Task:</strong> {test.writing[1].prompt}
+                      </p>
+                      {test.writing[1].imageUrl ? (
+                        <div className="mt-4 p-4 bg-muted rounded-lg text-center">
+                          <img src={test.writing[1].imageUrl} alt="Task 2 visual" className="mx-auto max-w-full" />
+                        </div>
+                      ) : (
+                        <div className="mt-4 p-8 bg-muted rounded-lg text-center">
+                          <p className="text-muted-foreground italic">[No image provided for this task]</p>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
 
-                  <label className="block text-sm font-medium text-card-foreground mb-2 mt-4">Or upload a photo of your handwritten Task 2 answer</label>
-                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
-                    <input type="file" accept="image/*" onChange={(event) => handleImageUpload(event, 2)} className="hidden" id="image-upload-2" />
-                    <label htmlFor="image-upload-2" className="cursor-pointer">
-                      <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                      <p className="text-muted-foreground mb-2">{task2ImageData ? "Image uploaded" : "Click to upload image for Task 2"}</p>
-                      <p className="text-sm text-muted-foreground">PNG, JPG up to 10MB</p>
-                    </label>
-                    {task2ImageData && (
-                      <div className="mt-4">
-                        <img src={task2ImageData} alt="Task 2 upload" className="mx-auto max-w-full" />
+                  <Card className="p-6 border-border">
+                    <h3 className="text-xl font-semibold text-card-foreground mb-4">Task 2 Answer</h3>
+
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium text-card-foreground mb-2">Type your answer</label>
+                      <Textarea
+                        value={task2Answer}
+                        onChange={(event) => setTask2Answer(event.target.value)}
+                        placeholder="Type your Task 2 answer here (minimum 250 words)"
+                        className="min-h-[200px] font-mono text-base"
+                      />
+                      <p className="text-sm text-muted-foreground mt-2">Word count: {task2WordCount}</p>
+
+                      <label className="block text-sm font-medium text-card-foreground mb-2 mt-4">Or upload a photo of your handwritten answer</label>
+                      <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
+                        <input type="file" accept="image/*" onChange={(event) => handleImageUpload(event, 2)} className="hidden" id="image-upload-2" />
+                        <label htmlFor="image-upload-2" className="cursor-pointer">
+                          <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                          <p className="text-muted-foreground mb-2">{task2ImageData ? "Image uploaded" : "Click to upload image for Task 2"}</p>
+                          <p className="text-sm text-muted-foreground">PNG, JPG up to 10MB</p>
+                        </label>
+                        {task2ImageData && (
+                          <div className="mt-4">
+                            <img src={task2ImageData} alt="Task 2 upload" className="mx-auto max-w-full" />
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                </div>
-              </Card>
+                    </div>
+                  </Card>
 
-              <div className="flex flex-col sm:flex-row justify-end gap-3">
-                <Button variant="outline" onClick={handleExitToMockTests}>
-                  Exit Test
-                </Button>
-                <Button size="lg" onClick={handleSubmit} className="sm:w-auto">
-                  <CheckCircle className="w-5 h-5 mr-2" />
-                  Submit Answers
-                </Button>
-              </div>
+                  <div className="flex flex-col sm:flex-row justify-between gap-3">
+                    <Button variant="outline" onClick={handlePreviousTask}>
+                      Previous Task
+                    </Button>
+                    <div className="flex gap-3">
+                      <Button variant="outline" onClick={handleExitToMockTests}>
+                        Exit Test
+                      </Button>
+                      <Button size="lg" onClick={handleSubmit} className="sm:w-auto">
+                        <CheckCircle className="w-5 h-5 mr-2" />
+                        Submit Answers
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>
