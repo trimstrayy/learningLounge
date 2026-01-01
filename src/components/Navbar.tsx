@@ -21,8 +21,14 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <img src="/logo-full.svg" alt="The Learning Lounge" className="w-10 h-10 object-contain rounded-md" />
-            <span className="font-bold text-xl text-primary">The Learning Lounge</span>
+            <img
+              src="/logo-full.svg"
+              alt="The Learning Lounge"
+              className="w-10 h-10 object-contain rounded-md"
+            />
+            <span className="font-bold text-xl text-primary">
+              The Learning Lounge
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
