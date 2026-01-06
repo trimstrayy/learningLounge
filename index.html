@@ -17,6 +17,21 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@TheLearningLounge" />
   <meta name="twitter:image" content="/logo-full.svg" />
+
+  <script type="module">
+    if (import.meta.env.PROD && import.meta.env.VITE_GA_MEASUREMENT_ID) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${import.meta.env.VITE_GA_MEASUREMENT_ID}`;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', import.meta.env.VITE_GA_MEASUREMENT_ID);
+    }
+  </script>
   </head>
 
   <body>
