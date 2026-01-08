@@ -30,12 +30,12 @@ export default function Auth() {
   const navigate = useNavigate();
   const { user, loading, signIn, signUp } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginErrors, setLoginErrors] = useState<Record<string, string>>({});
-  
+
   // Signup form state
   const [signupName, setSignupName] = useState('');
   const [signupEmail, setSignupEmail] = useState('');
@@ -52,10 +52,12 @@ export default function Auth() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoginErrors({});
-    
-    const result = loginSchema.safeParse({ email: loginEmail, password: loginPassword });
-    
+
+    const result = loginSchema.safeParse({
+      email: loginEmail,
+      password: loginPassword,
+    });
+
     if (!result.success) {
       const errors: Record<string, string> = {};
       result.error.errors.forEach((err) => {
@@ -72,13 +74,7 @@ export default function Auth() {
     setIsSubmitting(false);
 
     if (error) {
-      if (error.message.includes('Invalid login credentials')) {
-        toast.error('Invalid email or password');
-      } else if (error.message.includes('Email not confirmed')) {
-        toast.error('Please confirm your email before logging in');
-      } else {
-        toast.error(error.message);
-      }
+      toast.error(error.message);
     } else {
       toast.success('Welcome back!');
       navigate('/');
@@ -87,15 +83,14 @@ export default function Auth() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSignupErrors({});
-    
+
     const result = signupSchema.safeParse({
       fullName: signupName,
       email: signupEmail,
       password: signupPassword,
       confirmPassword: signupConfirmPassword,
     });
-    
+
     if (!result.success) {
       const errors: Record<string, string> = {};
       result.error.errors.forEach((err) => {
@@ -189,6 +184,16 @@ export default function Auth() {
                   {loginErrors.password && (
                     <p className="text-sm text-destructive">{loginErrors.password}</p>
                   )}
+                </div>
+                <div className="flex justify-end">
+                  <Button
+                    type="button"
+                    variant="link"
+                    className="p-0 h-auto text-sm text-primary hover:underline"
+                    onClick={() => navigate('/forgot-password')}
+                  >
+                    Forgot Password?
+                  </Button>
                 </div>
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
                   {isSubmitting ? (
