@@ -12,6 +12,7 @@ import { toast } from "@/hooks/use-toast";
 import { usePremiumStatus } from "@/hooks/usePremium";
 import { PremiumBadge } from "@/components/premium/PremiumBadge";
 import { PremiumRequestForm } from "@/components/premium/PremiumRequestForm";
+import TeacherDashboard from "./TeacherDashboard";
 
 interface TestResult {
   id: string;
@@ -25,7 +26,7 @@ interface TestResult {
 }
 
 const Dashboard = () => {
-  const { user, loading } = useAuth();
+  const { user, role, loading } = useAuth();
   const { data: premiumData } = usePremiumStatus();
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [loadingResults, setLoadingResults] = useState(true);
@@ -82,6 +83,11 @@ const Dashboard = () => {
       toast({ title: "Success", description: "Target score updated!" });
     }
   };
+
+  // Show teacher dashboard for teachers/admins
+  if (role === 'consultancy_owner' || role === 'super_admin') {
+    return <TeacherDashboard />;
+  }
 
   if (loading) {
     return (
