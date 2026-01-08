@@ -24,6 +24,7 @@ import Dashboard from "./pages/Dashboard";
 import ScoreCalculator from "./pages/ScoreCalculator";
 import Classrooms from "./pages/Classrooms";
 import ClassroomDetail from "./pages/ClassroomDetail";
+import AdminPremiumRequests from "./pages/AdminPremiumRequests";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ function InnerRoutes() {
         <Route path="/score-calculator" element={<PageTransition><ScoreCalculator /></PageTransition>} />
         <Route path="/classrooms" element={<PageTransition><Classrooms /></PageTransition>} />
         <Route path="/classrooms/:classroomId" element={<PageTransition><ClassroomDetail /></PageTransition>} />
+        <Route path="/admin/premium-requests" element={<PageTransition><AdminPremiumRequests /></PageTransition>} />
         <Route path="/about" element={<PageTransition><About /></PageTransition>} />
         <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
         <Route path="/mock-tests" element={<PageTransition><MockTests /></PageTransition>} />

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { usePremiumStatus } from '@/hooks/usePremium';
 import { useConsultancy, useClassrooms, useStudentClassrooms } from '@/hooks/useClassroom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,15 +9,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Plus, Users, BookOpen, GraduationCap, Building, Copy, Check } from 'lucide-react';
+import { Plus, Users, BookOpen, GraduationCap, Building, Copy, Check, Crown, Lock } from 'lucide-react';
 import { toast } from 'sonner';
 import ClassroomLayout from '@/components/classroom/ClassroomLayout';
 
 export default function Classrooms() {
   const navigate = useNavigate();
   const { user, role, loading: authLoading } = useAuth();
+  const { data: premiumData, isLoading: premiumLoading } = usePremiumStatus();
 
-  if (authLoading) {
+  const isLoading = authLoading || premiumLoading;
+
+  if (isLoading) {
     return (
       <ClassroomLayout>
         <div className="flex items-center justify-center h-64">
@@ -26,16 +30,41 @@ export default function Classrooms() {
     );
   }
 
+  // Not logged in - redirect to auth
   if (!user) {
     navigate('/auth');
     return null;
+  }
+
+  // Check premium status for students (teachers/admins can always access)
+  const isTeacher = role === 'consultancy_owner' || role === 'super_admin';
+  const isPremium = premiumData?.isPremium ?? false;
+
+  if (!isTeacher && !isPremium) {
+    return (
+      <ClassroomLayout>
+        <div className="max-w-md mx-auto text-center py-12">
+          <div className="relative inline-block mb-4">
+            <Lock className="h-16 w-16 text-muted-foreground" />
+            <Crown className="h-8 w-8 text-amber-500 absolute -top-2 -right-2" />
+          </div>
+          <h2 className="text-2xl font-bold mb-2">Premium Feature</h2>
+          <p className="text-muted-foreground mb-6">
+            Classrooms are a premium-only feature. Upgrade to premium to access classrooms, join study groups, and receive assignments from teachers.
+          </p>
+          <Button asChild>
+            <Link to="/dashboard">Request Premium Access</Link>
+          </Button>
+        </div>
+      </ClassroomLayout>
+    );
   }
 
   if (role === 'student') {
     return <StudentClassroomsView />;
   }
 
-  if (role === 'consultancy_owner' || role === 'super_admin') {
+  if (isTeacher) {
     return <TeacherClassroomsView />;
   }
 

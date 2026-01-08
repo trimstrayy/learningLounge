@@ -9,6 +9,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+import { usePremiumStatus } from "@/hooks/usePremium";
+import { PremiumBadge } from "@/components/premium/PremiumBadge";
+import { PremiumRequestForm } from "@/components/premium/PremiumRequestForm";
 
 interface TestResult {
   id: string;
@@ -23,6 +26,7 @@ interface TestResult {
 
 const Dashboard = () => {
   const { user, loading } = useAuth();
+  const { data: premiumData } = usePremiumStatus();
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [loadingResults, setLoadingResults] = useState(true);
   const [targetScore, setTargetScore] = useState<number>(7.0);
@@ -135,7 +139,10 @@ const Dashboard = () => {
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+              {premiumData?.isPremium && <PremiumBadge />}
+            </div>
             <p className="text-muted-foreground">
               Welcome back, {user.email}! Track your IELTS preparation progress.
             </p>
@@ -290,6 +297,13 @@ const Dashboard = () => {
               )}
             </CardContent>
           </Card>
+
+          {/* Premium Request Section - only show for non-premium users */}
+          {!premiumData?.isPremium && (
+            <div className="mt-8">
+              <PremiumRequestForm />
+            </div>
+          )}
         </div>
       </main>
 
