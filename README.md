@@ -53,8 +53,38 @@ npm run dev
 
 Then open your browser at:
 👉 http://localhost:..../
+## 🔐 Google OAuth Setup
 
+To enable Google sign-in functionality:
 
+1. **Create a Google Cloud Project**
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select existing one
+
+2. **Enable Google+ API**
+   - Navigate to "APIs & Services" > "Library"
+   - Search for "Google+ API" and enable it
+
+3. **Create OAuth 2.0 Credentials**
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" > "OAuth 2.0 Client IDs"
+   - Configure OAuth consent screen if prompted
+   - Set Application type to "Web application"
+   - Add authorized redirect URIs:
+     - For development: `http://localhost:8080/auth/v1/callback`
+     - For production: `https://your-domain.com/auth/v1/callback`
+
+4. **Configure Supabase**
+   - Go to your Supabase project dashboard
+   - Navigate to "Authentication" > "Providers"
+   - Enable Google provider
+   - Enter your Google Client ID and Client Secret
+   - Add redirect URLs matching your app's domain
+
+5. **Environment Variables**
+   - Copy `.env.example` to `.env`
+   - Add your Supabase URL and anon key
+   - Google OAuth is configured entirely in Supabase dashboard
 📱 Responsive Design
 
 Layout adapts seamlessly to desktop, tablet, and mobile viewports.
