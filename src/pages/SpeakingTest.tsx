@@ -9,6 +9,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { loadQuestions } from "@/utils/loadQuestions";
 import type { SpeakingTest as SpeakingTestType, SpeakingPart1Topic, SpeakingPart3Question } from "@/types/questions";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { SpeakingEvaluation } from "@/types/speakingEvaluation";
+import { SpeakingEvaluationResult } from "@/components/SpeakingEvaluationResult";
 import { 
   Mic, 
   MicOff, 
@@ -20,7 +24,9 @@ import {
   Volume2,
   Pause,
   RotateCcw,
-  FileText
+  FileText,
+  Sparkles,
+  Loader2
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
@@ -43,13 +49,16 @@ interface Recording {
   url: string;
   duration: number;
   part: string;
+  partNumber: number; // 1, 2, or 3
   questionIndex?: number;
+  questions?: string[]; // Questions asked during this recording
 }
 
 const SpeakingTest = () => {
   const navigate = useNavigate();
   const { testId } = useParams<{ testId: string }>();
   const { toast } = useToast();
+  const { user } = useAuth();
   
   // Test data
   const [test, setTest] = useState<SpeakingTestType | null>(null);
@@ -77,6 +86,11 @@ const SpeakingTest = () => {
   
   // Notes for Part 2
   const [notes, setNotes] = useState("");
+  
+  // AI Evaluation state
+  const [evaluating, setEvaluating] = useState(false);
+  const [evaluation, setEvaluation] = useState<SpeakingEvaluation | null>(null);
+  const [evaluationError, setEvaluationError] = useState<string | null>(null);
   
   // Session management
   const durationMinutes = 14;
@@ -175,11 +189,17 @@ const SpeakingTest = () => {
         const url = URL.createObjectURL(blob);
         const duration = Math.floor((Date.now() - recordingStartTimeRef.current) / 1000);
         
+        // Determine part number from label
+        let partNumber = 1;
+        if (partLabel.includes("2")) partNumber = 2;
+        else if (partLabel.includes("3")) partNumber = 3;
+        
         setRecordings(prev => [...prev, {
           blob,
           url,
           duration,
           part: partLabel,
+          partNumber,
           questionIndex: questionIdx
         }]);
         
@@ -395,6 +415,141 @@ const SpeakingTest = () => {
     return recordings.reduce((acc, rec) => acc + rec.duration, 0);
   };
 
+  // Convert blob to base64
+  const blobToBase64 = async (blob: Blob): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        // Remove the data URL prefix
+        const base64Data = base64.split(',')[1];
+        resolve(base64Data);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  // Get AI Evaluation
+  const getAIEvaluation = async () => {
+    if (!user) {
+      toast({
+        title: "Sign In Required",
+        description: "Please sign in to get AI evaluation of your speaking.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (recordings.length === 0) {
+      toast({
+        title: "No Recordings",
+        description: "No speaking recordings found to evaluate.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setEvaluating(true);
+    setEvaluationError(null);
+
+    try {
+      // Group recordings by part and convert to base64
+      const part1Recordings = recordings.filter(r => r.part === "Part 1");
+      const part2Recordings = recordings.filter(r => r.part === "Part 2" || r.part === "Part 2 Follow-up");
+      const part3Recordings = recordings.filter(r => r.part === "Part 3");
+
+      // Combine recordings for each part
+      const preparePartAudio = async (recs: Recording[], partNum: number) => {
+        if (recs.length === 0) return null;
+        
+        // If multiple recordings for a part, combine them
+        const combinedBlob = recs.length === 1 
+          ? recs[0].blob 
+          : new Blob(recs.map(r => r.blob), { type: 'audio/webm' });
+        
+        const audioBase64 = await blobToBase64(combinedBlob);
+        const totalDuration = recs.reduce((sum, r) => sum + r.duration, 0);
+        
+        // Collect questions for this part
+        const questions: string[] = [];
+        if (partNum === 1 && currentTopic) {
+          questions.push(...currentTopic.questions);
+        } else if (partNum === 2 && test?.part2) {
+          questions.push(test.part2.cueCard.topic);
+        } else if (partNum === 3 && test?.part3.questions) {
+          questions.push(...test.part3.questions.map(q => q.question));
+        }
+        
+        return {
+          part: partNum,
+          audioBase64,
+          duration: totalDuration,
+          questions
+        };
+      };
+
+      const partData = await Promise.all([
+        preparePartAudio(part1Recordings, 1),
+        preparePartAudio(part2Recordings, 2),
+        preparePartAudio(part3Recordings, 3)
+      ]);
+
+      const validRecordings = partData.filter(p => p !== null);
+
+      if (validRecordings.length === 0) {
+        throw new Error("No valid recordings to evaluate");
+      }
+
+      // Call the Edge Function
+      const { data: sessionData } = await supabase.auth.getSession();
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/evaluate-speaking`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionData?.session?.access_token}`,
+            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({
+            recordings: validRecordings,
+            testId: testId || '1',
+            cueCardTopic: test?.part2?.cueCard?.topic || 'General topic',
+            part3Theme: test?.part3?.theme || 'General discussion'
+          })
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Evaluation failed: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      if (result.success && result.evaluation) {
+        setEvaluation(result.evaluation);
+        toast({
+          title: "Evaluation Complete",
+          description: `Estimated Band: ${result.evaluation.estimatedBand.toFixed(1)}`,
+        });
+      } else {
+        throw new Error(result.error || "Evaluation failed");
+      }
+    } catch (error) {
+      console.error("Evaluation error:", error);
+      setEvaluationError(error instanceof Error ? error.message : "Failed to evaluate speaking");
+      toast({
+        title: "Evaluation Failed",
+        description: error instanceof Error ? error.message : "An error occurred during evaluation",
+        variant: "destructive"
+      });
+    } finally {
+      setEvaluating(false);
+    }
+  };
+
   const handleRestartTest = () => {
     setPhase("intro");
     setCurrentQuestionIndex(0);
@@ -402,6 +557,8 @@ const SpeakingTest = () => {
     setNotes("");
     setTimer(0);
     setTimerActive(false);
+    setEvaluation(null);
+    setEvaluationError(null);
     session.setStarted(false);
     session.setTimeLeft(durationMinutes * 60);
   };
@@ -991,77 +1148,144 @@ const SpeakingTest = () => {
     </motion.div>
   );
 
-  const renderCompleted = () => (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="max-w-3xl mx-auto"
-    >
-      <Card className="p-8">
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
+  const renderCompleted = () => {
+    // Show evaluation results if available
+    if (evaluation) {
+      return (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="max-w-4xl mx-auto"
+        >
+          <SpeakingEvaluationResult 
+            evaluation={evaluation} 
+            onRetake={handleRestartTest}
+          />
+          <div className="mt-6 flex justify-center">
+            <Button variant="outline" onClick={() => navigate('/mock-tests')}>
+              Back to Mock Tests
+            </Button>
           </div>
-          <h1 className="text-3xl font-bold mb-2">Test Completed!</h1>
-          <p className="text-muted-foreground text-lg">
-            Well done! You've completed the IELTS Speaking Mock Test
-          </p>
-        </div>
+        </motion.div>
+      );
+    }
 
-        {/* Summary */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="text-center p-4 bg-muted/50 rounded-lg">
-            <div className="text-2xl font-bold text-primary">{recordings.length}</div>
-            <div className="text-sm text-muted-foreground">Recordings</div>
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="max-w-3xl mx-auto"
+      >
+        <Card className="p-8">
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
+            </div>
+            <h1 className="text-3xl font-bold mb-2">Test Completed!</h1>
+            <p className="text-muted-foreground text-lg">
+              Well done! You've completed the IELTS Speaking Mock Test
+            </p>
           </div>
-          <div className="text-center p-4 bg-muted/50 rounded-lg">
-            <div className="text-2xl font-bold text-primary">{formatTime(getTotalRecordingTime())}</div>
-            <div className="text-sm text-muted-foreground">Total Time</div>
-          </div>
-          <div className="text-center p-4 bg-muted/50 rounded-lg">
-            <div className="text-2xl font-bold text-primary">3</div>
-            <div className="text-sm text-muted-foreground">Parts Completed</div>
-          </div>
-          <div className="text-center p-4 bg-muted/50 rounded-lg">
-            <div className="text-2xl font-bold text-green-600">✓</div>
-            <div className="text-sm text-muted-foreground">Full Test</div>
-          </div>
-        </div>
 
-        {/* Recordings list */}
-        <div className="mb-8">
-          <h3 className="font-semibold mb-4">Your Recordings</h3>
-          <div className="space-y-3 max-h-[300px] overflow-y-auto">
-            {recordings.map((rec, idx) => (
-              <div key={idx} className="flex items-center gap-4 p-3 bg-muted/30 rounded-lg">
-                <div className="flex-1">
-                  <div className="font-medium">{rec.part}</div>
-                  <div className="text-sm text-muted-foreground">{formatTime(rec.duration)}</div>
+          {/* Summary */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="text-center p-4 bg-muted/50 rounded-lg">
+              <div className="text-2xl font-bold text-primary">{recordings.length}</div>
+              <div className="text-sm text-muted-foreground">Recordings</div>
+            </div>
+            <div className="text-center p-4 bg-muted/50 rounded-lg">
+              <div className="text-2xl font-bold text-primary">{formatTime(getTotalRecordingTime())}</div>
+              <div className="text-sm text-muted-foreground">Total Time</div>
+            </div>
+            <div className="text-center p-4 bg-muted/50 rounded-lg">
+              <div className="text-2xl font-bold text-primary">3</div>
+              <div className="text-sm text-muted-foreground">Parts Completed</div>
+            </div>
+            <div className="text-center p-4 bg-muted/50 rounded-lg">
+              <div className="text-2xl font-bold text-green-600">✓</div>
+              <div className="text-sm text-muted-foreground">Full Test</div>
+            </div>
+          </div>
+
+          {/* Recordings list */}
+          <div className="mb-8">
+            <h3 className="font-semibold mb-4">Your Recordings</h3>
+            <div className="space-y-3 max-h-[300px] overflow-y-auto">
+              {recordings.map((rec, idx) => (
+                <div key={idx} className="flex items-center gap-4 p-3 bg-muted/30 rounded-lg">
+                  <div className="flex-1">
+                    <div className="font-medium">{rec.part}</div>
+                    <div className="text-sm text-muted-foreground">{formatTime(rec.duration)}</div>
+                  </div>
+                  <audio controls src={rec.url} className="h-10" />
                 </div>
-                <audio controls src={rec.url} className="h-10" />
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
-          <p className="text-sm text-blue-700 dark:text-blue-300">
-            <strong>Coming soon:</strong> AI-powered evaluation for Fluency, Lexical Resource, Grammar, and Pronunciation.
-          </p>
-        </div>
+          {/* AI Evaluation Section */}
+          <div className="mb-6">
+            {evaluationError && (
+              <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-4">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-red-700 dark:text-red-300">Evaluation Error</p>
+                    <p className="text-sm text-red-600 dark:text-red-400">{evaluationError}</p>
+                  </div>
+                </div>
+              </div>
+            )}
 
-        <div className="grid grid-cols-2 gap-4">
-          <Button variant="outline" onClick={handleRestartTest}>
-            <RotateCcw className="w-4 h-4 mr-2" />
-            Take Another Test
-          </Button>
-          <Button onClick={() => navigate('/mock-tests')}>
-            Back to Mock Tests
-          </Button>
-        </div>
-      </Card>
-    </motion.div>
-  );
+            {!user ? (
+              <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+                <p className="text-sm text-amber-700 dark:text-amber-300">
+                  <strong>Sign in required:</strong> Create an account or sign in to get AI-powered evaluation of your speaking performance.
+                </p>
+              </div>
+            ) : (
+              <Button 
+                onClick={getAIEvaluation} 
+                disabled={evaluating || recordings.length === 0}
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+                size="lg"
+              >
+                {evaluating ? (
+                  <>
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    Analyzing Your Speaking...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    Get AI Evaluation
+                  </>
+                )}
+              </Button>
+            )}
+
+            {evaluating && (
+              <div className="mt-4 text-center">
+                <p className="text-sm text-muted-foreground">
+                  This may take 30-60 seconds. We're transcribing your audio and analyzing your performance...
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <Button variant="outline" onClick={handleRestartTest}>
+              <RotateCcw className="w-4 h-4 mr-2" />
+              Take Another Test
+            </Button>
+            <Button onClick={() => navigate('/mock-tests')}>
+              Back to Mock Tests
+            </Button>
+          </div>
+        </Card>
+      </motion.div>
+    );
+  };
 
   // Main render
   return (
