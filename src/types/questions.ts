@@ -79,16 +79,40 @@ export interface WritingTest {
 }
 
 // Speaking schema
+export interface SpeakingPart1Topic {
+  theme: string;
+  introduction: string;
+  questions: string[];
+}
+
 export interface SpeakingCueCard {
   topic: string;
+  instruction: string;
   points: string[];
+  conclusion: string;
+  prepTime: number;
+  speakTime: number;
+}
+
+export interface SpeakingPart3Question {
+  question: string;
+  followUp?: string;
 }
 
 export interface SpeakingTest {
   testId: string;
-  part1: { topic: string; questions: string[] };
-  part2: { cueCard: SpeakingCueCard };
-  part3: { discussion: string[] };
+  part1: { 
+    topics: SpeakingPart1Topic[];
+  };
+  part2: { 
+    cueCard: SpeakingCueCard;
+    followUpQuestions: string[];
+  };
+  part3: { 
+    theme: string;
+    introduction: string;
+    questions: SpeakingPart3Question[];
+  };
 }
 
 // Union type for convenience
