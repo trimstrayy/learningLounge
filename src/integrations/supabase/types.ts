@@ -250,6 +250,54 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          classroom_id: string
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string | null
+          post_id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          classroom_id: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string | null
+          post_id: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          classroom_id?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string | null
+          post_id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_classroom_id_fkey"
+            columns: ["classroom_id"]
+            isOneToOne: false
+            referencedRelation: "classrooms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "classroom_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       premium_requests: {
         Row: {
           created_at: string
@@ -348,6 +396,39 @@ export type Database = {
           test_id?: string
           test_type?: string
           total_questions?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_feedback: {
+        Row: {
+          consultancy: string | null
+          contact: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          consultancy?: string | null
+          contact?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          consultancy?: string | null
+          contact?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
           user_id?: string
         }
         Relationships: []

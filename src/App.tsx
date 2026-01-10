@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./hooks/useAuth";
 import PageTransition from "./components/PageTransition";
+import { AnnouncementNotification } from "./components/notifications/AnnouncementNotification";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Testimonials from "./pages/Testimonials";
@@ -36,6 +37,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <AnnouncementNotification />
           <InnerRoutes />
         </BrowserRouter>
       </TooltipProvider>
