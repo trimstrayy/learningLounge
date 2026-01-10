@@ -20,7 +20,6 @@ import SpeakingTest from "./pages/SpeakingTest";
 import SpeakingCambridge08 from "./pages/SpeakingCambridge08";
 import WritingCambridge08 from "./pages/WritingCambridge08";
 import Auth from "./pages/Auth";
-import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import ScoreCalculator from "./pages/ScoreCalculator";
 import Classrooms from "./pages/Classrooms";
@@ -54,7 +53,6 @@ function InnerRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Dashboard /></PageTransition>} />
         <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
-        <Route path="/forgot-password" element={<PageTransition><ForgotPassword /></PageTransition>} />
         <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
         <Route path="/score-calculator" element={<PageTransition><ScoreCalculator /></PageTransition>} />
         <Route path="/classrooms" element={<PageTransition><Classrooms /></PageTransition>} />
