@@ -71,6 +71,11 @@ const WritingTest = () => {
     setTask2ImageData(null);
     setSubmitted(false);
     setShowResultsModal(false);
+    // Clear evaluation states
+    setTask1Evaluation(null);
+    setTask2Evaluation(null);
+    setShowEvaluation(false);
+    setFinalBandScore(null);
   }, []);
 
   const session = useTestSession(durationMinutes, {
