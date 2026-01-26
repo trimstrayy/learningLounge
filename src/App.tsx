@@ -27,6 +27,8 @@ import Classrooms from "./pages/Classrooms";
 import ClassroomDetail from "./pages/ClassroomDetail";
 import AdminPremiumRequests from "./pages/AdminPremiumRequests";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./app/privacy/page";
+import TermsOfService from "./app/terms/page";
 
 const queryClient = new QueryClient();
 
@@ -81,6 +83,8 @@ function InnerRoutes() {
   <Route path="/listening-test" element={<PageTransition><ListeningTest /></PageTransition>} />
   <Route path="/reading-test" element={<PageTransition><ReadingTest /></PageTransition>} />
   <Route path="/speaking-test" element={<PageTransition><SpeakingTest /></PageTransition>} />
+  <Route path="/privacy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
+  <Route path="/terms" element={<PageTransition><TermsOfService /></PageTransition>} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
