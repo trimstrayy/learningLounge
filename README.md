@@ -1,127 +1,156 @@
-<<<<<<< HEAD
-Learning Lounge,
-A modern, responsive web platform built for an IELTS consultancy to showcase its branding, services, testimonials, and provide mock IELTS test experiences for students — all in a single, elegant interface.
+# Lexora IELTS - Monorepo
 
-🏠 Home Page
+A modern, AI-powered IELTS preparation platform with web and mobile apps.
 
-Clean hero section with consultancy name, logo, and motto.
-“Our Expertise” cards highlighting IELTS preparation, visa guidance, and counseling services.
-“Testimonials” carousel showing student reviews.
-Integrated MapTiler map displaying the consultancy’s exact location.
+## 📁 Monorepo Structure
 
-🧭 Navigation
-Fully responsive top navigation bar (Home, About, Testimonials, Mock Tests, Contact).
-Mobile-friendly hamburger menu for smaller screens.
+```
+lexora-monorepo/
+├── apps/
+│   ├── web/              # React + Vite web application
+│   └── mobile/           # React Native mobile app (coming soon)
+├── packages/
+│   └── core/             # Shared types, utilities, and constants
+├── supabase/             # Supabase Edge Functions and migrations
+├── scripts/              # Build and utility scripts
+└── package.json          # Workspace root configuration
+```
 
-🧪 Mock IELTS Tests Section
+## 🚀 Quick Start
 
-Organized into 4 accordions:
+### Prerequisites
 
-Listening Test – Placeholder for future audio-based mock test.
-Reading Test – Placeholder for future passage-based questions.
-Writing Test – Functional UI with:
-Text editor to type written responses.
-Image upload option for handwritten answer sheets.
-Countdown timer (e.g., 60 minutes).
-Speaking Test – Interactive speaking test with:
-Text-based questions for practice mode.
-AI Examiner Mode with voice questions using OpenAI TTS.
-Recording functionality with evaluation.
+- Node.js >= 18.0.0
+- npm >= 9.0.0
 
-Each test section expands to explain the official IELTS format (duration, question type, marking scheme) and includes a Start Test button that opens the full-screen test environment.
+### Installation
 
-
-🧩 Project Structure
-├── public/               # Static assets
-├── src/                  # App source code
-│   ├── components/       # UI components (Navbar, Hero, Accordions, etc.)
-│   ├── pages/            # Main pages (Home, Tests, Contact)
-│   ├── App.jsx           # Root component
-│   └── main.jsx          # Entry point
-├── tailwind.config.js    # Tailwind CSS configuration
-├── vite.config.js        # Vite configuration
-├── .gitignore            # Ignored files
-├── package.json          # Dependencies and scripts
-└── README.md             # Project documentation
-
-⚙️ Setup and Installation
-1 Clone the Repository
+```bash
+# Clone the repository
 git clone https://github.com/trimstrayy/learningLounge.git
 cd learningLounge
 
-2 Install Dependencies
+# Install all dependencies (root + all workspaces)
 npm install
+```
 
-3 Run the Development Server
+### Development
+
+```bash
+# Start the web app
 npm run dev
 
-Then open your browser at:
-👉 http://localhost:..../
+# Or explicitly
+npm run dev:web
+```
 
+The web app will be available at `http://localhost:5173`
 
-📱 Responsive Design
+### Build
 
-Layout adapts seamlessly to desktop, tablet, and mobile viewports.
+```bash
+# Build the web app
+npm run build
 
-Clean, minimal interface with smooth transitions and clear typography.
+# Preview production build
+npm run preview
+```
 
+## 📦 Packages
 
-🚀 Future Enhancements
+### @lexora/core
 
-Backend integration (Node.js / Django / Supabase) for storing test results.
+Shared code used by both web and mobile apps:
 
-Add real IELTS listening and reading question data.
+- **Types**: Question schemas, user types, evaluation types
+- **Utils**: Band score calculations, formatting helpers, validation
+- **Constants**: App-wide constants, API endpoints, storage keys
 
-Integrate writing evaluation using OpenAI or custom scoring logic.
+```typescript
+// Usage in apps
+import { 
+  TestType, 
+  WritingEvaluation,
+  calculateBandScore,
+  formatTime,
+  APP_NAME 
+} from '@lexora/core';
+```
 
-Include authentication for students and admin dashboards.
+### @lexora/web
 
-Add scheduling and result history tracking.
+The React web application built with:
 
+- React 18 + TypeScript
+- Vite for development and building
+- Tailwind CSS + shadcn/ui for styling
+- Supabase for backend (auth, database, storage)
+- Framer Motion for animations
 
-🤖 AI Examiner Mode
+### @lexora/mobile (Coming Soon)
 
-The Speaking Test now includes an AI Examiner Mode that uses the Web Speech API to vocalize questions (currently using browser's built-in TTS, with plans to upgrade to OpenAI TTS for production).
+React Native mobile application sharing the same core logic.
 
-### Setup Instructions:
+## 🧪 Features
 
-**Current Implementation (Web Speech API):**
-- No API key required
-- Uses browser's built-in text-to-speech
-- Works in modern browsers (Chrome, Firefox, Safari, Edge)
+### Mock IELTS Tests
 
-**Future Production Setup (OpenAI TTS):**
-1. Get an OpenAI API key from [OpenAI Platform](https://platform.openai.com/api-keys)
-2. Add your API key to the `.env` file:
-   ```
-   VITE_OPENAI_API_KEY="your-actual-api-key-here"
-   ```
-3. Update the `speakQuestion` function in `SpeakingTestAIExaminer.tsx` to use OpenAI API
+- **Listening Test**: Audio-based questions with Cambridge materials
+- **Reading Test**: Passage-based questions with timer
+- **Writing Test**: AI-powered evaluation with Task 1 & Task 2
+- **Speaking Test**: Full speaking simulation with AI evaluation
 
-### Browser Audio Compatibility:
-- ✅ Modern browsers with Web Audio API support
-- ✅ Audio context automatically unlocked on user interaction
-- ✅ Graceful fallback if audio is blocked
-- ⚠️ Some older browsers may not support Web Speech API
+### AI Evaluation
 
-### Features:
-- Questions are spoken aloud using Web Speech API
-- Recording starts automatically after each question is spoken
-- Special handling for Part 2 with preparation instructions
-- **Beep sound** plays when Part 2 preparation time ends
-- **Audio context unlocked** on user interaction to comply with browser autoplay policies
-- Same evaluation system as Practice Mode
-- Fallback to text-only mode if TTS fails or isn't supported
+- Powered by OpenAI and Groq APIs
+- Detailed band score breakdown
+- Criteria-specific feedback
+- Improvement suggestions
 
+## 🛠️ Development
 
-👨‍💻 Developer Notes
+### Adding to Core Package
 
-The site currently uses placeholder data for test questions and instructions.
+When adding shared code:
 
-Writing test is interactive and supports both text and image submissions.
+1. Add files to `packages/core/src/`
+2. Export from the appropriate index file
+3. Both web and mobile apps will have access
 
-All components are structured and commented for easy backend linkage later.
-=======
-# loungelearning
-collective project
->>>>>>> df84e79d04b7e29d6126a61494221a49920183f5
+### Workspace Commands
+
+```bash
+# Run command in specific workspace
+npm run dev --workspace=@lexora/web
+npm run build --workspace=@lexora/web
+
+# Run lint across all workspaces
+npm run lint
+
+# Clean all build artifacts and node_modules
+npm run clean
+```
+
+## 📝 Environment Variables
+
+Create a `.env` file in `apps/web/`:
+
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 📄 License
+
+This project is private and proprietary.
+
+---
+
+Built with ❤️ for IELTS learners by Lexora Team

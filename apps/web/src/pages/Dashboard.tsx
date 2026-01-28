@@ -9,10 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { usePremiumStatus } from "@/hooks/usePremium";
-import { PremiumBadge } from "@/components/premium/PremiumBadge";
-import { PremiumRequestForm } from "@/components/premium/PremiumRequestForm";
-import TeacherDashboard from "./TeacherDashboard";
 
 interface TestResult {
   id: string;
@@ -26,13 +22,13 @@ interface TestResult {
 }
 
 const Dashboard = () => {
-  const { user, role, loading } = useAuth();
-  const { data: premiumData } = usePremiumStatus();
+  const { user, loading } = useAuth();
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [loadingResults, setLoadingResults] = useState(true);
   const [targetScore, setTargetScore] = useState<number>(7.0);
   const [editingTarget, setEditingTarget] = useState(false);
   const [tempTarget, setTempTarget] = useState("");
+  const [displayName, setDisplayName] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,17 +42,19 @@ const Dashboard = () => {
       
       if (results) setTestResults(results);
 
-      // Fetch profile for target score
+      // Fetch profile for target score and display name
       const { data: profile } = await supabase
         .from('profiles')
-        .select('target_score')
+        .select('target_score, full_name')
         .eq('user_id', user.id)
         .single();
-      
+
       if (profile?.target_score) {
         setTargetScore(Number(profile.target_score));
       }
-      
+      if (profile?.full_name) {
+        setDisplayName(profile.full_name);
+      }
       setLoadingResults(false);
     };
 
@@ -83,11 +81,6 @@ const Dashboard = () => {
       toast({ title: "Success", description: "Target score updated!" });
     }
   };
-
-  // Show teacher dashboard for teachers/admins
-  if (role === 'consultancy_owner' || role === 'super_admin') {
-    return <TeacherDashboard />;
-  }
 
   if (loading) {
     return (
@@ -138,19 +131,16 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
       
       <main className="flex-grow pt-24 pb-12">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="mb-8">
-            <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-              {premiumData?.isPremium && <PremiumBadge />}
-            </div>
+            <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
             <p className="text-muted-foreground">
-              Welcome back, {user.email}! Track your IELTS preparation progress.
+              Welcome back, {displayName ? displayName : user.email}! Track your IELTS preparation progress.
             </p>
           </div>
 
@@ -303,13 +293,6 @@ const Dashboard = () => {
               )}
             </CardContent>
           </Card>
-
-          {/* Premium Request Section - only show for non-premium users */}
-          {!premiumData?.isPremium && (
-            <div className="mt-8">
-              <PremiumRequestForm />
-            </div>
-          )}
         </div>
       </main>
 

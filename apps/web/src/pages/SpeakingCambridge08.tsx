@@ -95,12 +95,23 @@ const SpeakingCambridge08 = () => {
                       <div className="bg-muted/50 p-4 rounded mb-6">
                         <p className="text-sm"><strong>Note:</strong> The speaking test is a face-to-face conversation with an examiner. It is recorded for assessment purposes.</p>
                       </div>
-                      <Button
-                        className="w-full"
-                        onClick={() => navigate(`/test/speaking/cambridge-08-test-${test.id}`)}
-                      >
-                        Start {test.title}
-                      </Button>
+                      <div className="space-y-3">
+                        <Button
+                          className="w-full"
+                          onClick={() => navigate(`/test/speaking/cambridge-08-test-${test.id}`)}
+                        >
+                          Start {test.title}
+                        </Button>
+                        {test.id === 1 && (
+                          <Button
+                            variant="outline"
+                            className="w-full"
+                            onClick={() => navigate(`/test/speaking/ai-examiner/${test.id}`)}
+                          >
+                            🤖 AI Examiner Mode
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>

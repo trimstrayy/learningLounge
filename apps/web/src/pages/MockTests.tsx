@@ -101,9 +101,9 @@ const MockTests = () => {
   }, [completedTests]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
-      <main className="pt-24 pb-20">
+      <main className="flex-grow pt-24 pb-20">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="text-center mb-16">

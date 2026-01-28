@@ -3,18 +3,18 @@
   "writing": [
     {
       "taskId": 1,
-      "type": "plan-comparision",
+      "type": "pie-chart",
       "instruction": "Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-      "prompt": "The plans bwlow show the layout of a university's sports center now, and how it will look after redevelopment.",
-      "imageUrl": "/questions/writing_questions/book13/C13T4W1.jpg",
+      "prompt": "The pie charts below show the percentage of time spent on different activities by working professionals in a particular country in 1958 and 2008.",
+      "imageUrl": null,
       "minWords": 150,
       "suggestedTime": "20 minutes"
     },
     {
       "taskId": 2,
-      "type": "opinion-essay",
+      "type": "problem-solution",
       "instruction": "Give reasons for your answer and include any relevant examples from your own knowledge or experience.",
-      "prompt": "In spite of the advances made in agriculture, many people around the world still go hungry. Why is this the case? What can be done about this problem? ",
+      "prompt": "In many countries, the amount of waste produced by households and industries is increasing. What are the causes of this increase and what measures can be taken to reduce it?",
       "imageUrl": null,
       "minWords": 250,
       "suggestedTime": "40 minutes"

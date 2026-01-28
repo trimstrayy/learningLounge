@@ -4,9 +4,9 @@ import TestimonialsSection from "@/components/home/TestimonialsSection";
 
 const Testimonials = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
-      <main className="pt-24 pb-20">
+      <main className="flex-grow pt-24 pb-20">
         <div className="container mx-auto px-4 mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4 text-center">Testimonials</h1>
           <p className="text-lg text-muted-foreground text-center max-w-2xl mx-auto">

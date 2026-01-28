@@ -9,8 +9,9 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from '@/hooks/useAuth';
+import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -34,7 +35,7 @@ interface Section {
   audioUrl?: string;
   passageTitle?: string;
   passageContent?: string;
-  passageText?: string; // legacy field support
+  passageText?: string; 
   questions: Question[];
 }
 
@@ -62,6 +63,7 @@ const createPlaceholderReadingTest = (testId: string): ReadingTestData => {
 };
 
 const ReadingTest = () => {
+  const { user } = useAuth();
   const { testId } = useParams<{ testId: string }>();
   const navigate = useNavigate();
   const [test, setTest] = useState<ReadingTestData | null>(null);
@@ -196,26 +198,23 @@ const ReadingTest = () => {
       wrongQuestions
     });
 
-    // Save to database if user is logged in
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
+    // Save result to Supabase test_results
+    if (user && user.id) {
       const { error } = await supabase.from('test_results').insert({
-        user_id: user.id,
         test_id: test.testId,
         test_type: 'reading',
+        user_id: user.id,
+        band_score: band,
         correct_count: correctCount,
         total_questions: totalQuestions,
-        band_score: band,
+        answers: answers,
         duration_minutes: durationMinutes,
-        answers: answers
+        created_at: new Date().toISOString(),
       });
-      
       if (error) {
-        console.error('Failed to save test result:', error);
-        toast({ title: "Warning", description: "Test completed but failed to save results", variant: "destructive" });
+        toast({ title: 'Failed to save result', description: error.message, variant: 'destructive' });
       }
     }
-
     const payload = {
       testId: test.testId,
       answers,
@@ -430,17 +429,6 @@ const ReadingTest = () => {
                             {sec.passageContent ?? sec.passageText}
                           </p>
                         )}
-
-                        {/* Section image/diagram if available */}
-                        {(sec as any).imageUrl && (
-                          <div className="mb-4">
-                            <img
-                              src={(sec as any).imageUrl}
-                              alt={`Section ${sec.sectionNumber} diagram`}
-                              className="max-w-full h-auto rounded border"
-                            />
-                          </div>
-                        )} 
                       </div>
                     )} 
 

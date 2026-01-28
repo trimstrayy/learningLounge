@@ -250,91 +250,12 @@ export type Database = {
         }
         Relationships: []
       }
-      notifications: {
-        Row: {
-          classroom_id: string
-          created_at: string
-          id: string
-          is_read: boolean
-          message: string | null
-          post_id: string
-          title: string
-          user_id: string
-        }
-        Insert: {
-          classroom_id: string
-          created_at?: string
-          id?: string
-          is_read?: boolean
-          message?: string | null
-          post_id: string
-          title: string
-          user_id: string
-        }
-        Update: {
-          classroom_id?: string
-          created_at?: string
-          id?: string
-          is_read?: boolean
-          message?: string | null
-          post_id?: string
-          title?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "notifications_classroom_id_fkey"
-            columns: ["classroom_id"]
-            isOneToOne: false
-            referencedRelation: "classrooms"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "notifications_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "classroom_posts"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      premium_requests: {
-        Row: {
-          created_at: string
-          id: string
-          reason: string | null
-          reviewed_at: string | null
-          reviewed_by: string | null
-          status: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          reason?: string | null
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          status?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          reason?: string | null
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          status?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           created_at: string
           email: string | null
           full_name: string | null
           id: string
-          is_premium: boolean
           target_score: number | null
           updated_at: string
           user_id: string
@@ -344,7 +265,6 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
-          is_premium?: boolean
           target_score?: number | null
           updated_at?: string
           user_id: string
@@ -354,7 +274,6 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
-          is_premium?: boolean
           target_score?: number | null
           updated_at?: string
           user_id?: string
@@ -400,39 +319,6 @@ export type Database = {
         }
         Relationships: []
       }
-      user_feedback: {
-        Row: {
-          consultancy: string | null
-          contact: string | null
-          created_at: string
-          email: string
-          id: string
-          message: string
-          name: string
-          user_id: string
-        }
-        Insert: {
-          consultancy?: string | null
-          contact?: string | null
-          created_at?: string
-          email: string
-          id?: string
-          message: string
-          name: string
-          user_id: string
-        }
-        Update: {
-          consultancy?: string | null
-          contact?: string | null
-          created_at?: string
-          email?: string
-          id?: string
-          message?: string
-          name?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
       user_roles: {
         Row: {
           created_at: string
@@ -451,6 +337,54 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      writing_evaluations: {
+        Row: {
+          id: string
+          user_id: string | null
+          test_id: string
+          task_number: number
+          essay_text: string
+          task_achievement_score: number | null
+          coherence_cohesion_score: number | null
+          lexical_resource_score: number | null
+          grammar_score: number | null
+          overall_band_score: number | null
+          feedback: Json | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          test_id: string
+          task_number: number
+          essay_text: string
+          task_achievement_score?: number | null
+          coherence_cohesion_score?: number | null
+          lexical_resource_score?: number | null
+          grammar_score?: number | null
+          overall_band_score?: number | null
+          feedback?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          test_id?: string
+          task_number?: number
+          essay_text?: string
+          task_achievement_score?: number | null
+          coherence_cohesion_score?: number | null
+          lexical_resource_score?: number | null
+          grammar_score?: number | null
+          overall_band_score?: number | null
+          feedback?: Json | null
+          created_at?: string
+          updated_at?: string
         }
         Relationships: []
       }
