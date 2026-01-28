@@ -49,7 +49,7 @@ export default function ClassroomLayout({ children }: ClassroomLayoutProps) {
             {!collapsed && (
               <Link to="/" className="flex items-center gap-2">
                 <img src="/logo-full.svg" alt="Logo" className="w-8 h-8" />
-                <span className="font-bold text-primary">Learning Lounge</span>
+                <span className="font-bold text-primary">LEXORA</span>
               </Link>
             )}
             <Button 

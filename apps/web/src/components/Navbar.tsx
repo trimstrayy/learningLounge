@@ -17,13 +17,13 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-white/10 shadow-sm text-white" style={{ backgroundColor: 'hsl(220 60% 25%)' }}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <img src="/logo-full.svg" alt="LEXORA" className="w-10 h-10 object-contain rounded-md" />
-            <span className="font-bold text-xl text-primary">LEXORA</span>
+            <span className="font-bold text-xl text-white">LEXORA</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -35,8 +35,8 @@ const Navbar = () => {
                 className={cn(
                   "px-4 py-2 rounded-lg text-sm font-medium transition-all",
                   location.pathname === item.path
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-secondary"
+                    ? "bg-white/20 text-white"
+                    : "text-white/80 hover:bg-white/10 hover:text-white"
                 )}
               >
                 {item.name}
@@ -51,20 +51,20 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? (
-              <X className="w-6 h-6 text-foreground" />
+              <X className="w-6 h-6 text-white" />
             ) : (
-              <Menu className="w-6 h-6 text-foreground" />
+              <Menu className="w-6 h-6 text-white" />
             )}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-border animate-in slide-in-from-top-2 duration-200">
+          <div className="md:hidden py-4 border-t border-white/20 animate-in slide-in-from-top-2 duration-200">
             <div className="flex flex-col gap-2">
               {navItems.map((item) => (
                 <Link
@@ -74,8 +74,8 @@ const Navbar = () => {
                   className={cn(
                     "px-4 py-3 rounded-lg text-sm font-medium transition-all",
                     location.pathname === item.path
-                      ? "bg-primary text-primary-foreground"
-                      : "text-foreground hover:bg-secondary"
+                      ? "bg-white/20 text-white"
+                      : "text-white/80 hover:bg-white/10 hover:text-white"
                   )}
                 >
                   {item.name}
