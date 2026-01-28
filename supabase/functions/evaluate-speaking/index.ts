@@ -240,19 +240,7 @@ serve(async (req) => {
     return new Response(JSON.stringify({ success: true, evaluation: fullEvaluation }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 
   } catch (error) {
-<<<<<<< HEAD
     console.error('Final Error:', error);
     return new Response(JSON.stringify({ error: error.message }), { status: 400, headers: corsHeaders });
-=======
-    console.error('Error:', error);
-    
-    return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'An error occurred during evaluation',
-        timestamp: new Date().toISOString()
-      }),
-      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
->>>>>>> f412fa50b1544d06c9962163c229b51dd615e481
   }
 });
