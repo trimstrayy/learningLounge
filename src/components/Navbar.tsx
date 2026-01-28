@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import UserMenu from "@/components/UserMenu";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { name: "Dashboard", path: "/dashboard" },
@@ -21,14 +22,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <img
-              src="/logo-full.svg"
-              alt="The Learning Lounge"
-              className="w-10 h-10 object-contain rounded-md"
-            />
-            <span className="font-bold text-xl text-primary">
-              The Learning Lounge
-            </span>
+            <img src="/logo-full.svg" alt="LEXORA" className="w-10 h-10 object-contain rounded-md" />
+            <span className="font-bold text-xl text-primary">LEXORA</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -47,6 +42,7 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+            <ThemeToggle />
             <div className="ml-2">
               <UserMenu />
             </div>
@@ -85,7 +81,8 @@ const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="px-4 py-2">
+              <div className="px-4 py-2 flex items-center gap-2">
+                <ThemeToggle />
                 <UserMenu />
               </div>
             </div>

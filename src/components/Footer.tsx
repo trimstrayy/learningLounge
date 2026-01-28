@@ -1,4 +1,6 @@
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
+import LegalLinks from "./LegalLinks";
 
 const Footer = () => {
   return (
@@ -28,10 +30,10 @@ const Footer = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="/" className="hover:underline">Home</a></li>
-              <li><a href="/about" className="hover:underline">About Us</a></li>
-              <li><a href="/mock-tests" className="hover:underline">Mock Tests</a></li>
-              <li><a href="/contact" className="hover:underline">Contact</a></li>
+              <li><Link to="/" className="hover:underline">Home</Link></li>
+              <li><Link to="/about" className="hover:underline">About Us</Link></li>
+              <li><Link to="/mock-tests" className="hover:underline">Mock Tests</Link></li>
+              <li><Link to="/contact" className="hover:underline">Contact</Link></li>
             </ul>
           </div>
 
@@ -70,8 +72,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/20 mt-8 pt-6 text-center text-sm">
+        <div className="border-t border-primary-foreground/20 mt-8 pt-6 flex justify-between items-center text-sm">
           <p>&copy; {new Date().getFullYear()} Powered by LEXORA team members. All rights reserved.</p>
+          <LegalLinks />
         </div>
       </div>
     </footer>

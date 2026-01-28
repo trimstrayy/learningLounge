@@ -20,7 +20,7 @@ const HeroSection = () => {
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-in slide-in-from-bottom-4 duration-700">
-            The Learning Lounge
+            LEXORA
           </h1>
 
           {/* Tagline */}

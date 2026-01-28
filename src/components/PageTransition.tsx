@@ -15,7 +15,6 @@ export default function PageTransition({ children }: { children: ReactNode }) {
       animate="enter"
       exit="exit"
       style={{ willChange: "transform, opacity" }}
-      className="min-h-screen"
     >
       {children}
     </motion.div>

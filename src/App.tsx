@@ -5,8 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./hooks/useAuth";
+import { ThemeProvider } from "./hooks/useTheme";
+import { AuthCallback } from "./components/AuthCallback";
 import PageTransition from "./components/PageTransition";
-import { AnnouncementNotification } from "./components/notifications/AnnouncementNotification";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Testimonials from "./pages/Testimonials";
@@ -19,32 +20,37 @@ import ReadingTest from "./pages/ReadingTest";
 import ReadingCambridge08 from "./pages/ReadingCambridge08";
 import SpeakingTest from "./pages/SpeakingTest";
 import SpeakingCambridge08 from "./pages/SpeakingCambridge08";
+import SpeakingTestAIExaminer from "./pages/SpeakingTestAIExaminer";
 import WritingCambridge08 from "./pages/WritingCambridge08";
 import Auth from "./pages/Auth";
+import CheckEmail from "./pages/CheckEmail";
+import EmailVerified from "./pages/EmailVerified";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import ScoreCalculator from "./pages/ScoreCalculator";
 import Classrooms from "./pages/Classrooms";
 import ClassroomDetail from "./pages/ClassroomDetail";
-import AdminPremiumRequests from "./pages/AdminPremiumRequests";
 import NotFound from "./pages/NotFound";
-import PrivacyPolicy from "./app/privacy/page";
-import TermsOfService from "./app/terms/page";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AnnouncementNotification />
-          <InnerRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+  <ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <InnerRoutes />
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
 );
 
 export default App;
@@ -53,15 +59,20 @@ function InnerRoutes() {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <>
+      <AuthCallback />
+      <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Dashboard /></PageTransition>} />
+        <Route path="/" element={<PageTransition><MockTests /></PageTransition>} />
         <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
+        <Route path="/auth/check-email" element={<PageTransition><CheckEmail /></PageTransition>} />
+        <Route path="/auth/verified" element={<PageTransition><EmailVerified /></PageTransition>} />
+        <Route path="/auth/forgot-password" element={<PageTransition><ForgotPassword /></PageTransition>} />
+        <Route path="/auth/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
         <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
         <Route path="/score-calculator" element={<PageTransition><ScoreCalculator /></PageTransition>} />
         <Route path="/classrooms" element={<PageTransition><Classrooms /></PageTransition>} />
         <Route path="/classrooms/:classroomId" element={<PageTransition><ClassroomDetail /></PageTransition>} />
-        <Route path="/admin/premium-requests" element={<PageTransition><AdminPremiumRequests /></PageTransition>} />
         <Route path="/about" element={<PageTransition><About /></PageTransition>} />
         <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
         <Route path="/mock-tests" element={<PageTransition><MockTests /></PageTransition>} />
@@ -71,6 +82,7 @@ function InnerRoutes() {
   <Route path="/reading/cambridge-08" element={<PageTransition><ReadingCambridge08 /></PageTransition>} />
   <Route path="/writing/cambridge-08" element={<PageTransition><WritingCambridge08 /></PageTransition>} />
   <Route path="/speaking/cambridge-08" element={<PageTransition><SpeakingCambridge08 /></PageTransition>} />
+  <Route path="/test/speaking/ai-examiner/:testId" element={<PageTransition><SpeakingTestAIExaminer /></PageTransition>} />
   <Route path="/test/listening/:testId" element={<PageTransition><ListeningTest /></PageTransition>} />
   <Route path="/test/reading/:testId" element={<PageTransition><ReadingTest /></PageTransition>} />
   <Route path="/test/writing/:testId" element={<PageTransition><WritingTest /></PageTransition>} />
@@ -83,11 +95,12 @@ function InnerRoutes() {
   <Route path="/listening-test" element={<PageTransition><ListeningTest /></PageTransition>} />
   <Route path="/reading-test" element={<PageTransition><ReadingTest /></PageTransition>} />
   <Route path="/speaking-test" element={<PageTransition><SpeakingTest /></PageTransition>} />
-  <Route path="/privacy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
-  <Route path="/terms" element={<PageTransition><TermsOfService /></PageTransition>} />
+  <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
+  <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
+    </>
   );
 }
