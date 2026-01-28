@@ -9,6 +9,8 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
+  // Load .env from monorepo root
+  envDir: path.resolve(__dirname, "../.."),
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   // include static asset types so they are recognized by Vite when imported
   assetsInclude: ["**/*.mp3", "**/*.png", "**/*.jpg", "**/*.txt", "**/*.json"],
