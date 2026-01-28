@@ -57,6 +57,7 @@ async function imageUrlToBase64(url: string): Promise<string | null> {
 export async function evaluateWriting(params: EvaluateWritingParams): Promise<{
   success: boolean;
   evaluation?: WritingEvaluation;
+  testResultId?: string;
   error?: string;
 }> {
   try {
@@ -116,7 +117,8 @@ export async function evaluateWriting(params: EvaluateWritingParams): Promise<{
 
     return {
       success: true,
-      evaluation: data.evaluation
+      evaluation: data.evaluation,
+      testResultId: data.testResultId
     };
   } catch (err) {
     console.error('Unexpected error:', err);
@@ -127,18 +129,38 @@ export async function evaluateWriting(params: EvaluateWritingParams): Promise<{
   }
 }
 
-export async function getUserEvaluations(_userId: string) {
-  // Note: writing_evaluations table not yet created
-  // This is a placeholder for future implementation
-  console.log('getUserEvaluations: table not yet available');
-  return null;
+export async function getUserEvaluations(userId: string) {
+  const { data, error } = await supabase
+    .from('writing_evaluations')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching evaluations:', error);
+    return null;
+  }
+
+  return data;
 }
 
-export async function getTestEvaluation(_userId: string, _testId: string, _taskNumber: number) {
-  // Note: writing_evaluations table not yet created
-  // This is a placeholder for future implementation
-  console.log('getTestEvaluation: table not yet available');
-  return null;
+export async function getTestEvaluation(userId: string, testId: string, taskNumber: number) {
+  const { data, error } = await supabase
+    .from('writing_evaluations')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('test_id', testId)
+    .eq('task_number', taskNumber)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error && error.code !== 'PGRST116') { // PGRST116 is "no rows returned"
+    console.error('Error fetching evaluation:', error);
+    return null;
+  }
+
+  return data;
 }
 
 // Helper function to get word count
