@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 import UserMenu from "@/components/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useAuth } from "@/hooks/useAuth";
 
 const navItems = [
   { name: "Dashboard", path: "/dashboard" },
@@ -15,6 +16,11 @@ const navItems = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { role } = useAuth();
+
+  const allNavItems = role === 'super_admin' 
+    ? [...navItems, { name: "Admin", path: "/admin" }]
+    : navItems;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-white/10 shadow-sm text-white" style={{ backgroundColor: 'hsl(220 60% 25%)' }}>
@@ -27,17 +33,18 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => (
+            {allNavItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
                 className={cn(
-                  "px-4 py-2 rounded-lg text-sm font-medium transition-all",
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-1",
                   location.pathname === item.path
                     ? "bg-white/20 text-white"
                     : "text-white/80 hover:bg-white/10 hover:text-white"
                 )}
               >
+                {item.name === "Admin" && <Shield className="h-4 w-4" />}
                 {item.name}
               </Link>
             ))}
@@ -65,18 +72,19 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden py-4 border-t border-white/20 animate-in slide-in-from-top-2 duration-200">
             <div className="flex flex-col gap-2">
-              {navItems.map((item) => (
+              {allNavItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "px-4 py-3 rounded-lg text-sm font-medium transition-all",
+                    "px-4 py-3 rounded-lg text-sm font-medium transition-all flex items-center gap-2",
                     location.pathname === item.path
                       ? "bg-white/20 text-white"
                       : "text-white/80 hover:bg-white/10 hover:text-white"
                   )}
                 >
+                  {item.name === "Admin" && <Shield className="h-4 w-4" />}
                   {item.name}
                 </Link>
               ))}

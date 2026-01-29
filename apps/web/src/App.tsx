@@ -7,6 +7,9 @@ import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./hooks/useAuth";
 import { ThemeProvider } from "./hooks/useTheme";
 import { AuthCallback } from "./components/AuthCallback";
+import { FeedbackModal } from "./components/FeedbackModal";
+import { FeedbackButton } from "./components/FeedbackButton";
+import { useFeedbackModal } from "./hooks/useFeedbackModal";
 import PageTransition from "./components/PageTransition";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -34,6 +37,7 @@ import ClassroomDetail from "./pages/ClassroomDetail";
 import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -57,10 +61,13 @@ export default App;
 
 function InnerRoutes() {
   const location = useLocation();
+  const { isOpen, openFeedback, closeFeedback } = useFeedbackModal();
 
   return (
     <>
       <AuthCallback />
+      <FeedbackModal isOpen={isOpen} onClose={closeFeedback} />
+      <FeedbackButton onClick={openFeedback} />
       <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><MockTests /></PageTransition>} />
@@ -97,6 +104,7 @@ function InnerRoutes() {
   <Route path="/speaking-test" element={<PageTransition><SpeakingTest /></PageTransition>} />
   <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
   <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
+  <Route path="/admin" element={<PageTransition><AdminDashboard /></PageTransition>} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
