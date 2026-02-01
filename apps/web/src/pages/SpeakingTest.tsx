@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import TestHeader from "@/components/TestHeader";
 import { useTestSession } from "@/hooks/useTestSession";
+import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { Card } from "@/components/ui/card";
 import { motion, AnimatePresence } from "framer-motion";
 import { loadQuestions } from "@/utils/loadQuestions";
@@ -26,7 +27,8 @@ import {
   RotateCcw,
   FileText,
   Sparkles,
-  Loader2
+  Loader2,
+  RefreshCw
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
@@ -92,11 +94,43 @@ const SpeakingTest = () => {
   const [evaluation, setEvaluation] = useState<SpeakingEvaluation | null>(null);
   const [evaluationError, setEvaluationError] = useState<string | null>(null);
   
+  // Text-to-Speech state
+  const [hasSpokenCurrentQuestion, setHasSpokenCurrentQuestion] = useState(false);
+  const questionToSpeakRef = useRef<string | null>(null);
+  
+  // TTS hook with auto-start recording callback
+  const { speak, cancel: cancelSpeech, isSpeaking, isSupported: ttsSupported } = useSpeechSynthesis({
+    rate: 0.9,
+    onEnd: () => {
+      // Auto-start recording when examiner finishes speaking
+      // Only for active question phases
+      if (
+        (phase === "part1-active" || phase === "part3-active" || phase === "part2-followup") && 
+        !isRecording && 
+        hasSpokenCurrentQuestion
+      ) {
+        const currentQuestion = questionToSpeakRef.current;
+        if (currentQuestion) {
+          startRecording(
+            phase === "part1-active" ? "Part 1" : 
+            phase === "part3-active" ? "Part 3" : "Part 2 Follow-up",
+            currentQuestionIndex
+          );
+        }
+      }
+    },
+    onError: (error) => {
+      console.error("TTS Error:", error);
+      // On error, just show the question and allow manual start
+    }
+  });
+  
   // Session management
   const durationMinutes = 14;
   const session = useTestSession(durationMinutes, {
     onConfirmExit: () => {
       stopRecording();
+      cancelSpeech();
       cleanupMedia();
     }
   });
@@ -152,6 +186,13 @@ const SpeakingTest = () => {
       })
       .catch(() => {});
   }, []);
+
+  // Cleanup TTS on unmount
+  useEffect(() => {
+    return () => {
+      cancelSpeech();
+    };
+  }, [cancelSpeech]);
 
   const cleanupMedia = useCallback(() => {
     if (streamRef.current) {
@@ -253,39 +294,98 @@ const SpeakingTest = () => {
     return test.part3.questions[currentQuestionIndex] || null;
   }, [test, currentQuestionIndex]);
 
+  // Auto-speak question when it changes (TTS)
+  useEffect(() => {
+    if (!ttsSupported) return;
+    
+    let questionText: string | null = null;
+    
+    // Determine current question based on phase
+    if (phase === "part1-active" && currentPart1Question) {
+      questionText = currentPart1Question;
+    } else if (phase === "part3-active" && currentPart3Question) {
+      questionText = currentPart3Question.question;
+      if (currentPart3Question.followUp) {
+        questionText += `. ${currentPart3Question.followUp}`;
+      }
+    } else if (phase === "part2-followup" && test?.part2.followUpQuestions?.[currentQuestionIndex]) {
+      questionText = test.part2.followUpQuestions[currentQuestionIndex];
+    }
+    
+    if (questionText && !isRecording) {
+      questionToSpeakRef.current = questionText;
+      setHasSpokenCurrentQuestion(true);
+      speak(questionText);
+    }
+    
+    // Reset spoken flag when question changes
+    return () => {
+      setHasSpokenCurrentQuestion(false);
+    };
+  }, [phase, currentQuestionIndex, currentPart1Question, currentPart3Question, test?.part2.followUpQuestions, ttsSupported, isRecording, speak]);
+
+  // Function to replay the current question
+  const replayQuestion = useCallback(() => {
+    if (!ttsSupported || isRecording) return;
+    
+    let questionText: string | null = null;
+    
+    if (phase === "part1-active" && currentPart1Question) {
+      questionText = currentPart1Question;
+    } else if (phase === "part3-active" && currentPart3Question) {
+      questionText = currentPart3Question.question;
+    } else if (phase === "part2-followup" && test?.part2.followUpQuestions?.[currentQuestionIndex]) {
+      questionText = test.part2.followUpQuestions[currentQuestionIndex];
+    }
+    
+    if (questionText) {
+      questionToSpeakRef.current = questionText;
+      setHasSpokenCurrentQuestion(true);
+      speak(questionText);
+    }
+  }, [phase, currentPart1Question, currentPart3Question, test?.part2.followUpQuestions, currentQuestionIndex, ttsSupported, isRecording, speak]);
+
   // Auto-advance for Part 1 when timer completes
   const advancePart1Question = useCallback(() => {
     stopRecording();
+    cancelSpeech();
     
     if (currentTopic && currentQuestionIndex < currentTopic.questions.length - 1) {
       const nextIdx = currentQuestionIndex + 1;
       setCurrentQuestionIndex(nextIdx);
       setTimer(30);
       setTimerActive(true);
-      setTimeout(() => startRecording("Part 1", nextIdx), 300);
+      // TTS will auto-trigger recording when speech ends
+      if (!ttsSupported) {
+        setTimeout(() => startRecording("Part 1", nextIdx), 300);
+      }
     } else {
       // Move to Part 2
       setTimerActive(false);
       setPhase("part2-intro");
     }
-  }, [currentTopic, currentQuestionIndex, stopRecording]);
+  }, [currentTopic, currentQuestionIndex, stopRecording, cancelSpeech, ttsSupported]);
 
   // Auto-advance for Part 3 when timer completes
   const advancePart3Question = useCallback(() => {
     stopRecording();
+    cancelSpeech();
     
     if (test?.part3.questions && currentQuestionIndex < test.part3.questions.length - 1) {
       const nextIdx = currentQuestionIndex + 1;
       setCurrentQuestionIndex(nextIdx);
       setTimer(60);
       setTimerActive(true);
-      setTimeout(() => startRecording("Part 3", nextIdx), 300);
+      // TTS will auto-trigger recording when speech ends
+      if (!ttsSupported) {
+        setTimeout(() => startRecording("Part 3", nextIdx), 300);
+      }
     } else {
       // Test complete
       setTimerActive(false);
       setPhase("completed");
     }
-  }, [test, currentQuestionIndex, stopRecording]);
+  }, [test, currentQuestionIndex, stopRecording, cancelSpeech, ttsSupported]);
 
   const handleTimerComplete = useCallback(() => {
     // Auto-advance based on current phase
@@ -321,23 +421,32 @@ const SpeakingTest = () => {
   };
 
   const startPart1 = async () => {
+    cancelSpeech(); // Cancel any ongoing speech
     setPhase("part1-active");
     setCurrentQuestionIndex(0);
     setTimer(30); // 30 seconds per question
     setTimerActive(true);
-    await startRecording("Part 1", 0);
+    // Recording will auto-start after TTS finishes speaking the question
+    // If TTS is not supported, start recording immediately
+    if (!ttsSupported) {
+      await startRecording("Part 1", 0);
+    }
   };
 
   const nextPart1Question = async () => {
     stopRecording();
+    cancelSpeech();
     
     if (currentTopic && currentQuestionIndex < currentTopic.questions.length - 1) {
       const nextIdx = currentQuestionIndex + 1;
       setCurrentQuestionIndex(nextIdx);
       setTimer(30);
       setTimerActive(true);
-      // Small delay before starting next recording
-      setTimeout(() => startRecording("Part 1", nextIdx), 300);
+      // Recording will auto-start after TTS finishes speaking
+      // If TTS is not supported, start recording with delay
+      if (!ttsSupported) {
+        setTimeout(() => startRecording("Part 1", nextIdx), 300);
+      }
     } else {
       // Move to Part 2
       setTimerActive(false);
@@ -378,9 +487,13 @@ const SpeakingTest = () => {
       await startRecording("Part 2 Follow-up", currentQuestionIndex);
     } else {
       stopRecording();
+      cancelSpeech();
       if (currentQuestionIndex < test.part2.followUpQuestions.length - 1) {
         setCurrentQuestionIndex(prev => prev + 1);
-        setTimeout(() => startRecording("Part 2 Follow-up", currentQuestionIndex + 1), 300);
+        // TTS will trigger recording after speaking, fallback for no TTS
+        if (!ttsSupported) {
+          setTimeout(() => startRecording("Part 2 Follow-up", currentQuestionIndex + 1), 300);
+        }
       } else {
         setPhase("part3-intro");
       }
@@ -388,22 +501,30 @@ const SpeakingTest = () => {
   };
 
   const startPart3 = async () => {
+    cancelSpeech();
     setPhase("part3-active");
     setCurrentQuestionIndex(0);
     setTimer(60); // 60 seconds per question
     setTimerActive(true);
-    await startRecording("Part 3", 0);
+    // Recording will auto-start after TTS finishes
+    if (!ttsSupported) {
+      await startRecording("Part 3", 0);
+    }
   };
 
   const nextPart3Question = async () => {
     stopRecording();
+    cancelSpeech();
     
     if (test?.part3.questions && currentQuestionIndex < test.part3.questions.length - 1) {
       const nextIdx = currentQuestionIndex + 1;
       setCurrentQuestionIndex(nextIdx);
       setTimer(60);
       setTimerActive(true);
-      setTimeout(() => startRecording("Part 3", nextIdx), 300);
+      // TTS will trigger recording, fallback for no TTS
+      if (!ttsSupported) {
+        setTimeout(() => startRecording("Part 3", nextIdx), 300);
+      }
     } else {
       // Test complete
       setTimerActive(false);
@@ -551,6 +672,7 @@ const SpeakingTest = () => {
   };
 
   const handleRestartTest = () => {
+    cancelSpeech(); // Cancel any ongoing TTS
     setPhase("intro");
     setCurrentQuestionIndex(0);
     setRecordings([]);
@@ -559,6 +681,8 @@ const SpeakingTest = () => {
     setTimerActive(false);
     setEvaluation(null);
     setEvaluationError(null);
+    setHasSpokenCurrentQuestion(false);
+    questionToSpeakRef.current = null;
     session.setStarted(false);
     session.setTimeLeft(durationMinutes * 60);
   };
@@ -728,21 +852,63 @@ const SpeakingTest = () => {
           <Progress value={(timer / 30) * 100} className="h-2" />
         </div>
 
-        {/* Question */}
+        {/* Question - Hidden while examiner is speaking (Fairness Mode) */}
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 rounded-xl p-8 mb-6">
-          <div className="flex items-start gap-4">
-            <Volume2 className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
-            <p className="text-xl font-medium text-blue-900 dark:text-blue-100">
-              {currentPart1Question}
-            </p>
-          </div>
+          {isSpeaking && ttsSupported ? (
+            <div className="flex flex-col items-center justify-center gap-4 py-4">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <Volume2 className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full animate-pulse" />
+                </div>
+                <span className="text-lg font-medium text-blue-700 dark:text-blue-300">
+                  Examiner is speaking...
+                </span>
+              </div>
+              <div className="flex gap-1">
+                <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-start gap-4">
+              <Volume2 className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" />
+              <p className="text-xl font-medium text-blue-900 dark:text-blue-100">
+                {currentPart1Question}
+              </p>
+            </div>
+          )}
         </div>
+
+        {/* Replay Button - Only show when not recording and not speaking */}
+        {ttsSupported && !isSpeaking && !isRecording && (
+          <div className="flex justify-center mb-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={replayQuestion}
+              className="gap-2"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Replay Question
+            </Button>
+          </div>
+        )}
 
         {/* Recording indicator */}
         {isRecording && (
           <div className="flex items-center justify-center gap-3 mb-6 p-4 bg-red-50 dark:bg-red-950/30 rounded-lg border border-red-200 dark:border-red-800">
             <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
             <span className="text-red-700 dark:text-red-300 font-medium">Recording your answer...</span>
+          </div>
+        )}
+
+        {/* Waiting for recording indicator - after TTS ends, before recording starts */}
+        {!isRecording && !isSpeaking && ttsSupported && hasSpokenCurrentQuestion && (
+          <div className="flex items-center justify-center gap-3 mb-6 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
+            <Mic className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            <span className="text-amber-700 dark:text-amber-300 font-medium">Starting recording...</span>
           </div>
         )}
 
@@ -980,14 +1146,49 @@ const SpeakingTest = () => {
           </div>
         </div>
 
+        {/* Question - Hidden while examiner is speaking */}
         <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/50 dark:to-pink-950/50 rounded-xl p-8 mb-6">
-          <div className="flex items-start gap-4">
-            <Volume2 className="w-6 h-6 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-1" />
-            <p className="text-xl font-medium text-purple-900 dark:text-purple-100">
-              {test?.part2.followUpQuestions[currentQuestionIndex]}
-            </p>
-          </div>
+          {isSpeaking && ttsSupported ? (
+            <div className="flex flex-col items-center justify-center gap-4 py-4">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <Volume2 className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-purple-500 rounded-full animate-pulse" />
+                </div>
+                <span className="text-lg font-medium text-purple-700 dark:text-purple-300">
+                  Examiner is speaking...
+                </span>
+              </div>
+              <div className="flex gap-1">
+                <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-start gap-4">
+              <Volume2 className="w-6 h-6 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-1" />
+              <p className="text-xl font-medium text-purple-900 dark:text-purple-100">
+                {test?.part2.followUpQuestions[currentQuestionIndex]}
+              </p>
+            </div>
+          )}
         </div>
+
+        {/* Replay Button */}
+        {ttsSupported && !isSpeaking && !isRecording && (
+          <div className="flex justify-center mb-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={replayQuestion}
+              className="gap-2"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Replay Question
+            </Button>
+          </div>
+        )}
 
         {isRecording && (
           <div className="flex items-center justify-center gap-3 mb-6 p-4 bg-red-50 dark:bg-red-950/30 rounded-lg border border-red-200 dark:border-red-800">
@@ -1108,28 +1309,70 @@ const SpeakingTest = () => {
           <Progress value={(timer / 60) * 100} className="h-2" />
         </div>
 
-        {/* Question */}
+        {/* Question - Hidden while examiner is speaking */}
         <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/50 dark:to-emerald-950/50 rounded-xl p-8 mb-6">
-          <div className="flex items-start gap-4">
-            <Volume2 className="w-6 h-6 text-green-600 dark:text-green-400 flex-shrink-0 mt-1" />
-            <div>
-              <p className="text-xl font-medium text-green-900 dark:text-green-100 mb-3">
-                {currentPart3Question?.question}
-              </p>
-              {currentPart3Question?.followUp && (
-                <p className="text-sm text-green-700 dark:text-green-300 italic">
-                  Follow-up: {currentPart3Question.followUp}
-                </p>
-              )}
+          {isSpeaking && ttsSupported ? (
+            <div className="flex flex-col items-center justify-center gap-4 py-4">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <Volume2 className="w-8 h-8 text-green-600 dark:text-green-400" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                </div>
+                <span className="text-lg font-medium text-green-700 dark:text-green-300">
+                  Examiner is speaking...
+                </span>
+              </div>
+              <div className="flex gap-1">
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex items-start gap-4">
+              <Volume2 className="w-6 h-6 text-green-600 dark:text-green-400 flex-shrink-0 mt-1" />
+              <div>
+                <p className="text-xl font-medium text-green-900 dark:text-green-100 mb-3">
+                  {currentPart3Question?.question}
+                </p>
+                {currentPart3Question?.followUp && (
+                  <p className="text-sm text-green-700 dark:text-green-300 italic">
+                    Follow-up: {currentPart3Question.followUp}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
         </div>
+
+        {/* Replay Button */}
+        {ttsSupported && !isSpeaking && !isRecording && (
+          <div className="flex justify-center mb-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={replayQuestion}
+              className="gap-2"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Replay Question
+            </Button>
+          </div>
+        )}
 
         {/* Recording indicator */}
         {isRecording && (
           <div className="flex items-center justify-center gap-3 mb-6 p-4 bg-red-50 dark:bg-red-950/30 rounded-lg border border-red-200 dark:border-red-800">
             <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
             <span className="text-red-700 dark:text-red-300 font-medium">Recording your answer...</span>
+          </div>
+        )}
+
+        {/* Waiting for recording indicator */}
+        {!isRecording && !isSpeaking && ttsSupported && hasSpokenCurrentQuestion && (
+          <div className="flex items-center justify-center gap-3 mb-6 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
+            <Mic className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            <span className="text-amber-700 dark:text-amber-300 font-medium">Starting recording...</span>
           </div>
         )}
 
